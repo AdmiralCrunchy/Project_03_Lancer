@@ -159,9 +159,9 @@ const RegisterPage = () => {
           </Box>
           <Box sx={{ mb: 6 }}>
             <Typography variant='h5' sx={{ fontWeight: 600, marginBottom: 1.5 }}>
-              Freelancing starts here.
+              Client who wants to see more?
             </Typography>
-            <Typography variant='body2'>Project and client management made easy</Typography>
+            <Typography variant='body2'>View your project and delieverable status</Typography>
           </Box>
           <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
             <TextField autoFocus fullWidth id='username' label='Username' sx={{ marginBottom: 4 }} />
@@ -207,22 +207,12 @@ const RegisterPage = () => {
                 Already have an account?
               </Typography>
               <Typography variant='body2'>
-                <Link passHref href='/pages/login'>
+                <Link passHref href='/pages/clientlogin'>
                   <LinkStyled>Sign in instead</LinkStyled>
                 </Link>
               </Typography>
             </Box>
-            <Divider sx={{ my: 5 }}>or</Divider>
-            <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <Typography variant='body2' sx={{ marginRight: 2 }}>
-                Are you a client?
-              </Typography>
-              <Typography variant='body2'>
-                <Link passHref href='/pages/clientlogin'>
-                  <LinkStyled>Sign in here</LinkStyled>
-                </Link>
-              </Typography>
-            </Box>
+
           </form>
         </CardContent>
       </Card>
