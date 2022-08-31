@@ -15,7 +15,7 @@ import { styled, useTheme } from '@mui/material/styles'
 import MuiCard from '@mui/material/Card'
 
 // ** Demo Components Imports
-import TableBasic from 'src/views/tables/TableBasic'
+import TableBasic from 'src/views/tables/projectTable'
 
 // ** Icons Imports
 import EyeOutline from 'mdi-material-ui/EyeOutline'

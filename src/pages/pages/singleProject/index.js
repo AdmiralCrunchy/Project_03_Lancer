@@ -15,7 +15,9 @@ const SingleProject = () => {
 return (
     <Box>
         <CardContent>
-            
+            <CardHeader>
+                
+            </CardHeader>
         </CardContent>
     </Box>
 )
