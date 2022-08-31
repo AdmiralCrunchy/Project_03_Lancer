@@ -14,7 +14,7 @@ const navigation = () => {
     {
       title: 'Projects',
       icon: HomeOutline,
-      path: '/projects'
+      path: '/pages/projects'
     },
     {
       title: 'Calendar',
