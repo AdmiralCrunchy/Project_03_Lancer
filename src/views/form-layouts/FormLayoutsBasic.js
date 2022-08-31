@@ -1,7 +1,12 @@
 // ** React Imports
-import { useState } from 'react'
+import { useState } from 'react';
+
 
 // ** MUI Imports
+import { styled } from '@mui/material/styles'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
+import Divider from '@mui/material/Divider'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
@@ -17,142 +22,223 @@ import FormControl from '@mui/material/FormControl'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import InputAdornment from '@mui/material/InputAdornment'
 import FormHelperText from '@mui/material/FormHelperText'
+import CreditCardClockOutline from 'mdi-material-ui/CreditCardClockOutline'
+import AccountClockOutline from 'mdi-material-ui/AccountClockOutline'
+import BankOutline from 'mdi-material-ui/BankOutline'
 
 // ** Icons Imports
-import EyeOutline from 'mdi-material-ui/EyeOutline'
-import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
-
+const Item = styled('div')(({ theme }) => ({
+  
+  border: '1px solid',
+  borderColor: theme.palette.mode === 'light' ? '#444d58' : '#ced7e0',
+  padding: theme.spacing(1),
+  borderRadius: '4px',
+  textAlign: 'center',
+}));
 const FormLayoutsBasic = () => {
   // ** States
+  const Form = styled('form')(({ theme }) => ({
+    maxWidth: 400,
+    padding: theme.spacing(12),
+    borderRadius: theme.shape.borderRadius,
+    border: `1px solid ${theme.palette.divider}`
+  }))  
+  const [name, setName] = useState([])
   const [values, setValues] = useState({
     password: '',
     showPassword: false
   })
 
-  const [confirmPassValues, setConfirmPassValues] = useState({
-    password: '',
-    showPassword: false
-  })
+ 
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
+ 
+  
   }
-
-  const handleConfirmPassChange = prop => event => {
-    setConfirmPassValues({ ...confirmPassValues, [prop]: event.target.value })
-  }
-
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword })
-  }
-
-  const handleClickConfirmPassShow = () => {
-    setConfirmPassValues({ ...confirmPassValues, showPassword: !confirmPassValues.showPassword })
-  }
-
-  const handleMouseDownPassword = event => {
-    event.preventDefault()
+  const handleSelectChange = event => {
+    setName(event.target.value)
   }
 
   return (
     <Card>
-      <CardHeader title='Basic' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title='Invoice' titleTypographyProps={{ variant: 'h6' }} sx={{marginBottom: 10, display: 'center'}}/>
       <CardContent>
         <form onSubmit={e => e.preventDefault()}>
-          <Grid container spacing={5}>
-            <Grid item xs={12}>
-              <TextField fullWidth label='Name' placeholder='Leonard Carter' />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                type='email'
-                label='Email'
-                placeholder='carterleonard@gmail.com'
-                helperText='You can use letters, numbers & periods'
+          <Grid container spacing={15}>
+          <Typography variant='body2' sx={{ fontWeight: 400 }} sx={{marginBottom: 6}} sx={{marginLeft: 15}}>
+              <p>Office 149, 450 South Brand Brooklyn </p>
+
+              <p>San Diego County, CA 91905, USA</p>
+
+              <p>+1 (123) 456 7891, +44 (876) 543 2198</p>
+          </Typography>
+
+            <Grid item xs={8} sx={{marginRight:50}}>
+              <TextField 
+              fullWidth 
+              type= 'input'
+              label='Invoice #' 
+              InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                     
+                    </InputAdornment>
+                  )
+                }}
               />
             </Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor='form-layouts-basic-password'>Password</InputLabel>
-                <OutlinedInput
-                  label='Password'
-                  value={values.password}
-                  id='form-layouts-basic-password'
-                  onChange={handleChange('password')}
-                  type={values.showPassword ? 'text' : 'password'}
-                  aria-describedby='form-layouts-basic-password-helper'
-                  endAdornment={
-                    <InputAdornment position='end'>
-                      <IconButton
-                        edge='end'
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        aria-label='toggle password visibility'
-                      >
-                        {values.showPassword ? <EyeOutline /> : <EyeOffOutline />}
-                      </IconButton>
+            <Grid item xs={8}>
+              <TextField
+                fullWidth
+                type='date'
+                label= 'Date Issued'
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                     
                     </InputAdornment>
-                  }
-                />
-                <FormHelperText id='form-layouts-basic-password-helper'>
-                  Use 8 or more characters with a mix of letters, numbers & symbols
-                </FormHelperText>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor='form-layouts-confirm-password'>Confirm Password</InputLabel>
-                <OutlinedInput
-                  label='Confirm Password'
-                  value={confirmPassValues.password}
-                  id='form-layouts-confirm-password'
-                  onChange={handleConfirmPassChange('password')}
-                  aria-describedby='form-layouts-confirm-password-helper'
-                  type={confirmPassValues.showPassword ? 'text' : 'password'}
-                  endAdornment={
-                    <InputAdornment position='end'>
-                      <IconButton
-                        edge='end'
-                        onClick={handleClickConfirmPassShow}
-                        onMouseDown={handleMouseDownPassword}
-                        aria-label='toggle password visibility'
-                      >
-                        {confirmPassValues.showPassword ? <EyeOutline /> : <EyeOffOutline />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-                <FormHelperText id='form-layouts-confirm-password-helper'>
-                  Make sure to type the same password as above
-                </FormHelperText>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <Box
-                sx={{
-                  gap: 5,
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
+                  )
                 }}
-              >
-                <Button type='submit' variant='contained' size='large'>
-                  Get Started!
-                </Button>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Typography sx={{ mr: 2 }}>Already have an account?</Typography>
-                  <Link href='/' onClick={e => e.preventDefault()}>
-                    Log in
-                  </Link>
-                </Box>
-              </Box>
+                
+              />
             </Grid>
+            <Grid item xs={8}>
+              <FormControl fullWidth>
+              <TextField
+                fullWidth
+                type='date'
+                label = 'Date Due'
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                     
+                    </InputAdornment>
+                  )
+                }}
+              />
+              </FormControl>
+            </Grid>
+            <Grid item sm={10}>
+            <Divider sx={{ marginBottom: 10 }} />
+            </Grid>
+            <CardHeader title='Invoice To:' titleTypographyProps={{ variant: 'h6' }}  sx={{marginLeft: 15}}/>
+            <Grid item xs={10} sm={4} >
+              <FormControl fullWidth>
+                <InputLabel id='form-layouts-separator-multiple-select-label'></InputLabel>
+                <Select
+                  multiple
+                  value={name}
+                  onChange={handleSelectChange}
+                  id='form-layouts-separator-multiple-select'
+                  labelId='form-layouts-separator-multiple-select-label'
+                  input={<OutlinedInput  id='select-multiple-language' />}
+                >
+                  <MenuItem value='John'>John</MenuItem>
+                  <MenuItem value='Melissa'>Melissa</MenuItem>
+                  <MenuItem value='Sabrina'>Sabrina</MenuItem>
+                  <MenuItem value='Tommy'>Tommy</MenuItem>
+                  <MenuItem value='Oliver'>Oliver</MenuItem>
+                  <MenuItem value='James'>James</MenuItem>
+                  <MenuItem value='Alice'>Alice</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <CardHeader title='Total Cost:' titleTypographyProps={{ variant: 'h6' }}  sx={{marginLeft: 25}}/>
+            <Grid item xs={0} sm={0} sx={{marginLeft: 135}}>
+              <FormControl fullWidth>
+              <TextField 
+              fullWidth 
+              type= 'input'
+              label='Cost Per Hour' 
+              InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                     <CreditCardClockOutline/>
+                    </InputAdornment>
+                  )
+                }}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={0} sm={0} sx={{marginLeft: 135}}>
+              <FormControl fullWidth>
+              <TextField 
+              fullWidth 
+              type= 'number'
+              label='Total Hours' 
+              InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                    <AccountClockOutline/> 
+                    </InputAdornment>
+                  )
+                }}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={0} sm={0} sx={{marginLeft: 135}}>
+              <FormControl fullWidth>
+              <TextField 
+              fullWidth 
+              type= 'input'
+              label='Amount Due' 
+              InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>$
+                     
+                    </InputAdornment>
+                  )
+                }}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item sm={10}>
+            <Divider sx={{ marginBottom: 10 }} />
+            </Grid>
+            <Grid item xs={12}>
+              <Button type='submit' variant='contained' size='large' color='success'>
+                Send Invoice
+              </Button>
+              </Grid>
+              <Grid item xs={12}>
+              <Button type='submit' variant='contained' size='large'>
+                Preview > > >
+              </Button>
+              </Grid>
+              <Grid item xs={12}>
+              <Button type='submit' variant='contained' size='large'  >
+                Save Invoice 
+              </Button>
+              </Grid>
+              <CardHeader title='Internet Banking:' titleTypographyProps={{ variant: 'h6' }}  sx={{marginLeft: 65}}/>
+            <Grid item xs={10} sm={6} sx={{marginLeft:70}}>
+
+              <FormControl fullWidth>
+                <Select
+                  multiple
+                  value={name}
+                  onChange={handleSelectChange}
+                  id='form-layouts-separator-multiple-select'
+                  labelId='form-layouts-separator-multiple-select-label'
+                  input={<OutlinedInput  id='select-multiple-language' />}
+                >
+                  <MenuItem value='PayPal'>PayPal</MenuItem>
+                  
+                </Select>
+              </FormControl>
+            </Grid>
+            
           </Grid>
-        </form>
-      </CardContent>
-    </Card>
+          </form>
+          </CardContent>
+          </Card>
+          
+          
+         
+    
+    
+    
   )
 }
 

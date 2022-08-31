@@ -6,20 +6,22 @@ import TextField from '@mui/material/TextField'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import InputAdornment from '@mui/material/InputAdornment'
-
+import Stack from '@mui/material/Stack'
 // ** Icons Imports
 import Phone from 'mdi-material-ui/Phone'
 import EmailOutline from 'mdi-material-ui/EmailOutline'
 import AccountOutline from 'mdi-material-ui/AccountOutline'
 import MessageOutline from 'mdi-material-ui/MessageOutline'
+import CreditCardOutline from  'mdi-material-ui'
+import CreditCardClockOutline from 'mdi-material-ui'
 
 const FormLayoutsIcons = () => {
   return (
-    <Card>
-      <CardHeader title='Basic with Icons' titleTypographyProps={{ variant: 'h6' }} />
+    <Card sx={{justifyContent: 'flex-end'}}>
+      <CardHeader title='Basic with Icons' titleTypographyProps={{ variant: 'h6' }}  />
       <CardContent>
-        <form onSubmit={e => e.preventDefault()}>
-          <Grid container spacing={5}>
+        <form onSubmit={e => e.preventDefault()} >
+          <Grid container spacing={5}  >
             <Grid item xs={12}>
               <TextField
                 fullWidth
@@ -82,6 +84,8 @@ const FormLayoutsIcons = () => {
                 }}
               />
             </Grid>
+      
+  
             <Grid item xs={12}>
               <Button type='submit' variant='contained' size='large'>
                 Submit

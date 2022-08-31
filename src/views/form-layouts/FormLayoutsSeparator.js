@@ -75,44 +75,32 @@ const FormLayoutsSeparator = () => {
 
   return (
     <Card>
-      <CardHeader title='Multi Column with Form Separator' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title='Invoice' titleTypographyProps={{ variant: 'h6' }} />
       <Divider sx={{ margin: 0 }} />
       <form onSubmit={e => e.preventDefault()}>
         <CardContent>
           <Grid container spacing={5}>
             <Grid item xs={12}>
               <Typography variant='body2' sx={{ fontWeight: 600 }}>
-                1. Account Details
+              Office 149, 450 South Brand Brooklyn
+
+San Diego County, CA 91905, USA
+
++1 (123) 456 7891, +44 (876) 543 2198
+
+
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Username' placeholder='carterLeonard' />
+            <Grid item xs={5} sm={6}>
+              <TextField fullWidth label='#' placeholder='carterLeonard' />
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField fullWidth type='email' label='Email' placeholder='carterleonard@gmail.com' />
+            <Grid item xs={5} sm={6}>
+              <TextField fullWidth label='#' placeholder='carterLeonard' />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={5} sm={6}>
               <FormControl fullWidth>
                 <InputLabel htmlFor='form-layouts-separator-password'>Password</InputLabel>
-                <OutlinedInput
-                  label='Password'
-                  value={values.password}
-                  id='form-layouts-separator-password'
-                  onChange={handlePasswordChange('password')}
-                  type={values.showPassword ? 'text' : 'password'}
-                  endAdornment={
-                    <InputAdornment position='end'>
-                      <IconButton
-                        edge='end'
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        aria-label='toggle password visibility'
-                      >
-                        {values.showPassword ? <EyeOutline /> : <EyeOffOutline />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
+                
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
