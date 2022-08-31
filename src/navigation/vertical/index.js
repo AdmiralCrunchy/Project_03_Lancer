@@ -22,9 +22,25 @@ const navigation = () => {
       path: '/calender'
     },
     {
-      title: 'Billing',
+      badgeContent: '3',
+      title: 'Invoice',
       icon: CurrencyUsd,
-      path: '/billing'
+      badgeColor:'success',
+      path:'/pages/invoice',
+      children:[
+        {
+          title:'Add',
+          path: '/layouts/components/vertical',
+        },
+        {
+          title: 'Preview',
+          path: '/layouts/components/vertical',
+        },
+        {
+          title: 'List',
+          path: '/layouts/components/vertical'
+        }
+      ]
     },
     {
       title: 'Client List',
