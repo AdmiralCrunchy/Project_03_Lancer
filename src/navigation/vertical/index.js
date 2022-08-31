@@ -1,6 +1,6 @@
 // ** Icon imports
 import {Login, Table, CubeOutline, HomeOutline, FormatLetterCase, AccountCogOutline, CreditCardOutline, AccountPlusOutline, AlertCircleOutline, GoogleCirclesExtended, Calendar , CurrencyUsd, AccountMultiple} from 'mdi-material-ui'
-
+import MaterialUi from 'mdi-material-ui/MaterialUi'
 const navigation = () => {
   return [
     {
@@ -14,7 +14,13 @@ const navigation = () => {
     {
       title: 'Projects',
       icon: HomeOutline,
-      path: '/projects'
+      path: '/projects',
+      children: [
+        {
+          title: 'Test1',
+          path: '/components1'
+        }
+      ]
     },
     {
       title: 'Calendar',
@@ -103,6 +109,13 @@ const navigation = () => {
       icon: CubeOutline,
       title: 'Form Layouts',
       path: '/form-layouts'
+    },
+    {
+      icon: MaterialUi,
+      title: 'MUI Docs',
+      externalLink: true,
+      openInNewTab: true,
+      path: 'https://mui.com/material-ui/getting-started/usage/'
     }
   ]
 }
