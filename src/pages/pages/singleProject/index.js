@@ -10,12 +10,13 @@ import CardHeader from '@mui/material/CardHeader'
 import { styled, useTheme } from '@mui/material/styles'
 import MuiCard from '@mui/material/Card'
 
-const SingleProject = () => {
+const SingleProject = (project) => {
 
 return (
     <Box>
         <CardContent>
             <CardHeader>
+                <h1>{project.name}</h1>
                 
             </CardHeader>
         </CardContent>
