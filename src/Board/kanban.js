@@ -9,7 +9,7 @@ const board = {
   columns: [
     {
       id: 1,
-      title: "Todo",
+      title: "In Progress",
       cards: [
         {
           id: 1,
@@ -30,7 +30,7 @@ const board = {
     },
     {
       id: 2,
-      title: "Doing",
+      title: "Completed",
       cards: [
         {
           id: 9,
@@ -41,7 +41,7 @@ const board = {
     },
     {
       id: 3,
-      title: "Q&A",
+      title: "Backlog",
       cards: [
         {
           id: 10,
