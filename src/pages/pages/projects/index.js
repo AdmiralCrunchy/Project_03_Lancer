@@ -18,10 +18,6 @@ import MuiCard from '@mui/material/Card'
 import TableBasic from 'src/views/tables/projectTable'
 import UncontrolledBoard from 'src/Board/kanban.js'
 
-// ** Icons Imports
-import EyeOutline from 'mdi-material-ui/EyeOutline'
-import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
-
 // ** Configs
 import themeConfig from 'src/configs/themeConfig'
 
