@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import "@asseinfo/react-kanban/dist/styles.css"
 
 // ** Next Imports
@@ -18,17 +18,14 @@ import MuiCard from '@mui/material/Card'
 import TableBasic from 'src/views/tables/projectTable'
 import UncontrolledBoard from 'src/Board/kanban.js'
 
-// ** Configs
-import themeConfig from 'src/configs/themeConfig'
-
-// ** Demo Imports
-import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
-
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: { width: '90rem' }
 }))
 
+useEffect(()=> {
+
+}, []);
 
 const ProjectPage = () =>{
 

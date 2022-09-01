@@ -12,14 +12,17 @@ import TableContainer from '@mui/material/TableContainer'
 import TablePagination from '@mui/material/TablePagination'
 
 const columns = [
-  {id: 'projectName', label: 'Project Name', minWidth: 170},
-  {id: 'projectStatus', label: 'Project Status', minWidth: 170, align: 'center'},
-  {id: 'initialCharge', label: 'Initial Charge', minWidth: 170, align: 'right'},
-  {id: 'balance', label: 'Project Balance', minWidth: 170, align: 'right'},
+  {id: 'id', label: 'Project Id', minWidth: 25},
+  {id: 'project_name', label: 'Project Name', minWidth: 150},
+  {id: 'project_status', label: 'Project Status', minWidth: 150, align: 'center'},
+  {id: 'initial_charge', label: 'Initial Charge', minWidth: 150, align: 'right'},
+  {id: 'balance', label: 'Project Balance', minWidth: 150, align: 'right'},
 ]
 
 
+
 export default function ProjectTable(){
+
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
@@ -89,8 +92,10 @@ export default function ProjectTable(){
               return (
                 <TableRow hover role='checkbox' tabIndex={-1} key={projects.id}>
                   {columns.map(column => {
+
                     if(projects[column.id] > 0 ){
                       const value = '$'+projects[column.id]
+
 
                       return (
                         <TableCell key={column.id} align={column.align}>
