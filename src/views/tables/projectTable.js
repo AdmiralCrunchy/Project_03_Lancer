@@ -40,7 +40,7 @@ const rows = [
   createData(`Outbound Gear`, 'Cancelled', 1400, 10000),
 ]
 
-const TableBasic = () => {
+const projectTable = () => {
   const [page, setPage] =useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const totalProjects = () => {
@@ -110,4 +110,4 @@ const TableBasic = () => {
   )
 }
 
-export default TableBasic
+export default projectTable
