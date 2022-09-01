@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import "@asseinfo/react-kanban/dist/styles.css"
 
 // ** Next Imports
@@ -23,6 +23,9 @@ const Card = styled(MuiCard)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: { width: '90rem' }
 }))
 
+useEffect(()=> {
+
+}, []);
 
 const ProjectPage = () =>{
 

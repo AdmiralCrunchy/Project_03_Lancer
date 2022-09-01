@@ -41,6 +41,7 @@ const ClientTable = () => {
   // ** States
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
+
   const totalClients = () => {
     return (row.length)
   }
