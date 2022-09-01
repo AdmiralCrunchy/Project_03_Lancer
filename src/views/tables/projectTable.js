@@ -12,32 +12,33 @@ import TableContainer from '@mui/material/TableContainer'
 import TablePagination from '@mui/material/TablePagination'
 
 const columns = [
-  {id: 'projectName', label: 'Project Name', minWidth: 170},
-  {id: 'projectStatus', label: 'Project Status', minWidth: 170, align: 'center'},
-  {id: 'initialCharge', label: 'Initial Charge', minWidth: 170, align: 'right'},
-  {id: 'balance', label: 'Project Balance', minWidth: 170, align: 'right'},
+  {id: 'id', label: 'Project Id', minWidth: 25},
+  {id: 'project_name', label: 'Project Name', minWidth: 150},
+  {id: 'project_status', label: 'Project Status', minWidth: 150, align: 'center'},
+  {id: 'initial_charge', label: 'Initial Charge', minWidth: 150, align: 'right'},
+  {id: 'balance', label: 'Project Balance', minWidth: 150, align: 'right'},
 ]
 
-const createData = (projectName, projectStatus, initialCharge, balance) => {
-  return { projectName, projectStatus, initialCharge, balance}
+const createData = (id, project_name, project_status, initial_charge, balance) => {
+  return {id, project_name, project_status, initial_charge, balance}
 }
 
 const rows = [
-  createData(`Monkeys Vs Shakespeare`, 'Not Started', 250, 50000),
-  createData(`Shelf Space`, 'Bug Fixing', 1000, 50000),
-  createData(`Let's Play`, 'Cancelled', 750, 2400),
-  createData(`Chew On It`, 'Cancelled', 12000, 150000),
-  createData(`Outbound Gear`, 'Cancelled', 1400, 10000),
-  createData(`Monkeys Vs Mike Tyson`, 'Not Started', 250, 50000),
-  createData(`Banana Inc`, 'Bug Fixing', 1000, 50000),
-  createData(`Tombero`, 'Cancelled', 750, 2400),
-  createData(`Connect Seven `, 'Market Ready', 12000, 150000),
-  createData(`Outbound Heroes`, 'Cancelled', 1400, 10000),
-  createData(`Dave Vs Shakespeare`, 'Not Started', 250, 50000),
-  createData(`Shelf Space`, 'Bug Fixing', 1000, 50000),
-  createData(`H-VAC Servers`, 'Cancelled', 750, 2400),
-  createData(`Chew On Shoes`, 'Market Ready', 12000, 150000),
-  createData(`Outbound Gear`, 'Cancelled', 1400, 10000),
+  createData(1,`Monkeys Vs Shakespeare`, 'Not Started', 250, 50000),
+  createData(2,`Shelf Space`, 'Bug Fixing', 1000, 50000),
+  createData(3,`Let's Play`, 'Cancelled', 750, 2400),
+  createData(4,`Chew On It`, 'Cancelled', 12000, 150000),
+  createData(5,`Outbound Gear`, 'Cancelled', 1400, 10000),
+  createData(6,`Monkeys Vs Mike Tyson`, 'Not Started', 250, 50000),
+  createData(7,`Banana Inc`, 'Bug Fixing', 1000, 50000),
+  createData(8,`Tombero`, 'Cancelled', 750, 2400),
+  createData(9,`Connect Seven `, 'Market Ready', 12000, 150000),
+  createData(10,`Outbound Heroes`, 'Cancelled', 1400, 10000),
+  createData(11,`Dave Vs Shakespeare`, 'Not Started', 250, 50000),
+  createData(12,`Shelf Space`, 'Bug Fixing', 1000, 50000),
+  createData(13,`H-VAC Servers`, 'Cancelled', 750, 2400),
+  createData(14,`Chew On Shoes`, 'Market Ready', 12000, 150000),
+  createData(15,`Outbound Gear`, 'Cancelled', 1400, 10000),
 ]
 
 const projectTable = () => {
@@ -75,7 +76,8 @@ const projectTable = () => {
               return (
                 <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
                   {columns.map(column => {
-                    if(row[column.id] > 0 ){
+                    console.log(column.id)
+                    if(row[column.id] > 0 && column.id != 'id'){
                       const value = '$'+row[column.id]
                       return (
                         <TableCell key={column.id} align={column.align}>
