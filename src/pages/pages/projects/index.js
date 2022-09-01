@@ -1,9 +1,9 @@
 // ** React Imports
 import { useState } from 'react'
+import "@asseinfo/react-kanban/dist/styles.css"
 
 // ** Next Imports
 import { useRouter } from 'next/router'
-import SingleProject from '../singleProject'
 
 
 // ** MUI Components
@@ -16,6 +16,7 @@ import MuiCard from '@mui/material/Card'
 
 // ** Demo Components Imports
 import TableBasic from 'src/views/tables/projectTable'
+import UncontrolledBoard from 'src/Board/kanban.js'
 
 // ** Icons Imports
 import EyeOutline from 'mdi-material-ui/EyeOutline'
@@ -32,8 +33,8 @@ const Card = styled(MuiCard)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: { width: '90rem' }
 }))
 
-const ProjectPage = () =>{
 
+const ProjectPage = () =>{
 
     // ** Hook
     const theme = useTheme()
@@ -51,10 +52,13 @@ const ProjectPage = () =>{
                             <TableBasic />
                             </Card>
                         </Grid>
+                        <Grid item xd={12}>
+                            <UncontrolledBoard />
+                        </Grid>
                     </Grid>
             </CardContent>
         </Box>
     )
 }
 
-export default ProjectPage;
+export default ProjectPage
