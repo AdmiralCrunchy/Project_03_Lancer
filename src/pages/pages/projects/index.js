@@ -48,7 +48,7 @@ const ProjectPage = () =>{
                             <TableBasic />
                             </Card>
                         </Grid>
-                        <Grid item xd={12}>
+                        <Grid item xs={12} sx={{alignItems: 'center', justifyContent: 'center'}}>
                             <UncontrolledBoard />
                         </Grid>
                     </Grid>
