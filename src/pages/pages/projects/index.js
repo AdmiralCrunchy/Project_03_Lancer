@@ -31,7 +31,6 @@ export default function ProjectTable(){
     return (projects.length)
   }
 
-
   const router = useRouter()
 
   useEffect(() => {

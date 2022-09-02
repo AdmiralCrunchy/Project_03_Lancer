@@ -1,5 +1,6 @@
 // ** React Imports
-import {  forwardRef, useState } from 'react';
+import {  forwardRef, useState, useEffect } from 'react';
+
 
 
 // ** MUI Imports
@@ -28,6 +29,7 @@ import CreditCardClockOutline from 'mdi-material-ui/CreditCardClockOutline'
 import AccountClockOutline from 'mdi-material-ui/AccountClockOutline'
 import BankOutline from 'mdi-material-ui/BankOutline'
 import DatePicker from 'react-datepicker'
+
 // ** Icons Imports
 
 const Item = styled('div')(({ theme }) => ({
@@ -47,16 +49,79 @@ const FormLayoutsBasic = () => {
     borderRadius: theme.shape.borderRadius,
     border: `1px solid ${theme.palette.divider}`
   }))  
+  
   const CustomInput = forwardRef((props, ref) => {
     return <TextField fullWidth {...props} inputRef={ref} label='Due Date' autoComplete='off' />
   })
+
   const [date, setDate] = useState(null)
   const [name, setName] = useState([])
   
   const [values, setValues] = useState({
-    password: '',
-    showPassword: false
+    projectName:"",
+    paymentDate: "",
+    paymentSum: "",
+    projectId: ""
   })
+
+//   const[projects, setProjects] = useState([{
+//     id: "",
+//     projectName: "",
+//     projectStatus: "",
+//     initialCharge: "",
+//     balance: ""
+// }])
+
+  // useEffect(() => {
+  //   fetch("http://lancerbackend.herokuapp.com/developers/home", {
+  //     method: 'GET', // *GET, POST, PUT, DELETE, etc.
+  //     mode: 'cors',
+  //     contentType: 'application/json',
+  //     headers: {
+  //     'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+  //     "Access-Control-Allow-Origin": "*"
+  //   }
+  //   })
+  //    .then(res => res.json())
+  //    .then((data) =>{
+  //     console.log(data)
+  //     const holdingArray = []
+  //     data.Projects.map(project => {
+  //       let details = {
+  //         id: project.id,
+  //         projectName: project.project_name,
+  //       }
+  //       holdingArray.push(details)
+
+  //     })
+  //       setProjects(holdingArray)
+  //    }
+  //    )
+  // }, [])
+
+  const fetchNewInvoice = () => {
+    fetch("http://lancerbackend.herokuapp.com/projects/invoices", {
+      method: 'POST', 
+      mode: 'cors',
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        project_name: values.projectName,
+        payment_date: values.paymentDate,
+        payment_sum: values.paymentSum,
+        project_id: values.projectId
+      })
+    })
+      .then(res => res.json())
+      .then((data) => {
+        console.log(data)
+        location.reload()
+      })
+  }
+
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
   }
@@ -67,56 +132,74 @@ const FormLayoutsBasic = () => {
 
   return (
     <Card>
-      <CardHeader title='Invoice' titleTypographyProps={{ variant: 'h1' }} sx={{marginBottom: 10, display: 'center'}}/>
+      <CardHeader title='Invoice' titleTypographyProps={{ variant: 'h1' }} sx={{marginBottom: 4, display: 'center'}}/>
       <CardContent>
         <form onSubmit={e => e.preventDefault()}>
-          <Grid container spacing={30}>
-           <Grid item xs={5} >
+          <Grid>
+           <Grid >
             <FormControl fullWidth>
-              Project Name
+              <TextField
+                fullWidth
+                label = 'Project Name'
+                value ={values.projectName}
+                onChange ={handleChange("projectName")} 
                 
-                <Select 
+              />
+                {/* <Select 
                   multiple
-                  value={name}
                   onChange={handleSelectChange}
                   id='form-layouts-separator-multiple-select'
                   labelId='form-layouts-separator-multiple-select-label'
                   label= 'Project Name'
                   input={<OutlinedInput  id='select-multiple-language' />}
                 >
-                  <MenuItem value='...'></MenuItem>
-                  <MenuItem value='...'></MenuItem>
-                  <MenuItem value='...'></MenuItem>
-                  <MenuItem value='...'></MenuItem>
-                  <MenuItem value='...'></MenuItem>
-                  <MenuItem value='...'></MenuItem>
-                  <MenuItem value='...'></MenuItem>
-                </Select>
+                 {projects && <MenuItem id={projects.id} value={projects.projectName}></MenuItem>}
+                </Select> */}
               </FormControl>
             </Grid>
             </Grid>     
                 
-           
-            <Grid  item xs={5} sx={{marginTop:15}}>
-            <DatePicker
+            <Grid  item sx={{marginTop:4}} >
+            <TextField
+                fullWidth
+                align="center"
+                label = 'Project Id'
+                value ={values.projectId}
+                onChange ={handleChange("projectId")} 
+                
+              />
+           </Grid>
+            <Grid  item sx={{marginTop:4}} >
+            <TextField
+                fullWidth
+                align="center"
+                label = 'Payment Due Date'
+                value ={values.paymentDate}
+                onChange ={handleChange("paymentDate")} 
+                
+              />
+            {/* <DatePicker
                 selected={date}
                 showYearDropdown
                 showMonthDropdown
-                placeholderText='MM-DD-YYYY'
+                placeholderText='YYYY-MM-DD'
                 customInput={<CustomInput />}
                 id='form-layouts-separator-date'
+                values = {values.paymentDate}
                 onChange={date => setDate(date)}
-              />
+              /> */}
                 
                 
               
             </Grid>
-            <Grid item xs={5} sx={{marginTop:15, display: 'center'}}>
+            <Grid item sx={{marginTop:4}}>
               <FormControl fullWidth>
               <TextField
                 fullWidth
                 type='number'
                 label = 'Amount Due'
+                value ={values.paymentSum}
+                onChange ={handleChange("paymentSum")} 
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position='start'>$
@@ -129,13 +212,16 @@ const FormLayoutsBasic = () => {
               </FormControl>
             </Grid>
          
-            <Grid item xs={12} sx={{marginTop:15}}>
+            <Grid item sx={{marginTop:4}}>
             <Stack direction="row" spacing={2}>
               <Button 
               type='submit' 
               variant='contained' 
               size='large' 
               color='success'
+              onClick={() => {
+                fetchNewInvoice()
+              }}
               endIcon={<SendIcon />}>
                 Send Invoice
               </Button>
