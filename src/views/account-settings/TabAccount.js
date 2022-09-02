@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -20,6 +20,7 @@ import Button from '@mui/material/Button'
 
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
+import { Null } from 'mdi-material-ui'
 
 const ImgStyled = styled('img')(({ theme }) => ({
   width: 120,
@@ -51,12 +52,10 @@ const TabAccount = () => {
   const [imgSrc, setImgSrc] = useState('/images/avatars/1.png')
 
   const [values, setValues] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    
-    showPassword: false
+    firstName: "",
+    lastName: "" ,
+    email: "",
+    phone: ""
   })
 
   const onChange = file => {
@@ -68,26 +67,55 @@ const TabAccount = () => {
     }
   }
 
+  useEffect(() => {
+    fetch("http://127.0.0.1:3001/developers/home", {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors',
+      contentType: 'application/json',
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+         "Access-Control-Allow-Origin": "*"}
+    })
+     .then(res => res.json())
+     .then((data) =>{
+      console.log(data)
+      setValues({
+        firstName: data.first_name,
+        lastName: data.last_name,
+        email: data.email,
+        phone: data.phone
+     })
+     }
+     )
+  }, [])
+
   const fetchAccUpdate = () => {
 
-    fetch("http://lancer-backend.herokuapp.com/developers/settings", {
+    fetch("http://127.0.0.1:3001/developers/settings", {
       method: 'PUT', 
       mode: 'cors',
+      
       headers: {
-        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        
+        // "Access-Control-Allow-Origin": "*"
+        'Content-Type': "application/json",
       },
       body: JSON.stringify({
         first_name: values.firstName,
         last_name: values.lastName,
         email: values.email,
         phone: values.phone,
-        password: values.password
       })
     })
       .then(res => res.json())
       .then((data) => {
         console.log(data)
       })
+  }
+
+  const handleChange = prop => event => {
+    setValues({ ...values, [prop]: event.target.value })
   }
 
 
@@ -133,6 +161,7 @@ const TabAccount = () => {
             fullWidth 
             label='Last Name' 
             placeholder='John Doe'  
+            defaultValue = {values.lastName}
             value={values.lastName}
               onChange={handleChange('lastName')}
           />
