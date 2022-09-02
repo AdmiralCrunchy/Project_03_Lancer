@@ -27,6 +27,31 @@ const ClientTable = () => {
   const [rows, setRows] = useState(null)
 
   useEffect(() => {
+    fetch("http://lancerbackend.herokuapp.com/developers/verify", {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors',
+      contentType: 'application/json',
+      headers: {
+      'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      "Access-Control-Allow-Origin": "*"
+    }
+    })
+     .then(res => res.json())
+     .then((data) =>{
+      console.log(data)
+      console.log(data.dev)
+      if(!data.dev){
+        if (typeof window !== 'undefined') {
+          localStorage.clear();
+          window.location.href= "/"
+        }
+      }
+  
+      })
+  
+     }, [])
+
+  useEffect(() => {
     fetch("http://lancerbackend.herokuapp.com/developers/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',

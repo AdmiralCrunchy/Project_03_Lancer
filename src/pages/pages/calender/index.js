@@ -1,5 +1,5 @@
 // ** React Imports
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Calendar from "react-beautiful-calendar"
 
 import { useRouter } from 'next/router'
@@ -20,12 +20,38 @@ const Card = styled(MuiCard)(({ theme }) => ({
    
   function CalendarPage() {
    
+    useEffect(() => {
+      fetch("http://lancerbackend.herokuapp.com/developers/verify", {
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors',
+        contentType: 'application/json',
+        headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        "Access-Control-Allow-Origin": "*"
+      }
+      })
+       .then(res => res.json())
+       .then((data) =>{
+        console.log(data)
+        console.log(data.dev)
+        if(!data.dev){
+          if (typeof window !== 'undefined') {
+            localStorage.clear();
+            window.location.href= "/"
+          }
+        }
+    
+        })
+    
+       }, [])
+
     const [date,setDate] = useState("")
     const [month,setMonth] = useState("")
     const [year,setYear] = useState("")
    
     const dateChangeHandler = ([date, month, year]) => {
       // ...use the values here
+      
       console.log(date)
       setDate(date)
       if(month === 1){

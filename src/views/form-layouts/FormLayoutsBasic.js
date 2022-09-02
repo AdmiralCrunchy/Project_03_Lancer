@@ -43,6 +43,31 @@ const Item = styled('div')(({ theme }) => ({
 
 const FormLayoutsBasic = () => {
   // ** States
+  useEffect(() => {
+    fetch("http://lancerbackend.herokuapp.com/developers/verify", {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors',
+      contentType: 'application/json',
+      headers: {
+      'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      "Access-Control-Allow-Origin": "*"
+    }
+    })
+     .then(res => res.json())
+     .then((data) =>{
+      console.log(data)
+      console.log(data.dev)
+      if(!data.dev){
+        if (typeof window !== 'undefined') {
+          localStorage.clear();
+          window.location.href= "/"
+        }
+      }
+  
+      })
+  
+     }, [])
+
   const Form = styled('form')(({ theme }) => ({
     maxWidth: 400,
     padding: theme.spacing(12),

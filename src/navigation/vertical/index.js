@@ -15,7 +15,7 @@ const navigation = () => {
     },
     {
       title: 'Projects',
-      icon: HomeOutline,
+      icon: AlertCircleOutline,
       path: '/pages/projects',
       children: [
         {
@@ -60,16 +60,6 @@ const navigation = () => {
       icon: AccountCogOutline,
       path: '/account-settings'
     },
-    {
-      sectionTitle: 'Documentation'
-    },
-    {
-      icon: MaterialUi,
-      title: 'MUI Docs',
-      externalLink: true,
-      openInNewTab: true,
-      path: 'https://mui.com/material-ui/getting-started/usage/'
-    }
   ]
 }
 

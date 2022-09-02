@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -43,6 +43,31 @@ const TabName = styled('span')(({ theme }) => ({
 
 const AccountSettings = () => {
   // ** State
+  useEffect(() => {
+    fetch("http://lancerbackend.herokuapp.com/developers/verify", {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors',
+      contentType: 'application/json',
+      headers: {
+      'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      "Access-Control-Allow-Origin": "*"
+    }
+    })
+     .then(res => res.json())
+     .then((data) =>{
+      console.log(data)
+      console.log(data.dev)
+      if(!data.dev){
+        if (typeof window !== 'undefined') {
+          localStorage.clear();
+          window.location.href= "/"
+        }
+      }
+  
+      })
+  
+     }, [])
+
   const [value, setValue] = useState('account')
 
   const handleChange = (event, newValue) => {
