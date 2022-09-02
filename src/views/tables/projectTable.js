@@ -10,6 +10,7 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TablePagination from '@mui/material/TablePagination'
+import { CheckboxMultipleMarkedOutline } from 'mdi-material-ui'
 
 const columns = [
   {id: 'id', label: 'Project Id', minWidth: 25},
@@ -75,8 +76,10 @@ const projectTable = () => {
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
               return (
                 <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
+                  
                   {columns.map(column => {
                     console.log(column.id)
+                    console.log(row[column.id])
                     if(row[column.id] > 0 && column.id != 'id'){
                       const value = '$'+row[column.id]
                       return (
