@@ -38,6 +38,7 @@ const Item = styled('div')(({ theme }) => ({
   borderRadius: '4px',
   textAlign: 'center',
 }));
+
 const FormLayoutsBasic = () => {
   // ** States
   const Form = styled('form')(({ theme }) => ({
@@ -51,6 +52,7 @@ const FormLayoutsBasic = () => {
   })
   const [date, setDate] = useState(null)
   const [name, setName] = useState([])
+  
   const [values, setValues] = useState({
     password: '',
     showPassword: false
@@ -58,6 +60,7 @@ const FormLayoutsBasic = () => {
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
   }
+
   const handleSelectChange = event => {
     setName(event.target.value)
   }

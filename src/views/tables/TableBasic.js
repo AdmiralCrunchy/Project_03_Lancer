@@ -7,29 +7,38 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 
-const createData = (name, calories, fat, carbs, protein) => {
-  return { name, calories, fat, carbs, protein }
+const createData = (name, status, charge, balance) => {
+  return { name, status, charge, balance}
 }
 
 const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9)
+  createData(`Monkeys Vs Shakespeare`, 'Not Started', 250, 50000),
+  createData(`Shelf Space`, 'Bug Fixing', 1000, 50000),
+  createData(`Let's Play`, 'Cancelled', 750, 2400),
+  createData(`Chew On It`, 'Market Ready', 12000, 150000),
+  createData(`Outbound Gear`, 'Cancelled', 1400, 10000),
+  createData(`Monkeys Vs Shakespeare`, 'Not Started', 250, 50000),
+  createData(`Shelf Space`, 'Bug Fixing', 1000, 50000),
+  createData(`Let's Play`, 'Cancelled', 750, 2400),
+  createData(`Chew On It`, 'Market Ready', 12000, 150000),
+  createData(`Outbound Gear`, 'Cancelled', 1400, 10000),
+  createData(`Monkeys Vs Shakespeare`, 'Not Started', 250, 50000),
+  createData(`Shelf Space`, 'Bug Fixing', 1000, 50000),
+  createData(`Let's Play`, 'Cancelled', 750, 2400),
+  createData(`Chew On It`, 'Market Ready', 12000, 150000),
+  createData(`Outbound Gear`, 'Cancelled', 1400, 10000),
 ]
 
 const TableBasic = () => {
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+      <Table sx={{ minWidth: 600 }} aria-label='simple table'>
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align='right'>Calories</TableCell>
-            <TableCell align='right'>Fat (g)</TableCell>
-            <TableCell align='right'>Carbs (g)</TableCell>
-            <TableCell align='right'>Protein (g)</TableCell>
+            <TableCell>Project Name</TableCell>
+            <TableCell align='right'>Current Status</TableCell>
+            <TableCell align='right'>Initial Charge</TableCell>
+            <TableCell align='right'>Balance</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -45,10 +54,9 @@ const TableBasic = () => {
               <TableCell component='th' scope='row'>
                 {row.name}
               </TableCell>
-              <TableCell align='right'>{row.calories}</TableCell>
-              <TableCell align='right'>{row.fat}</TableCell>
-              <TableCell align='right'>{row.carbs}</TableCell>
-              <TableCell align='right'>{row.protein}</TableCell>
+              <TableCell align='right'>{row.status}</TableCell>
+              <TableCell align='right'>${row.charge}</TableCell>
+              <TableCell align='right'>${row.balance}</TableCell>
             </TableRow>
           ))}
         </TableBody>

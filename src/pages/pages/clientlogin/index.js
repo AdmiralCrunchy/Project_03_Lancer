@@ -196,7 +196,7 @@ const ClientLoginPage = () => {
               size='large'
               variant='contained'
               sx={{ marginBottom: 7 }}
-              onClick={() => router.push('/')}
+              onClick={() => router.push('/pages/dashboard')}
             >
               Login
             </Button>
