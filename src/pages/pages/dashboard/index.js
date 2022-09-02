@@ -1,5 +1,6 @@
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
+import {useEffect} from 'react'
 
 // ** Icons Imports
 import Poll from 'mdi-material-ui/Poll'
@@ -29,7 +30,33 @@ import SalesByCountries from 'src/views/dashboard/SalesByCountries'
 // FETCH REQ (TOTAL BALANCE, ONGOING PROJECT #, NEW PROJ #, # OF CLINETS)
 
 
+
 const Dashboard = () => {
+  useEffect(() => {
+    fetch("http://lancerbackend.herokuapp.com/developers/verify", {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors',
+      contentType: 'application/json',
+      headers: {
+      'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      "Access-Control-Allow-Origin": "*"
+    }
+    })
+     .then(res => res.json())
+     .then((data) =>{
+      console.log(data)
+      console.log(data.dev)
+      if(!data.dev){
+        if (typeof window !== 'undefined') {
+          localStorage.clear();
+          window.location.href= "/"
+        }
+      }
+  
+      })
+  
+     }, [])
+
   return (
     <ApexChartWrapper>
       <Grid container spacing={6}>
