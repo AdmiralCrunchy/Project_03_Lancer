@@ -3,6 +3,7 @@ import { useState, Fragment } from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 // ** MUI Components
 import Box from '@mui/material/Box'
@@ -61,12 +62,43 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 const RegisterPage = () => {
   // ** States
   const [values, setValues] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
     password: '',
     showPassword: false
   })
 
   // ** Hook
   const theme = useTheme()
+  const router = useRouter()
+
+  const fetchSignUp = () => {
+
+    fetch("http://lancer-backend.herokuapp.com/developers/signup", {
+      method: 'POST', 
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        first_name: values.firstName,
+        last_name: values.lastName,
+        email: values.email,
+        phone: values.phone,
+        password: values.password
+      })
+    })
+      .then(res => res.json())
+      .then((data) => {
+        if(!data.token){
+          return
+        }
+        localStorage.setItem("token", JSON.stringify(`${data.token}`))
+        router.push('/')
+      })
+  }
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
@@ -163,16 +195,55 @@ const RegisterPage = () => {
             </Typography>
             <Typography variant='body2'>Project and client management made easy</Typography>
           </Box>
-          <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-            <TextField autoFocus fullWidth id='username' label='Username' sx={{ marginBottom: 4 }} />
-            <TextField fullWidth type='email' label='Email' sx={{ marginBottom: 4 }} />
+          <form noValidate autoComplete='off'>
+            <TextField autoFocus 
+              fullWidth 
+              id='firstName' 
+              label='First Name' 
+              placeholder="John"
+              value={values.firstName}
+                onChange={handleChange('firstName')}
+              sx={{ marginBottom: 4 }} 
+            />
+
+            <TextField 
+              fullWidth 
+              id='lastName' 
+              label='Last Name' 
+              placeholder="Smith"
+              value={values.lastName}
+                onChange={handleChange('lastName')}
+              sx={{ marginBottom: 4 }} 
+            />
+
+            <TextField 
+              fullWidth 
+              type='email' 
+              label='Email' 
+              id="email" 
+              placeholder="johnsmith@gmail.com"
+              value={values.email}
+                onChange={handleChange('email')}
+              sx={{ marginBottom: 4 }} 
+            />
+
+            <TextField 
+              fullWidth label='Phone' 
+              id="phone" 
+              placeholder='xxx-xxx-xxxx'
+              value={values.phone}
+                onChange={handleChange('phone')}
+              sx={{ marginBottom: 4 }} 
+            />
+
             <FormControl fullWidth>
               <InputLabel htmlFor='auth-register-password'>Password</InputLabel>
               <OutlinedInput
                 label='Password'
+                id='auth-login-password'
                 value={values.password}
-                id='auth-register-password'
                 onChange={handleChange('password')}
+                sx={{ marginBottom: 4 }}
                 type={values.showPassword ? 'text' : 'password'}
                 endAdornment={
                   <InputAdornment position='end'>
@@ -188,19 +259,17 @@ const RegisterPage = () => {
                 }
               />
             </FormControl>
-            <FormControlLabel
-              control={<Checkbox />}
-              label={
-                <Fragment>
-                  <span>I agree to </span>
-                  <Link href='/' passHref>
-                    <LinkStyled onClick={e => e.preventDefault()}>privacy policy & terms</LinkStyled>
-                  </Link>
-                </Fragment>
-              }
-            />
-            <Button fullWidth size='large' type='submit' variant='contained' sx={{ marginBottom: 7 }}>
-              Sign up
+            
+            <Button
+              fullWidth
+              size='large'
+              variant='contained'
+              sx={{ marginBottom: 7 }}
+              onClick={() => {
+                fetchSignUp()
+              }}
+            >
+              Login
             </Button>
             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
               <Typography variant='body2' sx={{ marginRight: 2 }}>

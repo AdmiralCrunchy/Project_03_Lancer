@@ -34,13 +34,15 @@ export default function ProjectTable(){
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
-      headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3RfbmFtZSI6IlBhcmtlciIsImxhc3RfbmFtZSI6Ik1jS2lsbG9wIiwiZW1haWwiOiJtY2tpbHBhcjAwMEBob3RtYWlsLmNvbSIsImlhdCI6MTY2MjA3NjEwMSwiZXhwIjoxNjYyMDgzMzAxfQ.Nbtx_QoqXv3PtT9hU2mMgKUtsvZiCTVz0zNiFvk7x_U',
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
     "Access-Control-Allow-Origin": "*"}
     })
      .then(res => res.json())
      .then((data) =>{
       console.log(data)
       const holdingArray = []
+      if(!data.Projects){return}
       data.Projects.map(project => {
         let details = {
           id: project.id,
