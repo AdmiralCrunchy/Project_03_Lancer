@@ -12,10 +12,10 @@ import TablePagination from '@mui/material/TablePagination'
 import UncontrolledBoard from 'src/Board/kanban.js'
 
 const columns = [
-  {id: 'projectName', label: 'Project Name', minWidth: 170},
+  {id: 'projectName', label: 'Project Name', minWidth: 170,  align: 'center'},
   {id: 'projectStatus', label: 'Project Status', minWidth: 170, align: 'center'},
-  {id: 'initialCharge', label: 'Initial Charge', minWidth: 170, align: 'right'},
-  {id: 'balance', label: 'Project Balance', minWidth: 170, align: 'right'},
+  {id: 'initialCharge', label: 'Initial Charge', minWidth: 170,  align: 'center'},
+  {id: 'balance', label: 'Project Balance', minWidth: 170,  align: 'center'},
 ]
 
 
@@ -30,7 +30,7 @@ export default function ProjectTable(){
   }
 
   useEffect(() => {
-    fetch("http://lancer-backend.herokuapp.com/developers/home", {
+    fetch("http://127.0.0.1:3001/developers/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
