@@ -3132,6 +3132,13 @@
   dependencies:
     "prop-types" "^15.5.7"
 
+"react-beautiful-calendar@^1.2.1":
+  "integrity" "sha512-jbSexxSdtbRfMeZiRE0y8+u/w3aURBJHt7vB6ZYFpsjDmZInbdqhH9GPzvHC069oHqA8ugjNc6pGD5ljIyVM9Q=="
+  "resolved" "https://registry.npmjs.org/react-beautiful-calendar/-/react-beautiful-calendar-1.2.1.tgz"
+  "version" "1.2.1"
+  dependencies:
+    "prop-types" "^15.7.2"
+
 "react-beautiful-dnd@^13.0.0", "react-beautiful-dnd@^13.1.1":
   "integrity" "sha512-0Lvs4tq2VcrEjEgDXHjT98r+63drkKEgqyxdA7qD3mvKwga6a5SscbdLPO2IExotU1jW8L0Ksdl0Cj2AF67nPQ=="
   "resolved" "https://registry.npmjs.org/react-beautiful-dnd/-/react-beautiful-dnd-13.1.1.tgz"

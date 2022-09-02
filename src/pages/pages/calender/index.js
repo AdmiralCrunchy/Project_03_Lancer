@@ -1,7 +1,6 @@
 // ** React Imports
-
 import React, { useState } from "react";
-
+import Calendar from "react-beautiful-calendar"
 
 import { useRouter } from 'next/router'
 
@@ -21,12 +20,73 @@ const Card = styled(MuiCard)(({ theme }) => ({
    
   function CalendarPage() {
    
+    const [date,setDate] = useState("")
+    const [month,setMonth] = useState("")
+    const [year,setYear] = useState("")
    
+    const dateChangeHandler = ([date, month, year]) => {
+      // ...use the values here
+      console.log(date)
+      setDate(date)
+      if(month === 1){
+        setMonth("January")
+      }
+      if(month === 2){
+        setMonth("February")
+      }
+      if(month === 3){
+        setMonth("March")
+      }
+      if(month === 4){
+        setMonth("April")
+      }
+      if(month === 5){
+        setMonth("May")
+      }
+      if(month === 6){
+        setMonth("June")
+      }
+      if(month === 7){
+        setMonth("July")
+      }
+      if(month === 8){
+        setMonth("August")
+      }
+      if(month === 9){
+        setMonth("September")
+      }
+      if(month === 10){
+        setMonth("October")
+      }
+      if(month === 11){
+        setMonth("November")
+      }
+      if(month === 12){
+        setMonth("December")
+      }
+      console.log(year)
+      setYear(year)
+    };
+
     return (
         <Box>
             <CardContent sx={{ padding: theme => `${theme.spacing(5,5,5)} !important`}}>
-            
+              <Calendar onDateChange={dateChangeHandler} />
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Month</th>
+                      <th>Year</th>
+                    </tr>
+                  </thead>
+                </table>
                 <h1> Important Appointments</h1>
+                <tbody>
+                <tr>
+                  <td>{date} {month} {year}: </td>
+                </tr>
+              </tbody>
             </CardContent>
         </Box>
     )

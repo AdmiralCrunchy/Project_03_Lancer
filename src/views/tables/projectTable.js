@@ -91,23 +91,11 @@ export default function ProjectTable(){
            <TableBody>
             {projects.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(projects => {
               return (
-<<<<<<< HEAD
                 <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
-                  
                   {columns.map(column => {
                     console.log(column.id)
-                    console.log(row[column.id])
                     if(row[column.id] > 0 && column.id != 'id'){
                       const value = '$'+row[column.id]
-=======
-                <TableRow hover role='checkbox' tabIndex={-1} key={projects.id}>
-                  {columns.map(column => {
-
-                    if(projects[column.id] > 0 ){
-                      const value = '$'+projects[column.id]
-
-
->>>>>>> 7f1b066e52f1b0458d48e4eb8408f9a45875b88c
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {column.format && typeof value === 'number' ? column.format(value) : value}
