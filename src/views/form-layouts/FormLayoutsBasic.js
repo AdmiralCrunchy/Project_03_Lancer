@@ -1,8 +1,10 @@
 // ** React Imports
-import { useState } from 'react';
+import {  forwardRef, useState } from 'react';
 
 
 // ** MUI Imports
+import SendIcon from 'mdi-material-ui/SendOutline';
+import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
@@ -25,8 +27,9 @@ import FormHelperText from '@mui/material/FormHelperText'
 import CreditCardClockOutline from 'mdi-material-ui/CreditCardClockOutline'
 import AccountClockOutline from 'mdi-material-ui/AccountClockOutline'
 import BankOutline from 'mdi-material-ui/BankOutline'
-
+import DatePicker from 'react-datepicker'
 // ** Icons Imports
+
 const Item = styled('div')(({ theme }) => ({
   
   border: '1px solid',
@@ -44,19 +47,18 @@ const FormLayoutsBasic = () => {
     borderRadius: theme.shape.borderRadius,
     border: `1px solid ${theme.palette.divider}`
   }))  
+  const CustomInput = forwardRef((props, ref) => {
+    return <TextField fullWidth {...props} inputRef={ref} label='Due Date' autoComplete='off' />
+  })
+  const [date, setDate] = useState(null)
   const [name, setName] = useState([])
   
   const [values, setValues] = useState({
     password: '',
     showPassword: false
   })
-
- 
-
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
- 
-  
   }
 
   const handleSelectChange = event => {
@@ -65,177 +67,85 @@ const FormLayoutsBasic = () => {
 
   return (
     <Card>
-      <CardHeader title='Invoice' titleTypographyProps={{ variant: 'h6' }} sx={{marginBottom: 10, display: 'center'}}/>
+      <CardHeader title='Invoice' titleTypographyProps={{ variant: 'h1' }} sx={{marginBottom: 10, display: 'center'}}/>
       <CardContent>
         <form onSubmit={e => e.preventDefault()}>
-          <Grid container spacing={15}>
-          <Typography variant='body2' sx={{ fontWeight: 400 }}>
-              <p>Office 149, 450 South Brand Brooklyn </p>
-
-              <p>San Diego County, CA 91905, USA</p>
-
-              <p>+1 (123) 456 7891, +44 (876) 543 2198</p>
-          </Typography>
-
-            <Grid item xs={8} sx={{marginRight:50}}>
-              <TextField 
-              fullWidth 
-              type= 'input'
-              label='Invoice #' 
-              InputProps={{
-                  startAdornment: (
-                    <InputAdornment position='start'>
-                     
-                    </InputAdornment>
-                  )
-                }}
-              />
-            </Grid>
-            <Grid item xs={8}>
-              <TextField
-                fullWidth
-                type='date'
-                label= 'Date Issued'
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position='start'>
-                     
-                    </InputAdornment>
-                  )
-                }}
+          <Grid container spacing={30}>
+           <Grid item xs={5} >
+            <FormControl fullWidth>
+              Project Name
                 
-              />
-            </Grid>
-            <Grid item xs={8}>
-              <FormControl fullWidth>
-              <TextField
-                fullWidth
-                type='date'
-                label = 'Date Due'
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position='start'>
-                     
-                    </InputAdornment>
-                  )
-                }}
-              />
-              </FormControl>
-            </Grid>
-            <Grid item sm={10}>
-            <Divider sx={{ marginBottom: 10 }} />
-            </Grid>
-            <CardHeader title='Invoice To:' titleTypographyProps={{ variant: 'h6' }}  sx={{marginLeft: 15}}/>
-            <Grid item xs={10} sm={4} >
-              <FormControl fullWidth>
-                <InputLabel id='form-layouts-separator-multiple-select-label'></InputLabel>
-                <Select
+                <Select 
                   multiple
                   value={name}
                   onChange={handleSelectChange}
                   id='form-layouts-separator-multiple-select'
                   labelId='form-layouts-separator-multiple-select-label'
+                  label= 'Project Name'
                   input={<OutlinedInput  id='select-multiple-language' />}
                 >
-                  <MenuItem value='John'>John</MenuItem>
-                  <MenuItem value='Melissa'>Melissa</MenuItem>
-                  <MenuItem value='Sabrina'>Sabrina</MenuItem>
-                  <MenuItem value='Tommy'>Tommy</MenuItem>
-                  <MenuItem value='Oliver'>Oliver</MenuItem>
-                  <MenuItem value='James'>James</MenuItem>
-                  <MenuItem value='Alice'>Alice</MenuItem>
+                  <MenuItem value='...'></MenuItem>
+                  <MenuItem value='...'></MenuItem>
+                  <MenuItem value='...'></MenuItem>
+                  <MenuItem value='...'></MenuItem>
+                  <MenuItem value='...'></MenuItem>
+                  <MenuItem value='...'></MenuItem>
+                  <MenuItem value='...'></MenuItem>
                 </Select>
               </FormControl>
             </Grid>
-            <CardHeader title='Total Cost:' titleTypographyProps={{ variant: 'h6' }}  sx={{marginLeft: 25}}/>
-            <Grid item xs={0} sm={0} sx={{marginLeft: 135}}>
-              <FormControl fullWidth>
-              <TextField 
-              fullWidth 
-              type= 'input'
-              label='Cost Per Hour' 
-              InputProps={{
-                  startAdornment: (
-                    <InputAdornment position='start'>
-                     <CreditCardClockOutline/>
-                    </InputAdornment>
-                  )
-                }}
-                />
-              </FormControl>
+            </Grid>     
+                
+           
+            <Grid  item xs={5} sx={{marginTop:15}}>
+            <DatePicker
+                selected={date}
+                showYearDropdown
+                showMonthDropdown
+                placeholderText='MM-DD-YYYY'
+                customInput={<CustomInput />}
+                id='form-layouts-separator-date'
+                onChange={date => setDate(date)}
+              />
+                
+                
+              
             </Grid>
-            <Grid item xs={0} sm={0} sx={{marginLeft: 135}}>
+            <Grid item xs={5} sx={{marginTop:15, display: 'center'}}>
               <FormControl fullWidth>
-              <TextField 
-              fullWidth 
-              type= 'number'
-              label='Total Hours' 
-              InputProps={{
-                  startAdornment: (
-                    <InputAdornment position='start'>
-                    <AccountClockOutline/> 
-                    </InputAdornment>
-                  )
-                }}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={0} sm={0} sx={{marginLeft: 135}}>
-              <FormControl fullWidth>
-              <TextField 
-              fullWidth 
-              type= 'input'
-              label='Amount Due' 
-              InputProps={{
+              <TextField
+                fullWidth
+                type='number'
+                label = 'Amount Due'
+                InputProps={{
                   startAdornment: (
                     <InputAdornment position='start'>$
                      
                     </InputAdornment>
                   )
                 }}
-                />
+              />
+               
               </FormControl>
             </Grid>
-            <Grid item sm={10}>
-            <Divider sx={{ marginBottom: 10 }} />
-            </Grid>
-            <Grid item xs={12}>
-              <Button type='submit' variant='contained' size='large' color='success'>
+         
+            <Grid item xs={12} sx={{marginTop:15}}>
+            <Stack direction="row" spacing={2}>
+              <Button 
+              type='submit' 
+              variant='contained' 
+              size='large' 
+              color='success'
+              endIcon={<SendIcon />}>
                 Send Invoice
               </Button>
+              </Stack>
               </Grid>
-              <Grid item xs={12}>
-              <Button type='submit' variant='contained' size='large'>
-                Preview > > >
-              </Button>
-              </Grid>
-              <Grid item xs={12}>
-              <Button type='submit' variant='contained' size='large'  >
-                Save Invoice 
-              </Button>
-              </Grid>
-              <CardHeader title='Internet Banking:' titleTypographyProps={{ variant: 'h6' }}  sx={{marginLeft: 65}}/>
-            <Grid item xs={10} sm={6} sx={{marginLeft:70}}>
-
-              <FormControl fullWidth>
-                <Select
-                  multiple
-                  value={name}
-                  onChange={handleSelectChange}
-                  id='form-layouts-separator-multiple-select'
-                  labelId='form-layouts-separator-multiple-select-label'
-                  input={<OutlinedInput  id='select-multiple-language' />}
-                >
-                  <MenuItem value='PayPal'>PayPal</MenuItem>
-                  
-                </Select>
-              </FormControl>
-            </Grid>
-            
-          </Grid>
+           
           </form>
           </CardContent>
           </Card>
+         
           
           
          
