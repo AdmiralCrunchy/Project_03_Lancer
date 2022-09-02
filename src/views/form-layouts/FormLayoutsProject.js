@@ -34,7 +34,7 @@ const FormLayoutsProject = () => {
 
   const fetchNewProject = () => {
 
-    fetch("http://127.0.0.1:3001/projects/", {
+    fetch("http://lancerbackend.herokuapp.com/projects/", {
       method: 'POST', 
       mode: 'cors',
       headers: {
