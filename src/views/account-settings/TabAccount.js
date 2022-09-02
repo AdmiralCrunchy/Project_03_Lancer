@@ -50,6 +50,15 @@ const TabAccount = () => {
   const [openAlert, setOpenAlert] = useState(true)
   const [imgSrc, setImgSrc] = useState('/images/avatars/1.png')
 
+  const [values, setValues] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    
+    showPassword: false
+  })
+
   const onChange = file => {
     const reader = new FileReader()
     const { files } = file.target
@@ -58,6 +67,29 @@ const TabAccount = () => {
       reader.readAsDataURL(files[0])
     }
   }
+
+  const fetchAccUpdate = () => {
+
+    fetch("http://lancer-backend.herokuapp.com/developers/settings", {
+      method: 'PUT', 
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        first_name: values.firstName,
+        last_name: values.lastName,
+        email: values.email,
+        phone: values.phone,
+        password: values.password
+      })
+    })
+      .then(res => res.json())
+      .then((data) => {
+        console.log(data)
+      })
+  }
+
 
   return (
     <CardContent>
@@ -88,10 +120,22 @@ const TabAccount = () => {
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Username' placeholder='johnDoe' defaultValue='johnDoe' />
+            <TextField 
+              fullWidth 
+              label='First Name' 
+              placeholder='John'
+              value={values.firstName}
+              onChange={handleChange('firstName')}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Name' placeholder='John Doe' defaultValue='John Doe' />
+            <TextField 
+            fullWidth 
+            label='Last Name' 
+            placeholder='John Doe'  
+            value={values.lastName}
+              onChange={handleChange('lastName')}
+          />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -99,56 +143,39 @@ const TabAccount = () => {
               type='email'
               label='Email'
               placeholder='johnDoe@example.com'
-              defaultValue='johnDoe@example.com'
+              value={values.email}
+              onChange={handleChange('email')}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel>Role</InputLabel>
-              <Select label='Role' defaultValue='admin'>
-                <MenuItem value='admin'>Admin</MenuItem>
-                <MenuItem value='author'>Author</MenuItem>
-                <MenuItem value='editor'>Editor</MenuItem>
-                <MenuItem value='maintainer'>Maintainer</MenuItem>
-                <MenuItem value='subscriber'>Subscriber</MenuItem>
-              </Select>
-            </FormControl>
+            <TextField
+              fullWidth
+              label='Phone'
+              placeholder='xxx-xxx-xxxx'
+              value={values.phone}
+              onChange={handleChange('phone')}
+            />
           </Grid>
+         
           <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel>Status</InputLabel>
-              <Select label='Status' defaultValue='active'>
-                <MenuItem value='active'>Active</MenuItem>
-                <MenuItem value='inactive'>Inactive</MenuItem>
-                <MenuItem value='pending'>Pending</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Company' placeholder='ABC Pvt. Ltd.' defaultValue='ABC Pvt. Ltd.' />
+            <TextField 
+              fullWidth 
+              label='Company' 
+              placeholder='ABC Pvt. Ltd.' 
+              value={values.company}
+              onChange={handleChange('company')} 
+            />
           </Grid>
 
-          {openAlert ? (
-            <Grid item xs={12} sx={{ mb: 3 }}>
-              <Alert
-                severity='warning'
-                sx={{ '& a': { fontWeight: 400 } }}
-                action={
-                  <IconButton size='small' color='inherit' aria-label='close' onClick={() => setOpenAlert(false)}>
-                    <Close fontSize='inherit' />
-                  </IconButton>
-                }
-              >
-                <AlertTitle>Your email is not confirmed. Please check your inbox.</AlertTitle>
-                <Link href='/' onClick={e => e.preventDefault()}>
-                  Resend Confirmation
-                </Link>
-              </Alert>
-            </Grid>
-          ) : null}
 
           <Grid item xs={12}>
-            <Button variant='contained' sx={{ marginRight: 3.5 }}>
+            <Button 
+            variant='contained' 
+            onClick={() => {
+              fetchAccUpdate()
+            }}
+          
+            sx={{ marginRight: 3.5 }}>
               Save Changes
             </Button>
             <Button type='reset' variant='outlined' color='secondary'>
