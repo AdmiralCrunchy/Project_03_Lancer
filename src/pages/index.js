@@ -25,6 +25,8 @@ import StatisticsCard from 'src/views/dashboard/StatisticsCard'
 import WeeklyOverview from 'src/views/dashboard/WeeklyOverview'
 import DepositWithdraw from 'src/views/dashboard/DepositWithdraw'
 import SalesByCountries from 'src/views/dashboard/SalesByCountries'
+// FETCH REQ (TOTAL BALANCE, ONGOING PROJECT #, NEW PROJ #, # OF CLINETS)
+
 
 const Dashboard = () => {
   return (
@@ -33,6 +35,7 @@ const Dashboard = () => {
         <Grid item xs={12} md={6} lg={4}>
           <Grid container spacing={6}>
             <Grid item xs={6}>
+{/* TOTAL BALANCE */}
               <CardStatisticsVerticalComponent
                 stats='$25.6k'
                 icon={<Poll />}
@@ -42,6 +45,7 @@ const Dashboard = () => {
               />
             </Grid>
             <Grid item xs={6}>
+{/* ONGOING */}
               <CardStatisticsVerticalComponent
                 stats='78'
                 title='Ongoing Projets'
@@ -51,6 +55,7 @@ const Dashboard = () => {
               />
             </Grid>
             <Grid item xs={6}>
+{/* NEW PROJ */}
               <CardStatisticsVerticalComponent
                 stats='862'
                 trend='negative'
@@ -60,24 +65,15 @@ const Dashboard = () => {
               />
             </Grid>
             <Grid item xs={6}>
+{/* # of CLIENTS */}
               <CardStatisticsVerticalComponent
                 stats='15'
                 color='warning'
-
-
-
-                
                 title='Clients'
                 icon={<AccountOutline />}
               />
             </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <SalesByCountries />
-        </Grid>
-        <Grid item xs={12} md={12} lg={8}>
-          <DepositWithdraw />
         </Grid>
         <Grid item xs={12}>
           <Table />
