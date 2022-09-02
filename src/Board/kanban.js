@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import Board, { moveCard } from "@asseinfo/react-kanban";
-import "@asseinfo/react-kanban/dist/styles.css"
+// import "@asseinfo/react-kanban/dist/styles.css"
 // Use your own styles to override the default styles
-// import "./styles.css";
+import './kanban.module.css'
 
 const board = {
   columns: [

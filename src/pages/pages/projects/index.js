@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import FormLayoutsProject from "../../../views/form-layouts/FormLayoutsProject"
 import { useRouter } from 'next/router'
 
@@ -11,7 +11,8 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TablePagination from '@mui/material/TablePagination'
-import UncontrolledBoard from 'src/Board/kanban.js'
+
+// import UncontrolledBoard from 'src/Board/kanban.js'
 
 const columns = [
   {id: 'projectName', label: 'Project Name', minWidth: 170,  align: 'center'},
@@ -22,7 +23,6 @@ const columns = [
 
 
 export default function ProjectTable(){
-
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [projects, setProjects]= useState(null)
@@ -41,7 +41,8 @@ export default function ProjectTable(){
       contentType: 'application/json',
       headers: {
         'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-    "Access-Control-Allow-Origin": "*"}
+        "Access-Control-Allow-Origin": "*"
+      }
     })
      .then(res => res.json())
      .then((data) =>{
@@ -63,7 +64,7 @@ export default function ProjectTable(){
      }
      )
   }, [])
-  
+
   
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -74,7 +75,6 @@ export default function ProjectTable(){
     setPage(0)
   }
   
-
 
   return (
     <div >
@@ -132,12 +132,11 @@ export default function ProjectTable(){
       
   </Paper>}
 
-  <UncontrolledBoard />
 
   <FormLayoutsProject />
-
- 
   
+  {/* <UncontrolledBoard /> */}
+        
   </div>
   )
 }

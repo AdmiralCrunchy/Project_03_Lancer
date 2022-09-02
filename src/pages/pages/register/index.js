@@ -96,7 +96,7 @@ const RegisterPage = () => {
           return
         }
         localStorage.setItem("token", JSON.stringify(`${data.token}`))
-        router.push('/')
+        router.push('/pages/dashboard')
       })
   }
 
