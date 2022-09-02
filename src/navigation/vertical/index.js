@@ -8,7 +8,7 @@ const navigation = () => {
     {
       title: 'Dashboard',
       icon: HomeOutline,
-      path: '/'
+      path: '/pages/dashboard'
     },
     {
       sectionTitle: 'Pages'
@@ -59,21 +59,6 @@ const navigation = () => {
       title: 'Settings',
       icon: AccountCogOutline,
       path: '/account-settings'
-    },
-    {
-      sectionTitle: 'Login'
-    },
-    {
-      title: 'Login',
-      icon: Login,
-      path: '/pages/login',
-      openInNewTab: true
-    },
-    {
-      title: 'Register',
-      icon: AccountPlusOutline,
-      path: '/pages/register',
-      openInNewTab: true
     },
     {
       sectionTitle: 'Documentation'

@@ -11,7 +11,8 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TablePagination from '@mui/material/TablePagination'
-import UncontrolledBoard from 'src/Board/kanban.js'
+
+// import UncontrolledBoard from 'src/Board/kanban.js'
 
 const columns = [
   {id: 'projectName', label: 'Project Name', minWidth: 170,  align: 'center'},
@@ -40,7 +41,8 @@ export default function ProjectTable(){
       contentType: 'application/json',
       headers: {
         'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-    "Access-Control-Allow-Origin": "*"}
+        "Access-Control-Allow-Origin": "*"
+      }
     })
      .then(res => res.json())
      .then((data) =>{
@@ -130,9 +132,10 @@ export default function ProjectTable(){
       
   </Paper>}
 
+
   <FormLayoutsProject />
   
-  <UncontrolledBoard />
+  {/* <UncontrolledBoard /> */}
         
   </div>
   )

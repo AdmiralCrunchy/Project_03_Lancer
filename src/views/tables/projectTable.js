@@ -96,6 +96,7 @@ export default function ProjectTable(){
                     console.log(column.id)
                     if(row[column.id] > 0 && column.id != 'id'){
                       const value = '$'+row[column.id]
+                      
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {column.format && typeof value === 'number' ? column.format(value) : value}
