@@ -132,9 +132,11 @@ export default function ProjectTable(){
       
   </Paper>}
 
+  <UncontrolledBoard />
+
   <FormLayoutsProject />
 
-  <UncontrolledBoard />
+ 
   
   </div>
   )
