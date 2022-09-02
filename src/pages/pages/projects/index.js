@@ -1,54 +1,139 @@
-// ** React Imports
-import { useState } from 'react'
-import "@asseinfo/react-kanban/dist/styles.css"
-
-// ** Next Imports
+import React, { useState, useEffect } from 'react'
+import FormLayoutsProject from "../../../views/form-layouts/FormLayoutsProject"
 import { useRouter } from 'next/router'
 
-
-// ** MUI Components
-import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
-import CardContent from '@mui/material/CardContent'
-import CardHeader from '@mui/material/CardHeader'
-import { styled, useTheme } from '@mui/material/styles'
-import MuiCard from '@mui/material/Card'
-
-// ** Demo Components Imports
-import TableBasic from 'src/views/tables/projectTable'
+// ** MUI Imports
+import Paper from '@mui/material/Paper'
+import Table from '@mui/material/Table'
+import TableRow from '@mui/material/TableRow'
+import TableHead from '@mui/material/TableHead'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TablePagination from '@mui/material/TablePagination'
 import UncontrolledBoard from 'src/Board/kanban.js'
 
-// ** Styled Components
-const Card = styled(MuiCard)(({ theme }) => ({
-  [theme.breakpoints.up('sm')]: { width: '90rem' }
-}))
+const columns = [
+  {id: 'projectName', label: 'Project Name', minWidth: 170,  align: 'center'},
+  {id: 'projectStatus', label: 'Project Status', minWidth: 170, align: 'center'},
+  {id: 'initialCharge', label: 'Initial Charge', minWidth: 170,  align: 'center'},
+  {id: 'balance', label: 'Project Balance', minWidth: 170,  align: 'center'},
+]
 
 
-const ProjectPage = () =>{
+export default function ProjectTable(){
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [projects, setProjects]= useState(null)
 
-    // ** Hook
-    const theme = useTheme()
-    const router = useRouter()
+  const totalProjects = () => {
+    return (projects.length)
+  }
 
-    return(
-        <Box>
-            <CardContent sx={{ padding: theme => `${theme.spacing(5,5,5)} !important`}}>
-                <h1>Projects</h1>
-                <p>You're active project are listed below</p>
-                    <Grid container spacing={6}>
-                        <Grid item xs={12}>
-                            <Card>
-                            <CardHeader title='Active Projects' titleTypographyProps={{ variant: 'h6' }} />
-                            <TableBasic />
-                            </Card>
-                        </Grid>
-                        <Grid item xs={12} sx={{alignItems: 'center', justifyContent: 'center'}}>
-                            <UncontrolledBoard />
-                        </Grid>
-                    </Grid>
-            </CardContent>
-        </Box>
-    )
+
+  const router = useRouter()
+
+  useEffect(() => {
+    fetch("http://lancerbackend.herokuapp.com/developers/home", {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors',
+      contentType: 'application/json',
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+    "Access-Control-Allow-Origin": "*"}
+    })
+     .then(res => res.json())
+     .then((data) =>{
+      console.log(data)
+      const holdingArray = []
+      if(!data.Projects){return}
+      data.Projects.map(project => {
+        let details = {
+          id: project.id,
+          projectName: project.project_name,
+          projectStatus: project.project_status,
+          initialCharge: project.initial_charge,
+          balance: project.balance
+        }
+        holdingArray.push(details)
+
+      })
+        setProjects(holdingArray)
+     }
+     )
+  }, [])
+
+  
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage)
+  }
+
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(+event.target.value)
+    setPage(0)
+  }
+  
+
+  return (
+    <div >
+    {projects && <Paper sx={{ width: '100%', overflow: 'hidden', marginBottom:4 }}>
+      
+      <TableContainer component={Paper}>
+      <Table stickyHeader aria-label='sticky table'>
+          <TableHead>
+            <TableRow>
+              {columns.map(column => (
+                <TableCell key={column.id} align={column.align} sx={{ minWidth: column.minWidth }}>
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+           <TableBody>
+            {projects.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(projects => {
+              return (
+                <TableRow hover role='checkbox' tabIndex={-1} key={projects.id}>
+                  {columns.map(column => {
+                    if(projects[column.id] > 0 ){
+                      const value = '$'+projects[column.id]
+
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === 'number' ? column.format(value) : value}
+                        </TableCell>
+                      )
+                    }else{
+                      const value = projects[column.id]
+
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === 'number' ? column.format(value) : value}
+                        </TableCell>
+                      )
+                    }
+                  })}
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component='div'
+        count={projects.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+      
+  </Paper>}
+
+  <FormLayoutsProject />
+  
+  <UncontrolledBoard />
+        
+  </div>
+  )
 }
-
-export default ProjectPage

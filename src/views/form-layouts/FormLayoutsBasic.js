@@ -35,6 +35,7 @@ const Item = styled('div')(({ theme }) => ({
   borderRadius: '4px',
   textAlign: 'center',
 }));
+
 const FormLayoutsBasic = () => {
   // ** States
   const Form = styled('form')(({ theme }) => ({
@@ -44,6 +45,7 @@ const FormLayoutsBasic = () => {
     border: `1px solid ${theme.palette.divider}`
   }))  
   const [name, setName] = useState([])
+  
   const [values, setValues] = useState({
     password: '',
     showPassword: false
@@ -56,6 +58,7 @@ const FormLayoutsBasic = () => {
  
   
   }
+
   const handleSelectChange = event => {
     setName(event.target.value)
   }
@@ -66,7 +69,7 @@ const FormLayoutsBasic = () => {
       <CardContent>
         <form onSubmit={e => e.preventDefault()}>
           <Grid container spacing={15}>
-          <Typography variant='body2' sx={{ fontWeight: 400 }} sx={{marginBottom: 6}} sx={{marginLeft: 15}}>
+          <Typography variant='body2' sx={{ fontWeight: 400 }}>
               <p>Office 149, 450 South Brand Brooklyn </p>
 
               <p>San Diego County, CA 91905, USA</p>
