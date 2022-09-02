@@ -33,7 +33,7 @@ export default function ProjectTable(){
   }
 
   useEffect(() => {
-    fetch("http://lancer-backend.herokuapp.com/developers/home", {
+    fetch("http://lancerbackend.herokuapp.com/developers/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',

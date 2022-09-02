@@ -27,7 +27,7 @@ const ClientTable = () => {
   const [rows, setRows] = useState(null)
 
   useEffect(() => {
-    fetch("http://127.0.0.1:3001/developers/home", {
+    fetch("http://lancerbackend.herokuapp.com/developers/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
