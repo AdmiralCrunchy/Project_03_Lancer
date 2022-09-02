@@ -44,6 +44,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
    
   function CalendarPage() {
    
+<<<<<<< HEAD
   // ** States
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(10)
@@ -55,6 +56,42 @@ const Card = styled(MuiCard)(({ theme }) => ({
    
     const dateChangeHandler = ([day, month, year]) => {
       setDate(day)
+=======
+    useEffect(() => {
+      fetch("http://lancerbackend.herokuapp.com/developers/verify", {
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors',
+        contentType: 'application/json',
+        headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        "Access-Control-Allow-Origin": "*"
+      }
+      })
+       .then(res => res.json())
+       .then((data) =>{
+        console.log(data)
+        console.log(data.dev)
+        if(!data.dev){
+          if (typeof window !== 'undefined') {
+            localStorage.clear();
+            window.location.href= "/"
+          }
+        }
+    
+        })
+    
+       }, [])
+
+    const [date,setDate] = useState("")
+    const [month,setMonth] = useState("")
+    const [year,setYear] = useState("")
+   
+    const dateChangeHandler = ([date, month, year]) => {
+      // ...use the values here
+      
+      console.log(date)
+      setDate(date)
+>>>>>>> ea90e3d9df514154c57b4312057c78c30e496523
       if(month === 1){
         setMonth("January")
       }
