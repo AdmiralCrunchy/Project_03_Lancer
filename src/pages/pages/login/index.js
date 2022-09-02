@@ -90,6 +90,8 @@ const LoginPage = () => {
   }
 
   const handleChange = prop => event => {
+    event.preventDefault()
+    event.stopPropagation()
     setValues({ ...values, [prop]: event.target.value })
   }
 
@@ -185,7 +187,8 @@ const LoginPage = () => {
             <Typography variant='body2'>Sign-in to your account</Typography>
           </Box>
 
-          <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
+          <form noValidate autoComplete='off' 
+            >
             <TextField 
               autoFocus 
               fullWidth 
@@ -203,7 +206,6 @@ const LoginPage = () => {
                 value={values.password}
                 id='auth-login-password'
                 onChange={handleChange('password')}
-                onSubmit={e => e.preventDefault()}
                 type={values.showPassword ? 'text' : 'password'}
                 endAdornment={
                   <InputAdornment position='end'>
@@ -228,9 +230,9 @@ const LoginPage = () => {
               size='large'
               variant='contained'
               sx={{ marginBottom: 7 }}
-              onClick={fetchLogin()}
-
-              
+              onClick={() => {
+                fetchLogin()
+              }}
             >
               Login
             </Button>
