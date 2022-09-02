@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import FormLayoutsProject from "../../../views/form-layouts/FormLayoutsProject"
 import { useRouter } from 'next/router'
 
@@ -22,7 +22,6 @@ const columns = [
 
 
 export default function ProjectTable(){
-
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [projects, setProjects]= useState(null)
@@ -63,7 +62,7 @@ export default function ProjectTable(){
      }
      )
   }, [])
-  
+
   
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -74,7 +73,6 @@ export default function ProjectTable(){
     setPage(0)
   }
   
-
 
   return (
     <div >
@@ -133,9 +131,9 @@ export default function ProjectTable(){
   </Paper>}
 
   <FormLayoutsProject />
-
-  <UncontrolledBoard />
   
+  <UncontrolledBoard />
+        
   </div>
   )
-}
+}}
