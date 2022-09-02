@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // ** MUI Imports
 import Paper from '@mui/material/Paper'
@@ -12,38 +12,53 @@ import TableContainer from '@mui/material/TableContainer'
 import TablePagination from '@mui/material/TablePagination'
 
 const columns = [
-  {id: 'firstName', label: 'First Name', minWidth: 170},
-  {id: 'lastName', label: 'Last Name', minWidth: 170},
-  {id: 'address', label: 'Address', minWidth: 170, align: 'right'},
-  {id: 'email', label: 'E-mail', minWidth: 170, align: 'right'},
-  {id: 'completedProjects', label: 'Completed Projects', minWidth: 170, align: 'right'},
-
-]
-function createData(firstName, lastName, address, email, completedProjects) {
-
-  return { firstName, lastName, address, email, completedProjects }
-}
-
-const rows = [
-  createData('Joe', 'Smith', '123 Test Street', 'joesmith@test.com', '3'),
-  createData('Joe', 'Smith', '123 Test Street', 'joesmith@test.com', '4'),
-  createData('Joe', 'Smith', '123 Test Street', 'joesmith@test.com', '6'),
-  createData('Joe', 'Smith', '123 Test Street', 'joesmith@test.com', '1'),
-  createData('Joe', 'Smith', '123 Test Street', 'joesmith@test.com', '5'),
-  createData('Joe', 'Smith', '123 Test Street', 'joesmith@test.com', '3'),
-  createData('Joe', 'Smith', '123 Test Street', 'joesmith@test.com', '8'),
-  createData('Joe', 'Smith', '123 Test Street', 'joesmith@test.com', '12'),
-  createData('Joe', 'Smith', '123 Test Street', 'joesmith@test.com', '5'),
-  createData('Joe', 'Smith', '123 Test Street', 'joesmith@test.com', '2'),
+  {id: 'firstName', label: 'First Name', minWidth: 170,  align: 'center'},
+  {id: 'lastName', label: 'Last Name', minWidth: 170,  align: 'center'},
+  {id: 'email', label: 'E-mail', minWidth: 170, align: 'center'},
+  {id: 'phone', label: 'Phone', minWidth: 170, align: 'center'},
+  {id: 'address', label: 'Address', minWidth: 170, align: 'center'},
+  
 ]
 
 const ClientTable = () => {
   // ** States
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rows, setRows] = useState(null)
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:3001/developers/home", {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors',
+      contentType: 'application/json',
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+         "Access-Control-Allow-Origin": "*"
+  }
+    })
+     .then(res => res.json())
+     .then((data) =>{
+      console.log(data)
+      const holdingArray = []
+      if(!data.Projects){return}
+      data.Projects.map(project => {
+        let details = {
+          firstName: project.Client.first_name,
+          lastName: project.Client.last_name,
+          phone: project.Client.phone,
+          email: project.Client.email,
+          address: project.Client.address,
+        }
+        holdingArray.push(details)
+
+      })
+        setRows(holdingArray)
+     }
+     )
+  }, [])
 
   const totalClients = () => {
-    return (row.length)
+    return (rows.length)
   }
   
   const handleChangePage = (event, newPage) => {
@@ -56,7 +71,9 @@ const ClientTable = () => {
   }
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <div>
+
+    {rows && <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 550 }}>
         <Table stickyHeader aria-label='sticky table'>
           <TableHead>
@@ -96,7 +113,8 @@ const ClientTable = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-    </Paper>
+    </Paper>}
+    </div>
   )
 }
 
