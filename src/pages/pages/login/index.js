@@ -56,15 +56,42 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 const LoginPage = () => {
   // ** State
   const [values, setValues] = useState({
+    email: '',
     password: '',
     showPassword: false
   })
+
 
   // ** Hook
   const theme = useTheme()
   const router = useRouter()
 
+  const fetchLogin = () => {
+
+    fetch("http://127.0.0.1:3001/developers/login", {
+      method: 'POST', 
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: values.email,
+        password: values.password
+      })
+    })
+      .then(res => res.json())
+      .then((data) => {
+        if(!data.token){
+          return
+        }
+        localStorage.setItem("token", JSON.stringify(`${data.token}`))
+        router.push('/')
+      })
+  }
+
   const handleChange = prop => event => {
+    event.preventDefault()
+    event.stopPropagation()
     setValues({ ...values, [prop]: event.target.value })
   }
 
@@ -159,8 +186,19 @@ const LoginPage = () => {
             </Typography>
             <Typography variant='body2'>Sign-in to your account</Typography>
           </Box>
-          <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-            <TextField autoFocus fullWidth id='email' label='Email' sx={{ marginBottom: 4 }} />
+
+          <form noValidate autoComplete='off' 
+            >
+            <TextField 
+              autoFocus 
+              fullWidth 
+              id='email' 
+              label='Email' 
+              value={values.email}
+              onChange={handleChange('email')}
+              sx={{ marginBottom: 4 }} />
+              
+
             <FormControl fullWidth>
               <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
               <OutlinedInput
@@ -186,17 +224,15 @@ const LoginPage = () => {
             <Box
               sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
             >
-              <FormControlLabel control={<Checkbox />} label='Remember Me' />
-              <Link passHref href='/'>
-                <LinkStyled onClick={e => e.preventDefault()}>Forgot Password?</LinkStyled>
-              </Link>
             </Box>
             <Button
               fullWidth
               size='large'
               variant='contained'
               sx={{ marginBottom: 7 }}
-              onClick={() => router.push('/')}
+              onClick={() => {
+                fetchLogin()
+              }}
             >
               Login
             </Button>
