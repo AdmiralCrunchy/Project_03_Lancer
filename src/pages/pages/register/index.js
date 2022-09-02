@@ -76,7 +76,7 @@ const RegisterPage = () => {
 
   const fetchSignUp = () => {
 
-    fetch("http://lancer-backend.herokuapp.com/developers/signup", {
+    fetch("http://lancerbackend.herokuapp.com/developers/signup", {
       method: 'POST', 
       mode: 'cors',
       headers: {
@@ -202,7 +202,7 @@ const RegisterPage = () => {
               label='First Name' 
               placeholder="John"
               value={values.firstName}
-                onChange={handleChange('firstName')}
+              onChange={handleChange('firstName')}
               sx={{ marginBottom: 4 }} 
             />
 
@@ -212,7 +212,7 @@ const RegisterPage = () => {
               label='Last Name' 
               placeholder="Smith"
               value={values.lastName}
-                onChange={handleChange('lastName')}
+              onChange={handleChange('lastName')}
               sx={{ marginBottom: 4 }} 
             />
 

@@ -68,7 +68,7 @@ const LoginPage = () => {
 
   const fetchLogin = () => {
 
-    fetch("http://127.0.0.1:3001/developers/login", {
+    fetch("http://lancerbackend.herokuapp.com/developers/login", {
       method: 'POST', 
       mode: 'cors',
       headers: {
