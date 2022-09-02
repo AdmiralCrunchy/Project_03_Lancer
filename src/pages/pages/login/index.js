@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
@@ -34,6 +34,7 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 // ** Demo Imports
 import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
+import { json } from 'express'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -56,6 +57,7 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 const LoginPage = () => {
   // ** State
   const [values, setValues] = useState({
+    email: " ",
     password: '',
     showPassword: false
   })
@@ -63,6 +65,29 @@ const LoginPage = () => {
   // ** Hook
   const theme = useTheme()
   const router = useRouter()
+
+  useEffect((e) => {
+    e.preventDefault()
+
+    fetch("http://lancer-backend.herokuapp.com/developers/login", {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors',
+      contentType: 'application/json',
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: json.stringify({
+        email: values.email,
+        password: values.password
+      })
+    })
+      .then(res => res.json())
+      .then((data) => {
+        console.log(data)
+        localStorage.setItem("token", JSON.stringify(`${data.token}`))
+      })
+  },
+    [])
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
@@ -159,9 +184,16 @@ const LoginPage = () => {
             </Typography>
             <Typography variant='body2'>Sign-in to your account</Typography>
           </Box>
-          <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
+          <form noValidate autoComplete='off' onSubmit={useEffect(e)}>
             <TextField autoFocus fullWidth id='email' label='Email' sx={{ marginBottom: 4 }} />
             <FormControl fullWidth>
+            <InputLabel htmlFor='auth-login-email'>Email</InputLabel>
+              <OutlinedInput
+                label='email'
+                value={values.email}
+                id='auth-login-email'
+                onChange={handleChange('email')}
+              />
               <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
               <OutlinedInput
                 label='Password'
@@ -196,7 +228,14 @@ const LoginPage = () => {
               size='large'
               variant='contained'
               sx={{ marginBottom: 7 }}
-              onClick={() => router.push('/')}
+              onClick={() => {
+                useEffect
+                if (JSON.parse(localStorage.getItem("token"))){
+                 return () => router.push('/')
+                }
+                () => router.push('/404')
+              }}
+              
             >
               Login
             </Button>

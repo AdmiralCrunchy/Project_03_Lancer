@@ -34,7 +34,7 @@ export default function ProjectTable(){
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
-      headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3RfbmFtZSI6IlBhcmtlciIsImxhc3RfbmFtZSI6Ik1jS2lsbG9wIiwiZW1haWwiOiJtY2tpbHBhcjAwMEBob3RtYWlsLmNvbSIsImlhdCI6MTY2MjA2NTQ5OSwiZXhwIjoxNjYyMDcyNjk5fQ.haE3qCoBPSwr4sSJWgCB-DexCo8b9zaYJIkBBDi0r3M',
+      headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3RfbmFtZSI6IlBhcmtlciIsImxhc3RfbmFtZSI6Ik1jS2lsbG9wIiwiZW1haWwiOiJtY2tpbHBhcjAwMEBob3RtYWlsLmNvbSIsImlhdCI6MTY2MjA3NjEwMSwiZXhwIjoxNjYyMDgzMzAxfQ.Nbtx_QoqXv3PtT9hU2mMgKUtsvZiCTVz0zNiFvk7x_U',
     "Access-Control-Allow-Origin": "*"}
     })
      .then(res => res.json())
