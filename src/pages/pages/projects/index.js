@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import FormLayoutsProject from "../../../views/form-layouts/FormLayoutsProject"
+import { useRouter } from 'next/router'
 
 // ** MUI Imports
 import Paper from '@mui/material/Paper'
@@ -28,6 +30,9 @@ export default function ProjectTable(){
   const totalProjects = () => {
     return (projects.length)
   }
+
+
+  const router = useRouter()
 
   useEffect(() => {
     fetch("http://127.0.0.1:3001/developers/home", {
@@ -72,8 +77,8 @@ export default function ProjectTable(){
 
 
   return (
-    <div>
-    {projects && <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <div >
+    {projects && <Paper sx={{ width: '100%', overflow: 'hidden', marginBottom:4 }}>
       
       <TableContainer component={Paper}>
       <Table stickyHeader aria-label='sticky table'>
@@ -126,6 +131,8 @@ export default function ProjectTable(){
       />
       
   </Paper>}
+
+  <FormLayoutsProject />
 
   <UncontrolledBoard />
   
