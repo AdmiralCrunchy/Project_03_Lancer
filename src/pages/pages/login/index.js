@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
@@ -34,7 +34,6 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 // ** Demo Imports
 import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
-import { json } from 'express'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -57,37 +56,38 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 const LoginPage = () => {
   // ** State
   const [values, setValues] = useState({
-    email: " ",
+    email: '',
     password: '',
     showPassword: false
   })
+
 
   // ** Hook
   const theme = useTheme()
   const router = useRouter()
 
-  useEffect((e) => {
-    e.preventDefault()
+  const fetchLogin = () => {
 
-    fetch("http://lancer-backend.herokuapp.com/developers/login", {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    fetch("http://127.0.0.1:3001/developers/login", {
+      method: 'POST', 
       mode: 'cors',
-      contentType: 'application/json',
       headers: {
-        "Access-Control-Allow-Origin": "*"
+        'Content-Type': 'application/json',
       },
-      body: json.stringify({
+      body: JSON.stringify({
         email: values.email,
         password: values.password
       })
     })
       .then(res => res.json())
       .then((data) => {
-        console.log(data)
+        if(!data.token){
+          return
+        }
         localStorage.setItem("token", JSON.stringify(`${data.token}`))
+        router.push('/')
       })
-  },
-    [])
+  }
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
@@ -184,22 +184,26 @@ const LoginPage = () => {
             </Typography>
             <Typography variant='body2'>Sign-in to your account</Typography>
           </Box>
-          <form noValidate autoComplete='off' onSubmit={useEffect(e)}>
-            <TextField autoFocus fullWidth id='email' label='Email' sx={{ marginBottom: 4 }} />
+
+          <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
+            <TextField 
+              autoFocus 
+              fullWidth 
+              id='email' 
+              label='Email' 
+              value={values.email}
+              onChange={handleChange('email')}
+              sx={{ marginBottom: 4 }} />
+              
+
             <FormControl fullWidth>
-            <InputLabel htmlFor='auth-login-email'>Email</InputLabel>
-              <OutlinedInput
-                label='email'
-                value={values.email}
-                id='auth-login-email'
-                onChange={handleChange('email')}
-              />
               <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
               <OutlinedInput
                 label='Password'
                 value={values.password}
                 id='auth-login-password'
                 onChange={handleChange('password')}
+                onSubmit={e => e.preventDefault()}
                 type={values.showPassword ? 'text' : 'password'}
                 endAdornment={
                   <InputAdornment position='end'>
@@ -218,23 +222,14 @@ const LoginPage = () => {
             <Box
               sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
             >
-              <FormControlLabel control={<Checkbox />} label='Remember Me' />
-              <Link passHref href='/'>
-                <LinkStyled onClick={e => e.preventDefault()}>Forgot Password?</LinkStyled>
-              </Link>
             </Box>
             <Button
               fullWidth
               size='large'
               variant='contained'
               sx={{ marginBottom: 7 }}
-              onClick={() => {
-                useEffect
-                if (JSON.parse(localStorage.getItem("token"))){
-                 return () => router.push('/')
-                }
-                () => router.push('/404')
-              }}
+              onClick={fetchLogin()}
+
               
             >
               Login
