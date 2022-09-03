@@ -38,8 +38,6 @@ const ClientTable = () => {
     })
      .then(res => res.json())
      .then((data) =>{
-      console.log(data)
-      console.log(data.dev)
       if(!data.dev){
         if (typeof window !== 'undefined') {
           localStorage.clear();
@@ -63,9 +61,9 @@ const ClientTable = () => {
     })
      .then(res => res.json())
      .then((data) =>{
-      console.log(data)
+      console.log(data.Projects[0].Client.first_name)
       const holdingArray = []
-      if(!data.Projects){return}
+      
       data.Projects.map(project => {
         let details = {
           firstName: project.Client.first_name,
@@ -74,8 +72,9 @@ const ClientTable = () => {
           email: project.Client.email,
           address: project.Client.address,
         }
+        
         holdingArray.push(details)
-
+      
       })
         setRows(holdingArray)
      }
@@ -113,7 +112,7 @@ const ClientTable = () => {
           <TableBody>
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
               return (
-                <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
+                <TableRow hover role='checkbox' tabIndex={-1} key={row.id}>
                   {columns.map(column => {
                     const value = row[column.id]
 

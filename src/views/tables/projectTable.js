@@ -45,7 +45,6 @@ export default function ProjectTable(){
     })
      .then(res => res.json())
      .then((data) =>{
-      console.log(data)
       const holdingArray = []
       data.Projects.map(project => {
         let details = {
@@ -93,11 +92,11 @@ export default function ProjectTable(){
            <TableBody>
             {projects.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(projects => {
               return (
-                <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
+                <TableRow hover role='checkbox' tabIndex={-1} key={projects.id}>
                   {columns.map(column => {
                     console.log(column.id)
-                    if(row[column.id] > 0 && column.id != 'id'){
-                      const value = '$'+row[column.id]
+                    if(projects[column.id] > 0 && column.id != 'id'){
+                      const value = '$'+projects[column.id]
                       
                       return (
                         <TableCell key={column.id} align={column.align}>

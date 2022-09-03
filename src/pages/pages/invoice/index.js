@@ -11,6 +11,7 @@ import Box from '@mui/material/Box'
 // ** Demo Components Imports
 
 import FormLayoutsBasic from 'src/views/form-layouts/FormLayoutsBasic'
+import InvoiceTable from 'src/views/tables/InvoiceTable'
 import FormLayoutsIcons from 'src/views/form-layouts/FormLayoutsIcons'
 import FormLayoutsSeparator from 'src/views/form-layouts/FormLayoutsSeparator'
 import FormLayoutsAlignment from 'src/views/form-layouts/FormLayoutsAlignment'
@@ -22,19 +23,20 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 
 const FormLayouts = () => {
-    return (
     
+  return (
+      <div>
+        
         <DatePickerWrapper>
         <Grid container spacing={10}>
           <Grid item xs={12} md={8}>
             <FormLayoutsBasic />
-          
+            <InvoiceTable/>
         </Grid>
           </Grid>
          
-        
         </DatePickerWrapper>
-        
+        </div>
 
     
     )
