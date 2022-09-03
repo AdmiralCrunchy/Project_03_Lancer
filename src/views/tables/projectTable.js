@@ -94,7 +94,7 @@ export default function ProjectTable(){
               return (
                 <TableRow hover role='checkbox' tabIndex={-1} key={projects.id}>
                   {columns.map(column => {
-                    console.log(column.id)
+                    
                     if(projects[column.id] > 0 && column.id != 'id'){
                       const value = '$'+projects[column.id]
                       

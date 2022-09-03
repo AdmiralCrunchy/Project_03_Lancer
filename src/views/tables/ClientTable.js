@@ -50,7 +50,7 @@ const ClientTable = () => {
      }, [])
 
   useEffect(() => {
-    fetch("http://lancerbackend.herokuapp.com/developers/home", {
+    fetch("http://127.0.0.1:3001/developers/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
@@ -61,7 +61,6 @@ const ClientTable = () => {
     })
      .then(res => res.json())
      .then((data) =>{
-      console.log(data.Projects[0].Client.first_name)
       const holdingArray = []
       
       data.Projects.map(project => {
