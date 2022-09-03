@@ -157,7 +157,7 @@ const FormLayoutsBasic = () => {
 
   return (
     <Card>
-      <CardHeader title='Invoice' titleTypographyProps={{ variant: 'h1' }} sx={{marginBottom: 4, display: 'center'}}/>
+      <CardHeader title='Invoice' titleTypographyProps={{ variant: 'h1' }} sx={{marginBottom: 4}}/>
       <CardContent>
         <form onSubmit={e => e.preventDefault()}>
           <Grid>
