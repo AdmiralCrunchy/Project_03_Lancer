@@ -34,6 +34,7 @@ export default function ProjectTable(){
   }
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
     fetch("http://lancerbackend.herokuapp.com/developers/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
@@ -60,6 +61,7 @@ export default function ProjectTable(){
         setProjects(holdingArray)
      }
      )
+    }
   }, [])
   
   

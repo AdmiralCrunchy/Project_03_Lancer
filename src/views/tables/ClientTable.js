@@ -27,6 +27,7 @@ const ClientTable = () => {
   const [rows, setRows] = useState(null)
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
     fetch("http://lancerbackend.herokuapp.com/developers/verify", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
@@ -46,18 +47,20 @@ const ClientTable = () => {
       }
   
       })
-  
+    }
      }, [])
 
   useEffect(() => {
-    fetch("http://127.0.0.1:3001/developers/home", {
+    if (typeof window !== 'undefined') {
+      
+    fetch("http://lancerbackend.herokuapp.com/developers/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
       headers: {
         'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-         "Access-Control-Allow-Origin": "*"
-  }
+        "Access-Control-Allow-Origin": "*"
+      }
     })
      .then(res => res.json())
      .then((data) =>{
@@ -78,6 +81,7 @@ const ClientTable = () => {
         setRows(holdingArray)
      }
      )
+    }
   }, [])
 
   const totalClients = () => {

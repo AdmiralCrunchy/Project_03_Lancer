@@ -33,7 +33,7 @@ const FormLayoutsProject = () => {
   })
 
   const fetchNewProject = () => {
-
+    if (typeof window !== 'undefined') {
     fetch("http://lancerbackend.herokuapp.com/projects/", {
       method: 'POST', 
       mode: 'cors',
@@ -63,7 +63,8 @@ const FormLayoutsProject = () => {
         // })
       })
   }
-
+  }
+  
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
   }

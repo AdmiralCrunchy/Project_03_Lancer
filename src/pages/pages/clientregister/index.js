@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, Fragment } from 'react'
+import { useState, Fragment} from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
@@ -37,6 +37,7 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 // ** Demo Imports
 import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
+import { useRouter } from 'next/router'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -61,12 +62,46 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 const RegisterPage = () => {
   // ** States
   const [values, setValues] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
     password: '',
     showPassword: false
   })
 
   // ** Hook
   const theme = useTheme()
+  const router = useRouter()
+
+  const fetchSignUp = () => {
+
+    fetch("http://lancerbackend.herokuapp.com/clients/signup", {
+      method: 'POST', 
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        first_name: values.firstName,
+        last_name: values.lastName,
+        email: values.email,
+        phone: values.phone,
+        password: values.password
+      })
+    })
+      .then(res => res.json())
+      .then((data) => {
+        if(!data.token){
+          return
+        }
+        if (typeof window !== 'undefined') {
+        localStorage.setItem("token", JSON.stringify(`${data.token}`))
+        localStorage.setItem("type", JSON.stringify(`${data.type}`))
+        }
+        router.push('/pages/dashboard')
+      })
+  }
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
@@ -164,11 +199,51 @@ const RegisterPage = () => {
             <Typography variant='body2'>View your project and delieverable status</Typography>
           </Box>
           <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-            <TextField autoFocus fullWidth id='username' label='Username' sx={{ marginBottom: 4 }} />
-            <TextField fullWidth type='email' label='Email' sx={{ marginBottom: 4 }} />
+            <TextField 
+              autoFocus 
+              fullWidth 
+              id='firstName' 
+              label='First Name' 
+              sx={{ marginBottom: 4 }} 
+              values={values.firstName}
+              onChange={handleChange("firstName")}
+              />
+
+            <TextField 
+            autoFocus 
+            fullWidth 
+            id='lastName' 
+            label='Last Name' 
+            sx={{ marginBottom: 4 }} 
+            values={values.lastName}
+            onChange={handleChange("lastName")}
+            />
+            
+
+            <TextField 
+            fullWidth 
+            type='email' 
+            label='Email' sx={{ marginBottom: 4 }} 
+            values={values.email}
+            onChange={handleChange("email")}
+            />
+            
+            <TextField 
+            fullWidth 
+            type='phone' 
+            label='Phone' 
+            sx={{ marginBottom: 4 }}
+            value={values.phone}
+            onChange={handleChange("phone")}
+            />
+
+          
+
             <FormControl fullWidth>
+
               <InputLabel htmlFor='auth-register-password'>Password</InputLabel>
               <OutlinedInput
+              sx={{ marginBottom: 4 }}
                 label='Password'
                 value={values.password}
                 id='auth-register-password'
@@ -188,18 +263,17 @@ const RegisterPage = () => {
                 }
               />
             </FormControl>
-            <FormControlLabel
-              control={<Checkbox />}
-              label={
-                <Fragment>
-                  <span>I agree to </span>
-                  <Link href='/' passHref>
-                    <LinkStyled onClick={e => e.preventDefault()}>privacy policy & terms</LinkStyled>
-                  </Link>
-                </Fragment>
-              }
-            />
-            <Button fullWidth size='large' type='submit' variant='contained' sx={{ marginBottom: 7 }}>
+
+            
+            <Button
+              fullWidth
+              size='large'
+              variant='contained'
+              sx={{ marginBottom: 7 }}
+              onClick={() => {
+                fetchSignUp()
+              }}
+            >
               Sign up
             </Button>
             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>

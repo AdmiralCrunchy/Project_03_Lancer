@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, Fragment } from 'react'
+import { useState, Fragment, } from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
@@ -95,7 +95,10 @@ const RegisterPage = () => {
         if(!data.token){
           return
         }
+        if (typeof window !== 'undefined') {
         localStorage.setItem("token", JSON.stringify(`${data.token}`))
+        localStorage.setItem("type", JSON.stringify(`${data.type}`))
+        }
         router.push('/pages/dashboard')
       })
   }
@@ -269,7 +272,7 @@ const RegisterPage = () => {
                 fetchSignUp()
               }}
             >
-              Login
+              Sign up
             </Button>
             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
               <Typography variant='body2' sx={{ marginRight: 2 }}>
