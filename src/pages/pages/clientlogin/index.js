@@ -35,6 +35,8 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 // ** Demo Imports
 import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
 
+
+
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: { width: '28rem' }
@@ -56,6 +58,7 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 const ClientLoginPage = () => {
   // ** State
   const [values, setValues] = useState({
+    email: '',
     password: '',
     showPassword: false
   })
@@ -63,6 +66,32 @@ const ClientLoginPage = () => {
   // ** Hook
   const theme = useTheme()
   const router = useRouter()
+
+  const fetchLogin = () => {
+
+    fetch("http://lancerbackend.herokuapp.com/clients/login", {
+      method: 'POST', 
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: values.email,
+        password: values.password
+      })
+    })
+      .then(res => res.json())
+      .then((data) => {
+        if(!data.token){
+          return
+        }
+        if (typeof window !== 'undefined') {
+        localStorage.setItem("token", JSON.stringify(`${data.token}`))
+        localStorage.setItem("type", JSON.stringify(`${data.type}`))
+        }
+        router.push('/pages/dashboard')
+      })
+  }
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
@@ -160,7 +189,15 @@ const ClientLoginPage = () => {
             <Typography variant='body2'>Sign-in to your account to view client side dashboard</Typography>
           </Box>
           <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-            <TextField autoFocus fullWidth id='email' label='Email' sx={{ marginBottom: 4 }} />
+            <TextField 
+            autoFocus 
+            fullWidth 
+            id='email' 
+            label='Email' 
+            onChange = {handleChange('email')}
+            value={values.email}
+            sx={{ marginBottom: 4 }} />
+
             <FormControl fullWidth>
               <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
               <OutlinedInput
@@ -186,17 +223,17 @@ const ClientLoginPage = () => {
             <Box
               sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
             >
-              <FormControlLabel control={<Checkbox />} label='Remember Me' />
+              {/* <FormControlLabel control={<Checkbox />} label='Remember Me' />
               <Link passHref href='/'>
                 <LinkStyled onClick={e => e.preventDefault()}>Forgot Password?</LinkStyled>
-              </Link>
+              </Link> */}
             </Box>
             <Button
               fullWidth
               size='large'
               variant='contained'
               sx={{ marginBottom: 7 }}
-              onClick={() => router.push('/pages/dashboard')}
+              onClick={() => fetchLogin()}
             >
               Login
             </Button>

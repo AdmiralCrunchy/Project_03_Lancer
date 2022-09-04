@@ -68,6 +68,7 @@ const TabAccount = () => {
   }
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
     fetch("http://lancerbackend.herokuapp.com/developers/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
@@ -87,10 +88,11 @@ const TabAccount = () => {
      })
      }
      )
+    }
   }, [])
 
   const fetchAccUpdate = () => {
-
+    if (typeof window !== 'undefined') {
     fetch("http://lancerbackend.herokuapp.com/developers/settings", {
       method: 'PUT', 
       mode: 'cors',
@@ -112,6 +114,7 @@ const TabAccount = () => {
       .then((data) => {
         console.log(data)
       })
+    }
   }
 
   const handleChange = prop => event => {

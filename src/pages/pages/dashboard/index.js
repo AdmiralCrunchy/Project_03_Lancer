@@ -26,6 +26,7 @@ import StatisticsCard from 'src/views/dashboard/StatisticsCard'
 import WeeklyOverview from 'src/views/dashboard/WeeklyOverview'
 import DepositWithdraw from 'src/views/dashboard/DepositWithdraw'
 import SalesByCountries from 'src/views/dashboard/SalesByCountries'
+import { permCheck } from '../../../permcheck'
 
 // FETCH REQ (TOTAL BALANCE, ONGOING PROJECT #, NEW PROJ #, # OF CLINETS)
 
@@ -33,27 +34,7 @@ import SalesByCountries from 'src/views/dashboard/SalesByCountries'
 
 const Dashboard = () => {
   useEffect(() => {
-    fetch("http://lancerbackend.herokuapp.com/developers/verify", {
-      method: 'GET', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors',
-      contentType: 'application/json',
-      headers: {
-      'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-      "Access-Control-Allow-Origin": "*"
-    }
-    })
-     .then(res => res.json())
-     .then((data) =>{
-      console.log(data)
-      console.log(data.dev)
-      if(!data.dev){
-        if (typeof window !== 'undefined') {
-          localStorage.clear();
-          window.location.href= "/"
-        }
-      }
-  
-      })
+    permCheck()
   
      }, [])
 

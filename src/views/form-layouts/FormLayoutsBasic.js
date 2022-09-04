@@ -29,6 +29,7 @@ import CreditCardClockOutline from 'mdi-material-ui/CreditCardClockOutline'
 import AccountClockOutline from 'mdi-material-ui/AccountClockOutline'
 import BankOutline from 'mdi-material-ui/BankOutline'
 import DatePicker from 'react-datepicker'
+import { permCheck } from '../../permcheck'
 
 // ** Icons Imports
 
@@ -44,27 +45,7 @@ const Item = styled('div')(({ theme }) => ({
 const FormLayoutsBasic = () => {
   // ** States
   useEffect(() => {
-    fetch("http://lancerbackend.herokuapp.com/developers/verify", {
-      method: 'GET', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors',
-      contentType: 'application/json',
-      headers: {
-      'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-      "Access-Control-Allow-Origin": "*"
-    }
-    })
-     .then(res => res.json())
-     .then((data) =>{
-      console.log(data)
-      console.log(data.dev)
-      if(!data.dev){
-        if (typeof window !== 'undefined') {
-          localStorage.clear();
-          window.location.href= "/"
-        }
-      }
-  
-      })
+    permCheck()
   
      }, [])
 
@@ -98,6 +79,7 @@ const FormLayoutsBasic = () => {
 // }])
 
   // useEffect(() => {
+    // if (typeof window !== 'undefined') {
   //   fetch("http://lancerbackend.herokuapp.com/developers/home", {
   //     method: 'GET', // *GET, POST, PUT, DELETE, etc.
   //     mode: 'cors',
@@ -124,7 +106,9 @@ const FormLayoutsBasic = () => {
   //    )
   // }, [])
 
+ 
   const fetchNewInvoice = () => {
+    if (typeof window !== 'undefined') {
     fetch("http://lancerbackend.herokuapp.com/projects/invoices", {
       method: 'POST', 
       mode: 'cors',
@@ -145,6 +129,7 @@ const FormLayoutsBasic = () => {
         console.log(data)
         location.reload()
       })
+  }
   }
 
   const handleChange = prop => event => {

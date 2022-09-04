@@ -67,7 +67,7 @@ const LoginPage = () => {
   const router = useRouter()
 
   const fetchLogin = () => {
-
+    if (typeof window !== 'undefined') {
     fetch("http://lancerbackend.herokuapp.com/developers/login", {
       method: 'POST', 
       mode: 'cors',
@@ -84,9 +84,12 @@ const LoginPage = () => {
         if(!data.token){
           return
         }
+        if (typeof window !== 'undefined') {
         localStorage.setItem("token", JSON.stringify(`${data.token}`))
+        }
         router.push('/pages/dashboard')
       })
+    }
   }
 
   const handleChange = prop => event => {

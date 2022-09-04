@@ -11,6 +11,7 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TablePagination from '@mui/material/TablePagination'
+import { permCheck }from '../../../permcheck'
 
 // import UncontrolledBoard from 'src/Board/kanban.js'
 
@@ -34,32 +35,12 @@ export default function ProjectTable(){
   const router = useRouter()
 
   useEffect(() => {
-    fetch("http://lancerbackend.herokuapp.com/developers/verify", {
-      method: 'GET', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors',
-      contentType: 'application/json',
-      headers: {
-      'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-      "Access-Control-Allow-Origin": "*"
-    }
-    })
-     .then(res => res.json())
-     .then((data) =>{
-      console.log(data)
-      console.log(data.dev)
-      if(!data.dev){
-        if (typeof window !== 'undefined') {
-          localStorage.clear();
-          window.location.href= "/"
-        }
-      }
-  
-      })
-  
+  permCheck()
      }, [])
 
   useEffect(() => {
-    fetch("http://lancerbackend.herokuapp.com/developers/home", {
+    if (typeof window !== 'undefined') {
+    fetch("http://lancerbackend.herokuapp.com/projects/dev", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
@@ -72,8 +53,9 @@ export default function ProjectTable(){
      .then((data) =>{
       console.log(data)
       const holdingArray = []
-      if(!data.Projects){return}
-      data.Projects.map(project => {
+      if(!data){return}
+      data.map(project => {
+        
         let details = {
           id: project.id,
           projectName: project.project_name,
@@ -81,12 +63,15 @@ export default function ProjectTable(){
           initialCharge: project.initial_charge,
           balance: project.balance
         }
+        
         holdingArray.push(details)
 
       })
+      console.log(holdingArray)
         setProjects(holdingArray)
      }
      )
+    }
   }, [])
 
   
