@@ -1,5 +1,5 @@
 // ** React Imports
-import {  forwardRef, useState, useEffect } from 'react';
+import { forwardRef, useState, useEffect } from 'react';
 
 
 
@@ -34,7 +34,7 @@ import { permCheck } from '../../permcheck'
 // ** Icons Imports
 
 const Item = styled('div')(({ theme }) => ({
-  
+
   border: '1px solid',
   borderColor: theme.palette.mode === 'light' ? '#444d58' : '#ced7e0',
   padding: theme.spacing(1),
@@ -46,40 +46,40 @@ const FormLayoutsBasic = () => {
   // ** States
   useEffect(() => {
     permCheck()
-  
-     }, [])
+
+  }, [])
 
   const Form = styled('form')(({ theme }) => ({
     maxWidth: 400,
     padding: theme.spacing(12),
     borderRadius: theme.shape.borderRadius,
     border: `1px solid ${theme.palette.divider}`
-  }))  
-  
+  }))
+
   const CustomInput = forwardRef((props, ref) => {
     return <TextField fullWidth {...props} inputRef={ref} label='Due Date' autoComplete='off' />
   })
 
   const [date, setDate] = useState(null)
   const [name, setName] = useState([])
-  
+
   const [values, setValues] = useState({
-    projectName:"",
+    projectName: "",
     paymentDate: "",
     paymentSum: "",
     projectId: ""
   })
 
-//   const[projects, setProjects] = useState([{
-//     id: "",
-//     projectName: "",
-//     projectStatus: "",
-//     initialCharge: "",
-//     balance: ""
-// }])
+  //   const[projects, setProjects] = useState([{
+  //     id: "",
+  //     projectName: "",
+  //     projectStatus: "",
+  //     initialCharge: "",
+  //     balance: ""
+  // }])
 
   // useEffect(() => {
-    // if (typeof window !== 'undefined') {
+  // if (typeof window !== 'undefined') {
   //   fetch("http://lancerbackend.herokuapp.com/developers/home", {
   //     method: 'GET', // *GET, POST, PUT, DELETE, etc.
   //     mode: 'cors',
@@ -106,30 +106,30 @@ const FormLayoutsBasic = () => {
   //    )
   // }, [])
 
- 
+
   const fetchNewInvoice = () => {
     if (typeof window !== 'undefined') {
-    fetch("http://lancerbackend.herokuapp.com/projects/invoices", {
-      method: 'POST', 
-      mode: 'cors',
-      headers: {
-        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        project_name: values.projectName,
-        payment_date: values.paymentDate,
-        payment_sum: values.paymentSum,
-        project_id: values.projectId
+      fetch("http://lancerbackend.herokuapp.com/projects/invoices", {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          project_name: values.projectName,
+          payment_date: values.paymentDate,
+          payment_sum: values.paymentSum,
+          project_id: values.projectId
+        })
       })
-    })
-      .then(res => res.json())
-      .then((data) => {
-        console.log(data)
-        location.reload()
-      })
-  }
+        .then(res => res.json())
+        .then((data) => {
+          console.log(data)
+          location.reload()
+        })
+    }
   }
 
   const handleChange = prop => event => {
@@ -141,21 +141,24 @@ const FormLayoutsBasic = () => {
   }
 
   return (
-    <Card>
-      <CardHeader title='Invoice' titleTypographyProps={{ variant: 'h1' }} sx={{marginBottom: 4}}/>
-      <CardContent>
-        <form onSubmit={e => e.preventDefault()}>
-          <Grid>
-           <Grid >
-            <FormControl fullWidth>
-              <TextField
-                fullWidth
-                label = 'Project Name'
-                value ={values.projectName}
-                onChange ={handleChange("projectName")} 
-                
-              />
-                {/* <Select 
+    <div >
+      <Card sx={{ width: '100%', overflow: 'hidden', marginBottom:4 }}>
+        <CardHeader title='Send invoice' titleTypographyProps={{ variant: 'h6' }} align = "center" />
+        <CardContent>
+          <form onSubmit={e => e.preventDefault()}>
+
+            <Grid container spacing={5}>
+
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <TextField
+                    fullWidth
+                    label='Project Name'
+                    value={values.projectName}
+                    onChange={handleChange("projectName")}
+                    sx={{ marginBottom: 2 }} 
+                  />
+                  {/* <Select 
                   multiple
                   onChange={handleSelectChange}
                   id='form-layouts-separator-multiple-select'
@@ -165,30 +168,31 @@ const FormLayoutsBasic = () => {
                 >
                  {projects && <MenuItem id={projects.id} value={projects.projectName}></MenuItem>}
                 </Select> */}
-              </FormControl>
+                </FormControl>
+              </Grid>
             </Grid>
-            </Grid>     
-                
-            <Grid  item sx={{marginTop:4}} >
-            <TextField
+
+            <Grid item xs={12} sx={{ marginTop: 4, }} >
+              <TextField
                 fullWidth
                 align="center"
-                label = 'Project Id'
-                value ={values.projectId}
-                onChange ={handleChange("projectId")} 
-                
+                label='Project Id'
+                value={values.projectId}
+                onChange={handleChange("projectId")}
+                sx={{ marginBottom: 2 }} 
               />
-           </Grid>
-            <Grid  item sx={{marginTop:4}} >
-            <TextField
+            </Grid>
+
+            <Grid item sx={{ marginTop: 4 }} >
+              <TextField
                 fullWidth
                 align="center"
-                label = 'Payment Due Date'
-                value ={values.paymentDate}
-                onChange ={handleChange("paymentDate")} 
-                
+                label='Payment Due Date'
+                value={values.paymentDate}
+                onChange={handleChange("paymentDate")}
+                sx={{ marginBottom: 2 }} 
               />
-            {/* <DatePicker
+              {/* <DatePicker
                 selected={date}
                 showYearDropdown
                 showMonthDropdown
@@ -198,56 +202,51 @@ const FormLayoutsBasic = () => {
                 values = {values.paymentDate}
                 onChange={date => setDate(date)}
               /> */}
-                
-                
-              
+
+
+
             </Grid>
-            <Grid item sx={{marginTop:4}}>
+            <Grid item xs={12} sx={{ marginTop: 4 }}>
               <FormControl fullWidth>
-              <TextField
-                fullWidth
-                type='number'
-                label = 'Amount Due'
-                value ={values.paymentSum}
-                onChange ={handleChange("paymentSum")} 
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position='start'>$
-                     
-                    </InputAdornment>
-                  )
-                }}
-              />
-               
+                <TextField
+                  fullWidth
+                  type='number'
+                  label='Amount Due'
+                  value={values.paymentSum}
+                  onChange={handleChange("paymentSum")}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position='start'>$
+
+                      </InputAdornment>
+                    )
+                  }}
+                />
+
               </FormControl>
             </Grid>
-         
-            <Grid item sx={{marginTop:4}}>
-            <Stack direction="row" spacing={2}>
-              <Button 
-              type='submit' 
-              variant='contained' 
-              size='large' 
-              color='success'
-              onClick={() => {
-                fetchNewInvoice()
-              }}
-              endIcon={<SendIcon />}>
-                Send Invoice
-              </Button>
+
+            <Grid item sx={{ marginTop: 4 }}>
+              <Stack direction="row" spacing={2}>
+                <Button
+                 fullWidth
+                 size='large'
+                 variant='contained'
+                  onClick={() => {
+                    fetchNewInvoice()
+                  }}
+                 >
+                  Send Invoice
+                </Button>
               </Stack>
-              </Grid>
-           
+            </Grid>
+
           </form>
-          </CardContent>
-          </Card>
-         
-          
-          
-         
-    
-    
-    
+        </CardContent>
+      </Card>
+    </div>
+
+
   )
 }
 

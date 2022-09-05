@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import FormLayoutsProject from "../../../views/form-layouts/FormLayoutsProject"
+import FormLayoutsJoin from "../../../views/form-layouts/FormLayoutsJoin"
 import { useRouter } from 'next/router'
 
 // ** MUI Imports
@@ -40,6 +41,7 @@ export default function ProjectTable(){
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      if(JSON.parse(localStorage.getItem("type")) === "developer"){
     fetch("http://lancerbackend.herokuapp.com/projects/dev", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
@@ -70,8 +72,41 @@ export default function ProjectTable(){
       console.log(holdingArray)
         setProjects(holdingArray)
      }
-     )
-    }
+     )}
+     else{
+      fetch("http://lancerbackend.herokuapp.com/projects/client", {
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors',
+        contentType: 'application/json',
+        headers: {
+          'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+       .then(res => res.json())
+       .then((data) =>{
+        console.log(data)
+        const holdingArray = []
+        if(!data){return}
+        data.map(project => {
+          
+          let details = {
+            id: project.id,
+            projectName: project.project_name,
+            projectStatus: project.project_status,
+            initialCharge: project.initial_charge,
+            balance: project.balance
+          }
+          
+          holdingArray.push(details)
+  
+        })
+        console.log(holdingArray)
+          setProjects(holdingArray)
+       }
+       )}
+     }
+    
   }, [])
 
   
@@ -142,8 +177,8 @@ export default function ProjectTable(){
   </Paper>}
 
 
-  <FormLayoutsProject />
-  
+  {typeof window !== 'undefined' && JSON.parse(localStorage.getItem("type")) === "developer" && <FormLayoutsProject />}
+  {typeof window !== 'undefined' && JSON.parse(localStorage.getItem("type")) === "client" && <FormLayoutsJoin />}
   {/* <UncontrolledBoard /> */}
         
   </div>

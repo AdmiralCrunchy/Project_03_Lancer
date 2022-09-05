@@ -17,9 +17,9 @@ import InvoiceTable from 'src/views/tables/InvoiceTable'
 const FormLayouts = () => {
   return (
     <div>
-      <InvoiceTable/>
+      <InvoiceTable sx={{ marginBottom: 4 }} />
       
-    <DatePickerWrapper>
+    {/* <DatePickerWrapper>
       <Grid container spacing={6}>
         <Grid item xs={12} md={6}>
           <FormLayoutsBasic />
@@ -35,7 +35,7 @@ const FormLayouts = () => {
           <FormLayoutsAlignment />
         </Grid>
       </Grid>
-    </DatePickerWrapper>
+    </DatePickerWrapper> */}
     </div>
   )
 }

@@ -86,6 +86,7 @@ const LoginPage = () => {
         }
         if (typeof window !== 'undefined') {
         localStorage.setItem("token", JSON.stringify(`${data.token}`))
+        localStorage.setItem("type", JSON.stringify(`${data.type}`))
         }
         router.push('/pages/dashboard')
       })

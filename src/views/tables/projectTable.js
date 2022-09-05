@@ -35,6 +35,7 @@ export default function ProjectTable(){
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      if(JSON.parse(localStorage.getItem("type")) === "developer"){
     fetch("http://lancerbackend.herokuapp.com/developers/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
@@ -61,6 +62,34 @@ export default function ProjectTable(){
         setProjects(holdingArray)
      }
      )
+    }else{
+      fetch("http://lancerbackend.herokuapp.com/clients/home", {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors',
+      contentType: 'application/json',
+      headers: {
+                'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                "Access-Control-Allow-Origin": "*"
+              }
+    })
+     .then(res => res.json())
+     .then((data) =>{
+      const holdingArray = []
+      data.Projects.map(project => {
+        let details = {
+          id: project.id,
+          projectName: project.project_name,
+          projectStatus: project.project_status,
+          initialCharge: project.initial_charge,
+          balance: project.balance
+        }
+        holdingArray.push(details)
+
+      })
+        setProjects(holdingArray)
+     }
+     )
+    }
     }
   }, [])
   
