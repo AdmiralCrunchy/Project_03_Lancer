@@ -51,7 +51,7 @@ const clientTable = () => {
       </Grid>
       <Grid item xs={12}>
         <Card>
-          <CardHeader title='Clients' titleTypographyProps={{ variant: 'h6' }} />
+          
           <ClientTable />
         </Card>
       </Grid>
