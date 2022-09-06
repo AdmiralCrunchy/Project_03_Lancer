@@ -1,11 +1,11 @@
-// // ** React Imports
+// ** React Imports
 import React, { useState, useEffect } from "react";
 
 // import Calendar from "react-beautiful-calendar"
 
 import { useRouter } from 'next/router'
 
-// // ** MUI Components
+// ** MUI Components
 import Box from '@mui/material/Box'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
@@ -19,15 +19,11 @@ import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
+
 import { permCheck } from '../../../permcheck'
 
-// const Card = styled(MuiCard)(({ theme }) => ({
-//     [theme.breakpoints.up('sm')]: { width: '100rem' }
-//   }))
+import TablePagination from '@mui/material/TablePagination'
 
-//   const createData = (day, month, year, name, status, appName, description) => {
-//     return { day, month, year, name, status, appName, description}
-//   }
 
 //   const columns = [
 //     {id: 'firstName', label: 'First Name', minWidth: 170,  align: 'center'},
@@ -41,15 +37,18 @@ import { permCheck } from '../../../permcheck'
 //   const rows = [
 //     createData(2,9,2022,`Let's Play`, 'Parker McKillop', 'Checking in', "Just a brief check up to see where we are in the project.")
 //   ]
+
    
+const CalendarPage = () => {
    
-  function CalendarPage() {
-   
+return (
+  <div></div>
 
 //   // ** States
 //     const [page, setPage] = useState(0)
 //     const [rowsPerPage, setRowsPerPage] = useState(10)
 //     const [rows, setRows] = useState(null)
+
 
 //     const [day,setDate] = useState(2)
 //     const [month,setMonth] = useState("September")
@@ -138,12 +137,14 @@ import { permCheck } from '../../../permcheck'
 //             address: project.Client.address,
 //           }
 //           holdingArray.push(details)
+
   
 //         })
 //           setRows(holdingArray)
 //        }
 //        )}
 //     }, [])
+
 
 //     const totalAppointments = () => {
 //       return (rows.length)
@@ -152,19 +153,9 @@ import { permCheck } from '../../../permcheck'
 //     const handleChangePage = (event, newPage) => {
 //       setPage(newPage)
 //     }
-  
-//     const handleChangeRowsPerPage = event => {
-//       setRowsPerPage(+event.target.value)
-//       setPage(0)
-//     }
 
-    return (
-        <div></div>
+    
+)
+}
 
-
-    )
-
-//   }
-  }
-  
-export default CalendarPage
+export default CalendarPage;
