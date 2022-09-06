@@ -4,6 +4,7 @@ import {Login, Table, CubeOutline, HomeOutline, FormatLetterCase, AccountCogOutl
 import MaterialUi from 'mdi-material-ui/MaterialUi'
 
 const navigation = () => {
+
   return [
     {
       title: 'Dashboard',

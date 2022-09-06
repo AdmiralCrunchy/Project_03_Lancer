@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, Fragment } from 'react'
+import { useState, Fragment, useEffect } from 'react'
 
 // ** Next Import
 import { useRouter } from 'next/router'
@@ -36,8 +36,64 @@ const UserDropdown = () => {
   // ** States
   const [anchorEl, setAnchorEl] = useState(null)
 
+  const [values, setValues] = useState({
+    firstName: "",
+    lastName: "" ,
+    email: "",
+    phone: "",
+    type: ""
+  })
+
   // ** Hooks
   const router = useRouter()
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if(JSON.parse(localStorage.getItem("type")) === "developer"){
+    fetch("http://lancerbackend.herokuapp.com/developers/home", {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors',
+      contentType: 'application/json',
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+         "Access-Control-Allow-Origin": "*"}
+    })
+     .then(res => res.json())
+     .then((data) =>{
+      console.log(data)
+      setValues({
+        firstName: data.first_name,
+        lastName: data.last_name,
+        email: data.email,
+        phone: data.phone,
+        type: data.type
+     })
+     }
+     )
+    }
+  else{
+    fetch("http://lancerbackend.herokuapp.com/clients/home", {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors',
+      contentType: 'application/json',
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+         "Access-Control-Allow-Origin": "*"}
+    })
+     .then(res => res.json())
+     .then((data) =>{
+      console.log(data)
+      setValues({
+        firstName: data.first_name,
+        lastName: data.last_name,
+        email: data.email,
+        phone: data.phone,
+        type: data.type
+     })
+     }
+     )
+  }}
+  }, [])
 
   const handleDropdownOpen = event => {
     setAnchorEl(event.currentTarget)
@@ -90,24 +146,18 @@ const UserDropdown = () => {
       >
         <Box sx={{ pt: 2, pb: 3, px: 4 }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Badge
-              overlap='circular'
-              badgeContent={<BadgeContentSpan />}
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            >
-              <Avatar alt='John Doe' src='/images/avatars/1.png' sx={{ width: '2.5rem', height: '2.5rem' }} />
-            </Badge>
+            
             <Box sx={{ display: 'flex', marginLeft: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
-              <Typography sx={{ fontWeight: 600 }}>John Doe</Typography>
+              <Typography sx={{ fontWeight: 600 }}>{values.firstName + " " + values.lastName}</Typography>
               <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
-                Admin
+                {values.type}
               </Typography>
             </Box>
           </Box>
         </Box>
         <Divider sx={{ mt: 0, mb: 1 }} />
         <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose("/account-settings")}>
-          <Box sx={styles}>
+          <Box sx={styles} >
             <AccountOutline sx={{ marginRight: 2 }} />
             Profile
           </Box>

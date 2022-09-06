@@ -23,26 +23,23 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 
 const FormLayouts = () => {
-    
-  return (
-      <div>
-        
-        <DatePickerWrapper>
-        <Grid container spacing={10}>
-          <Grid item xs={12} md={8}>
-            <FormLayoutsBasic />
-            <InvoiceTable/>
-        </Grid>
-          </Grid>
-         
-        </DatePickerWrapper>
-        </div>
 
-    
-    )
+  return (
+    <div>
+
+      <InvoiceTable  />
+      
+
+      {JSON.parse(localStorage.getItem("type")) === "developer" &&<FormLayoutsBasic />}
+
+
+    </div>
+
+
+  )
 }
 
-             
+
 
 
 export default FormLayouts
