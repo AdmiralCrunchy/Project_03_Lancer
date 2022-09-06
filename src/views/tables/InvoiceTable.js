@@ -56,7 +56,7 @@ export default function InvoiceTable() {
                             amountDue: Payment.payment_sum,
                             paymentDate: Payment.payment_date,
                             projectName:data.project_name,
-                            balance: data.balance
+                            balance: data.balance,
                         }
                         holdingArray.push(details)
                     })

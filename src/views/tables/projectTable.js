@@ -14,6 +14,7 @@ import TablePagination from '@mui/material/TablePagination'
 import { CheckboxMultipleMarkedOutline } from 'mdi-material-ui'
 
 const columns = [
+  {id: 'id', label: 'Project ID', minWidth: 170,  align: 'center'},
   {id: 'projectName', label: 'Project Name', minWidth: 170,  align: 'center'},
   {id: 'projectStatus', label: 'Project Status', minWidth: 170, align: 'center'},
   {id: 'initialCharge', label: 'Initial Charge', minWidth: 170,  align: 'center'},
@@ -38,6 +39,8 @@ export default function ProjectTables(){
        }, [])
 
        useEffect(() => {
+        if (typeof window !== 'undefined') {
+            if(localStorage.getItem("type") === "developer"){
         fetch("http://lancerbackend.herokuapp.com/developers/home", {
           method: 'GET', // *GET, POST, PUT, DELETE, etc.
           mode: 'cors',
@@ -66,6 +69,50 @@ export default function ProjectTables(){
             setProjects(holdingArray)
          }
          )
+        }else{
+          fetch("http://lancerbackend.herokuapp.com/clients/home", {
+          method: 'GET', // *GET, POST, PUT, DELETE, etc.
+          mode: 'cors',
+          contentType: 'application/json',
+          headers: {
+            'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+            "Access-Control-Allow-Origin": "*"
+          }
+        })
+         .then(res => res.json())
+         .then((data) =>{
+          console.log(data)
+          const holdingArray = []
+         if(!data.Projects){
+          
+            let details = {
+              id: data.Project.id,
+              projectName: data.Project.project_name,
+              projectStatus: data.Project.project_status,
+              initialCharge: data.Project.initial_charge,
+              balance: data.Project.balance
+            }
+            holdingArray.push(details)
+    
+            
+            setProjects(holdingArray)
+         }else{
+          data.Projects.map(project => {
+            let details = {
+              id: project.id,
+              projectName: project.project_name,
+              projectStatus: project.project_status,
+              initialCharge: project.initial_charge,
+              balance: project.balance
+            }
+            holdingArray.push(details)
+    
+          })
+            setProjects(holdingArray)
+         }}
+         )
+        }
+      }
       }, [])
   
   
@@ -100,7 +147,7 @@ export default function ProjectTables(){
               return (
                 <TableRow hover role='checkbox' tabIndex={-1} key={projects.id}>
                   {columns.map(column => {
-                    if(projects[column.id] > 0 ){
+                    if(projects[column.id] > 0 && column.id !== "id"){
                       const value = '$'+projects[column.id]
 
                       return (

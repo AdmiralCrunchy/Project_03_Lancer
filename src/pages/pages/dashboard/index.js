@@ -36,8 +36,8 @@ const Dashboard = () => {
   return (
 
     <div>
-      <ProjectTable sx={{marginBottom: 4}} />
       <InvoiceTable sx={{marginBottom: 4}} />
+      <ProjectTable sx={{marginBottom: 4}} />
       <ClientTable sx={{marginBottom: 4}} />
     </div>
 
