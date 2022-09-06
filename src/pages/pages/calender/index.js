@@ -19,6 +19,7 @@ import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
+import { permCheck } from '../../../permcheck'
 
 // const Card = styled(MuiCard)(({ theme }) => ({
 //     [theme.breakpoints.up('sm')]: { width: '100rem' }
@@ -28,151 +29,129 @@ import TableContainer from '@mui/material/TableContainer'
 //     return { day, month, year, name, status, appName, description}
 //   }
 
-  const createData = (day, month, year, name, status, appName, description) => {
-    return { day, month, year, name, status, appName, description}
-  }
-
-  const columns = [
-    {id: 'firstName', label: 'First Name', minWidth: 170,  align: 'center'},
-    {id: 'lastName', label: 'Last Name', minWidth: 170,  align: 'center'},
-    {id: 'email', label: 'E-mail', minWidth: 170, align: 'center'},
-    {id: 'phone', label: 'Phone', minWidth: 170, align: 'center'},
-    {id: 'address', label: 'Address', minWidth: 170, align: 'center'},
+//   const columns = [
+//     {id: 'firstName', label: 'First Name', minWidth: 170,  align: 'center'},
+//     {id: 'lastName', label: 'Last Name', minWidth: 170,  align: 'center'},
+//     {id: 'email', label: 'E-mail', minWidth: 170, align: 'center'},
+//     {id: 'phone', label: 'Phone', minWidth: 170, align: 'center'},
+//     {id: 'address', label: 'Address', minWidth: 170, align: 'center'},
     
-  ]
+//   ]
 
-  const rows = [
-    createData(2,9,2022,`Let's Play`, 'Parker McKillop', 'Checking in', "Just a brief check up to see where we are in the project.")
-  ]
+//   const rows = [
+//     createData(2,9,2022,`Let's Play`, 'Parker McKillop', 'Checking in', "Just a brief check up to see where we are in the project.")
+//   ]
    
    
   function CalendarPage() {
    
-  let today = new Date();
 
-    const [page, setPage] = useState(0)
-    const [rowsPerPage, setRowsPerPage] = useState(5)
-    const [projects, setProjects]= useState(null)
+//   // ** States
+//     const [page, setPage] = useState(0)
+//     const [rowsPerPage, setRowsPerPage] = useState(10)
+//     const [rows, setRows] = useState(null)
 
-    const [day,setDate] = useState(2)
-    const [month,setMonth] = useState("September")
-    const [year,setYear] = useState(2022)
+//     const [day,setDate] = useState(2)
+//     const [month,setMonth] = useState("September")
+//     const [year,setYear] = useState(2022)
    
-    const dateChangeHandler = ([day, month, year]) => {
-      setDate(day)
-=======
-    useEffect(() => {
-      fetch("http://lancerbackend.herokuapp.com/developers/verify", {
-        method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors',
-        contentType: 'application/json',
-        headers: {
-        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-        "Access-Control-Allow-Origin": "*"
-      }
-      })
-       .then(res => res.json())
-       .then((data) =>{
-        console.log(data)
-        console.log(data.dev)
-        if(!data.dev){
-          if (typeof window !== 'undefined') {
-            localStorage.clear();
-            window.location.href= "/"
-          }
-        }
-    
-        })
-    
-       }, [])
+//     const dateChangeHandler = ([day, month, year]) => {
+//       setDate(day)
 
-    const [date,setDate] = useState("")
-    const [month,setMonth] = useState("")
-    const [year,setYear] = useState("")
+    // useEffect(() => {
+    //   permCheck()
+    //    }, [])
+
+    //    router = useRouter()
+
+//     const [date,setDate] = useState("")
+//     const [month,setMonth] = useState("")
+//     const [year,setYear] = useState("")
    
-    const dateChangeHandler = ([date, month, year]) => {
-      // ...use the values here
+//     const dateChangeHandler = ([date, month, year]) => {
+//       // ...use the values here
       
-      console.log(date)
-      setDate(date)
->>>>>>> ea90e3d9df514154c57b4312057c78c30e496523
-      if(month === 1){
-        setMonth("January")
-      }
-      if(month === 2){
-        setMonth("February")
-      }
-      if(month === 3){
-        setMonth("March")
-      }
-      if(month === 4){
-        setMonth("April")
-      }
-      if(month === 5){
-        setMonth("May")
-      }
-      if(month === 6){
-        setMonth("June")
-      }
-      if(month === 7){
-        setMonth("July")
-      }
-      if(month === 8){
-        setMonth("August")
-      }
-      if(month === 9){
-        setMonth("September")
-      }
-      if(month === 10){
-        setMonth("October")
-      }
-      if(month === 11){
-        setMonth("November")
-      }
-      if(month === 12){
-        setMonth("December")
-      }
-      setYear(year)
-    };
+//       console.log(date)
+//       setDate(date)
 
-    useEffect(() => {
-      fetch("http://lancerbackend.herokuapp.com/developers/home", {
-        method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors',
-        contentType: 'application/json',
-        headers: {
-          'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-           "Access-Control-Allow-Origin": "*"
-    }
-      })
-       .then(res => res.json())
-       .then((data) =>{
-        console.log(data)
-        const holdingArray = []
-        if(!data.Projects){return}
-        data.Projects.map(project => {
-          let details = {
-            firstName: project.Client.first_name,
-            lastName: project.Client.last_name,
-            phone: project.Client.phone,
-            email: project.Client.email,
-            address: project.Client.address,
-          }
-          holdingArray.push(details)
+//       if(month === 1){
+//         setMonth("January")
+//       }
+//       if(month === 2){
+//         setMonth("February")
+//       }
+//       if(month === 3){
+//         setMonth("March")
+//       }
+//       if(month === 4){
+//         setMonth("April")
+//       }
+//       if(month === 5){
+//         setMonth("May")
+//       }
+//       if(month === 6){
+//         setMonth("June")
+//       }
+//       if(month === 7){
+//         setMonth("July")
+//       }
+//       if(month === 8){
+//         setMonth("August")
+//       }
+//       if(month === 9){
+//         setMonth("September")
+//       }
+//       if(month === 10){
+//         setMonth("October")
+//       }
+//       if(month === 11){
+//         setMonth("November")
+//       }
+//       if(month === 12){
+//         setMonth("December")
+//       }
+//       setYear(year)
+//     };
+
+//     useEffect(() => {
+    // if (typeof window !== 'undefined') {
+//       fetch("http://lancerbackend.herokuapp.com/developers/home", {
+//         method: 'GET', // *GET, POST, PUT, DELETE, etc.
+//         mode: 'cors',
+//         contentType: 'application/json',
+//         headers: {
+//           'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+//            "Access-Control-Allow-Origin": "*"
+//     }
+//       })
+//        .then(res => res.json())
+//        .then((data) =>{
+//         console.log(data)
+//         const holdingArray = []
+//         if(!data.Projects){return}
+//         data.Projects.map(project => {
+//           let details = {
+//             firstName: project.Client.first_name,
+//             lastName: project.Client.last_name,
+//             phone: project.Client.phone,
+//             email: project.Client.email,
+//             address: project.Client.address,
+//           }
+//           holdingArray.push(details)
   
-        })
-          setRows(holdingArray)
-       }
-       )
-    }, [])
+//         })
+//           setRows(holdingArray)
+//        }
+//        )}
+//     }, [])
 
-    const totalAppointments = () => {
-      return (rows.length)
-    }
+//     const totalAppointments = () => {
+//       return (rows.length)
+//     }
 
-    const handleChangePage = (event, newPage) => {
-      setPage(newPage)
-    }
+//     const handleChangePage = (event, newPage) => {
+//       setPage(newPage)
+//     }
   
 //     const handleChangeRowsPerPage = event => {
 //       setRowsPerPage(+event.target.value)
@@ -180,69 +159,9 @@ import TableContainer from '@mui/material/TableContainer'
 //     }
 
     return (
-      <Box>
-        <CardContent sx={{ padding: theme => `${theme.spacing(5,5,5)} !important`}}>
-          <Calendar onDateChange={dateChangeHandler} />
-          <h1> Important Appointments</h1>
-                <tbody>
-                <tr>
-                  <h2>{month} {day} {year}: </h2>
-                </tr>
-              </tbody>
-              {rows && <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-              <TableContainer sx={{ maxHeight: 550 }}>
-                <Table stickyHeader aria-label='sticky table'>
-                  <TableHead>
-                    <TableRow>
-                      {columns.map(column => (
-                        <TableCell key={column.id} align={column.align} sx={{ minWidth: column.minWidth }}>
-                          {column.label}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-                      return (
-                        <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
-                          {columns.map(column => {
-                            const value = row[column.id]
-
-                          return (
-                            <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === 'number' ? column.format(value) : value}
-                            </TableCell>
-                          )
-                        }
-                      })}
-                    </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
-          component='div'
-          count={projects.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>}
-          <h1> Important Appointments</h1>
-                <tbody>
-                <tr>
-                  <h2>{month} {day} {year}: </h2>
-                </tr>
-              </tbody>
-    </Box>
-=======
         <div></div>
 
 
->>>>>>> 7431d69daabe5a9ef5422b062377a45d6048625b
     )
 
 //   }
