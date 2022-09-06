@@ -86,7 +86,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
       setDate(day)
 =======
     useEffect(() => {
-      fetch("https://lancerbackend.herokuapp.com/developers/verify", {
+      fetch("http://lancerbackend.herokuapp.com/developers/verify", {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors',
         contentType: 'application/json',
@@ -160,7 +160,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
     };
 
     useEffect(() => {
-      fetch("https://lancerbackend.herokuapp.com/developers/home", {
+      fetch("http://lancerbackend.herokuapp.com/developers/home", {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors',
         contentType: 'application/json',

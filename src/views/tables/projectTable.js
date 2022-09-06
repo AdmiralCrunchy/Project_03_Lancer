@@ -37,7 +37,7 @@ export default function ProjectTables(){
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if(JSON.parse(localStorage.getItem("type")) === "developer"){
-    fetch("https://lancerbackend.herokuapp.com/developers/home", {
+    fetch("http://lancerbackend.herokuapp.com/developers/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
@@ -64,7 +64,7 @@ export default function ProjectTables(){
      }
      )
     }else{
-      fetch("https://lancerbackend.herokuapp.com/clients/home", {
+      fetch("http://lancerbackend.herokuapp.com/clients/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',

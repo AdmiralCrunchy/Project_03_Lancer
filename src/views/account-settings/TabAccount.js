@@ -70,7 +70,7 @@ const TabAccount = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if(JSON.parse(localStorage.getItem("type")) === "developer"){
-    fetch("https://lancerbackend.herokuapp.com/developers/home", {
+    fetch("http://lancerbackend.herokuapp.com/developers/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
@@ -91,7 +91,7 @@ const TabAccount = () => {
      )
     }
   else{
-    fetch("https://lancerbackend.herokuapp.com/clients/home", {
+    fetch("http://lancerbackend.herokuapp.com/clients/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
@@ -116,7 +116,7 @@ const TabAccount = () => {
   const fetchAccUpdate = () => {
     if (typeof window !== 'undefined') {
       if(JSON.parse(localStorage.getItem("type")) === "developer"){
-    fetch("https://lancerbackend.herokuapp.com/developers/settings", {
+    fetch("http://lancerbackend.herokuapp.com/developers/settings", {
       method: 'PUT', 
       mode: 'cors',
       
@@ -138,7 +138,7 @@ const TabAccount = () => {
         console.log(data)
       })
     }else{
-      fetch("https://lancerbackend.herokuapp.com/clients/settings", {
+      fetch("http://lancerbackend.herokuapp.com/clients/settings", {
       method: 'PUT', 
       mode: 'cors',
       
