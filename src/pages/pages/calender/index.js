@@ -18,6 +18,7 @@ import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
+import TablePagination from '@mui/material/TablePagination'
 
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -29,69 +30,28 @@ const Card = styled(MuiCard)(({ theme }) => ({
   }
 
   const columns = [
-    {id: 'firstName', label: 'First Name', minWidth: 170,  align: 'center'},
-    {id: 'lastName', label: 'Last Name', minWidth: 170,  align: 'center'},
-    {id: 'email', label: 'E-mail', minWidth: 170, align: 'center'},
-    {id: 'phone', label: 'Phone', minWidth: 170, align: 'center'},
+    {id: 'projectName', label: 'Project Name', minWidth: 170,  align: 'center'},
+    {id: 'deadlineDate', label: 'Project Deadline', minWidth: 170, align: 'center'},
     {id: 'address', label: 'Address', minWidth: 170, align: 'center'},
     
   ]
+   
+function CalendarPage() {
+   
+  let today = new Date();
 
-  const rows = [
-    createData(2,9,2022,`Let's Play`, 'Parker McKillop', 'Checking in', "Just a brief check up to see where we are in the project.")
-  ]
-   
-   
-  function CalendarPage() {
-   
-<<<<<<< HEAD
-  // ** States
     const [page, setPage] = useState(0)
-    const [rowsPerPage, setRowsPerPage] = useState(10)
-    const [rows, setRows] = useState(null)
+    const [rowsPerPage, setRowsPerPage] = useState(5)
+    const [projects, setProjects]= useState(null)
 
-    const [day,setDate] = useState(2)
+    const [day,setDate] = useState(today.getDate())
     const [month,setMonth] = useState("September")
-    const [year,setYear] = useState(2022)
+    const [year,setYear] = useState(today.getFullYear())
    
     const dateChangeHandler = ([day, month, year]) => {
-      setDate(day)
-=======
-    useEffect(() => {
-      fetch("http://lancerbackend.herokuapp.com/developers/verify", {
-        method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors',
-        contentType: 'application/json',
-        headers: {
-        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-        "Access-Control-Allow-Origin": "*"
-      }
-      })
-       .then(res => res.json())
-       .then((data) =>{
-        console.log(data)
-        console.log(data.dev)
-        if(!data.dev){
-          if (typeof window !== 'undefined') {
-            localStorage.clear();
-            window.location.href= "/"
-          }
-        }
-    
-        })
-    
-       }, [])
-
-    const [date,setDate] = useState("")
-    const [month,setMonth] = useState("")
-    const [year,setYear] = useState("")
-   
-    const dateChangeHandler = ([date, month, year]) => {
       // ...use the values here
-      
-      console.log(date)
-      setDate(date)
->>>>>>> ea90e3d9df514154c57b4312057c78c30e496523
+      console.log(day)
+      setDate(day)
       if(month === 1){
         setMonth("January")
       }
@@ -131,6 +91,12 @@ const Card = styled(MuiCard)(({ theme }) => ({
       setYear(year)
     };
 
+    const totalAppointments = () => {
+      return (projects.length)
+    }
+
+    const router = useRouter()
+
     useEffect(() => {
       fetch("http://lancerbackend.herokuapp.com/developers/home", {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -148,11 +114,8 @@ const Card = styled(MuiCard)(({ theme }) => ({
         if(!data.Projects){return}
         data.Projects.map(project => {
           let details = {
-            firstName: project.Client.first_name,
-            lastName: project.Client.last_name,
-            phone: project.Client.phone,
-            email: project.Client.email,
-            address: project.Client.address,
+
+            projectComplete: project.completion_date,
           }
           holdingArray.push(details)
   
@@ -161,10 +124,6 @@ const Card = styled(MuiCard)(({ theme }) => ({
        }
        )
     }, [])
-
-    const totalAppointments = () => {
-      return (rows.length)
-    }
 
     const handleChangePage = (event, newPage) => {
       setPage(newPage)
@@ -177,56 +136,66 @@ const Card = styled(MuiCard)(({ theme }) => ({
 
     return (
       <Box>
-        <CardContent sx={{ padding: theme => `${theme.spacing(5,5,5)} !important`}}>
-          <Calendar onDateChange={dateChangeHandler} />
+        <Calendar onDateChange={dateChangeHandler} />
+        <h2>Project Deadlines</h2>
+        {projects && <Paper sx={{ width: '100%', overflow: 'hidden', marginBottom:4 }}>
+          <TableContainer component={Paper}>
+          <Table stickyHeader aria-label='sticky table'>
+              <TableHead>
+                <TableRow>
+                  {columns.map(column => (
+                    <TableCell key={column.id} align={column.align} sx={{ minWidth: column.minWidth }}>
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {projects.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(projects => {
+                  return (
+                    <TableRow hover role='checkbox' tabIndex={-1} key={projects.id}>
+                      {columns.map(column => {
+                        if(projects[column.id] > 0 ){
+                          const value = '$'+projects[column.id]
+
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === 'number' ? column.format(value) : value}
+                            </TableCell>
+                          )
+                        }else{
+                          const value = projects[column.id]
+
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === 'number' ? column.format(value) : value}
+                            </TableCell>
+                          )
+                        }
+                      })}
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component='div'
+          count={projects.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>}
           <h1> Important Appointments</h1>
                 <tbody>
                 <tr>
                   <h2>{month} {day} {year}: </h2>
                 </tr>
               </tbody>
-              {rows && <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-              <TableContainer sx={{ maxHeight: 550 }}>
-                <Table stickyHeader aria-label='sticky table'>
-                  <TableHead>
-                    <TableRow>
-                      {columns.map(column => (
-                        <TableCell key={column.id} align={column.align} sx={{ minWidth: column.minWidth }}>
-                          {column.label}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-                      return (
-                        <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
-                          {columns.map(column => {
-                            const value = row[column.id]
-
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === 'number' ? column.format(value) : value}
-                              </TableCell>
-                            )
-                          })}
-                        </TableRow>
-                      )
-                    })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
-                component='div'
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}/>
-          </Paper>}
-        </CardContent>
-      </Box>
+    </Box>
     )
   }
 
