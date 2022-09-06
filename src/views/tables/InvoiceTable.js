@@ -13,7 +13,7 @@ import TablePagination from '@mui/material/TablePagination'
 import { CheckboxMultipleMarkedOutline } from 'mdi-material-ui'
 
 const columns = [
-    { id: 'id', label: 'Invoice Id', minWidth: 25 },
+    { id: 'id', label: 'Invoice Id', minWidth: 25, align: 'center' },
     { id: 'amountDue', label: 'Amount Due', minWidth: 25, align: 'center' },
     { id: 'paymentDate', label: 'Due Date', minWidth: 25, align: 'center' },
     { id: 'projectName', label: 'Project Name', minWidth: 150, align: 'center' },
@@ -82,7 +82,7 @@ export default function InvoiceTable() {
 
     return (
         <div>
-            {projects && <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+            {projects && <Paper sx={{ width: '100%', overflow: 'hidden', marginBottom:4 }}>
 
                 <TableContainer component={Paper}>
                     <Table stickyHeader aria-label='sticky table'>

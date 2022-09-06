@@ -12,12 +12,12 @@ import TableContainer from '@mui/material/TableContainer'
 import TablePagination from '@mui/material/TablePagination'
 
 const columns = [
-  { id: 'firstName', label: 'First Name', minWidth: 170, align: 'center' },
-  { id: 'lastName', label: 'Last Name', minWidth: 170, align: 'center' },
-  { id: 'email', label: 'E-mail', minWidth: 170, align: 'center' },
-  { id: 'phone', label: 'Phone', minWidth: 170, align: 'center' },
-  { id: 'address', label: 'Address', minWidth: 170, align: 'center' },
-
+  {id: 'firstName', label: 'First Name', minWidth: 170,  align: 'center'},
+  {id: 'lastName', label: 'Last Name', minWidth: 170,  align: 'center'},
+  {id: 'email', label: 'E-mail', minWidth: 170, align: 'center'},
+  {id: 'phone', label: 'Phone', minWidth: 170, align: 'center'},
+  {id: 'address', label: 'Address', minWidth: 170, align: 'center'},
+  
 ]
 
 const ClientTable = () => {
@@ -28,111 +28,66 @@ const ClientTable = () => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      fetch("http://lancerbackend.herokuapp.com/developers/verify", {
-        method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors',
-        contentType: 'application/json',
-        headers: {
-          'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-          "Access-Control-Allow-Origin": "*"
-        }
-      })
-        .then(res => res.json())
-        .then((data) => {
-          if (!data.dev) {
-            if (typeof window !== 'undefined') {
-              localStorage.clear();
-              window.location.href = "/"
-            }
-          }
-
-        })
+    fetch("http://lancerbackend.herokuapp.com/developers/verify", {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors',
+      contentType: 'application/json',
+      headers: {
+      'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      "Access-Control-Allow-Origin": "*"
     }
-  }, [])
+    })
+     .then(res => res.json())
+     .then((data) =>{
+      if(!data.dev){
+        if (typeof window !== 'undefined') {
+          localStorage.clear();
+          window.location.href= "/"
+        }
+      }
+  
+      })
+    }
+     }, [])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      if (JSON.parse(localStorage.getItem("type")) === "developer") {
-        fetch("http://lancerbackend.herokuapp.com/developers/home", {
-          method: 'GET', // *GET, POST, PUT, DELETE, etc.
-          mode: 'cors',
-          contentType: 'application/json',
-          headers: {
-            'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-            "Access-Control-Allow-Origin": "*"
-          }
-        })
-          .then(res => res.json())
-          .then((data) => {
-            const holdingArray = []
-            if (data.projects) {
-              data.Projects.map(project => {
-                let details = {
-                  firstName: project.Client.first_name,
-                  lastName: project.Client.last_name,
-                  phone: project.Client.phone,
-                  email: project.Client.email,
-                  address: project.Client.address,
-                }
-
-                holdingArray.push(details)
-
-              })
-            }
-            setRows(holdingArray)
-          }
-          )
+      
+    fetch("http://lancerbackend.herokuapp.com/developers/home", {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors',
+      contentType: 'application/json',
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        "Access-Control-Allow-Origin": "*"
       }
-
-      else {
-        fetch("http://lancerbackend.herokuapp.com/clients/home", {
-          method: 'GET', // *GET, POST, PUT, DELETE, etc.
-          mode: 'cors',
-          contentType: 'application/json',
-          headers: {
-            'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-            "Access-Control-Allow-Origin": "*"
-          }
-        })
-          .then(res => res.json())
-          .then((data) => {
-            console.log(data)
-            const holdingArray = []
-            if (data.projects) {
-              data.Projects.map(project => {
-                let details = {
-                  firstName: project.Developer.first_name,
-                  lastName: project.Developer.last_name,
-                  phone: project.Developer.phone,
-                  email: project.Developer.email,
-                  address: project.Developer.address,
-                }
-
-                holdingArray.push(details)
-
-              }
-              )
-            }else{
-              let details = {
-                firstName: data.Project.Developer.first_name,
-                lastName: data.Project.Developer.last_name,
-                phone: data.Project.Developer.phone,
-                email: data.Project.Developer.email,
-                address: data.Project.Developer.address,
-              }
-              holdingArray.push(details)
-            }
-            setRows(holdingArray)
-          }
-          )
-      }
+    })
+     .then(res => res.json())
+     .then((data) =>{
+      const holdingArray = []
+      
+      data.Projects.map(project => {
+        let details = {
+          firstName: project.Client.first_name,
+          lastName: project.Client.last_name,
+          phone: project.Client.phone,
+          email: project.Client.email,
+          address: project.Client.address,
+        }
+        
+        holdingArray.push(details)
+      
+      })
+        setRows(holdingArray)
+     }
+     )
     }
   }, [])
 
   const totalClients = () => {
     return (rows.length)
   }
-
+  
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
   }
@@ -145,47 +100,47 @@ const ClientTable = () => {
   return (
     <div>
 
-      {rows && <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-        <TableContainer sx={{ maxHeight: 550 }}>
-          <Table stickyHeader aria-label='sticky table'>
-            <TableHead>
-              <TableRow>
-                {columns.map(column => (
-                  <TableCell key={column.id} align={column.align} sx={{ minWidth: column.minWidth }}>
-                    {column.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-                return (
-                  <TableRow hover role='checkbox' tabIndex={-1} key={row.id}>
-                    {columns.map(column => {
-                      const value = row[column.id]
+    {rows && <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+      <TableContainer sx={{ maxHeight: 550 }}>
+        <Table stickyHeader aria-label='sticky table'>
+          <TableHead>
+            <TableRow>
+              {columns.map(column => (
+                <TableCell key={column.id} align={column.align} sx={{ minWidth: column.minWidth }}>
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+              return (
+                <TableRow hover role='checkbox' tabIndex={-1} key={row.id}>
+                  {columns.map(column => {
+                    const value = row[column.id]
 
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number' ? column.format(value) : value}
-                        </TableCell>
-                      )
-                    })}
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
-          component='div'
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>}
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        {column.format && typeof value === 'number' ? column.format(value) : value}
+                      </TableCell>
+                    )
+                  })}
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component='div'
+        count={rows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </Paper>}
     </div>
   )
 }

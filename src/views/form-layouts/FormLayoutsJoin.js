@@ -105,7 +105,7 @@ const FormLayoutsJoin = () => {
                 fetchNewProject()
               }}
             >
-              Create Project
+              Join
             
               </Button>
             </Grid>

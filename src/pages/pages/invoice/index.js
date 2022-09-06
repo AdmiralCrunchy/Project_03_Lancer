@@ -26,11 +26,11 @@ const FormLayouts = () => {
 
   return (
     <div>
-
+      
       <InvoiceTable  />
       
 
-      {JSON.parse(localStorage.getItem("type")) === "developer" &&<FormLayoutsBasic />}
+      {typeof window !== 'undefined' && JSON.parse(localStorage.getItem("type")) === "developer" &&<FormLayoutsBasic />}
 
 
     </div>
