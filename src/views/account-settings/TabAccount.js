@@ -68,6 +68,8 @@ const TabAccount = () => {
   }
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if(JSON.parse(localStorage.getItem("type")) === "developer"){
     fetch("http://lancerbackend.herokuapp.com/developers/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
@@ -87,10 +89,33 @@ const TabAccount = () => {
      })
      }
      )
+    }
+  else{
+    fetch("http://lancerbackend.herokuapp.com/clients/home", {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors',
+      contentType: 'application/json',
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+         "Access-Control-Allow-Origin": "*"}
+    })
+     .then(res => res.json())
+     .then((data) =>{
+      console.log(data)
+      setValues({
+        firstName: data.first_name,
+        lastName: data.last_name,
+        email: data.email,
+        phone: data.phone
+     })
+     }
+     )
+  }}
   }, [])
 
   const fetchAccUpdate = () => {
-
+    if (typeof window !== 'undefined') {
+      if(JSON.parse(localStorage.getItem("type")) === "developer"){
     fetch("http://lancerbackend.herokuapp.com/developers/settings", {
       method: 'PUT', 
       mode: 'cors',
@@ -112,6 +137,30 @@ const TabAccount = () => {
       .then((data) => {
         console.log(data)
       })
+    }else{
+      fetch("http://lancerbackend.herokuapp.com/clients/settings", {
+      method: 'PUT', 
+      mode: 'cors',
+      
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        
+        // "Access-Control-Allow-Origin": "*"
+        'Content-Type': "application/json",
+      },
+      body: JSON.stringify({
+        first_name: values.firstName,
+        last_name: values.lastName,
+        email: values.email,
+        phone: values.phone,
+      })
+    })
+      .then(res => res.json())
+      .then((data) => {
+        console.log(data)
+      })
+    }
+  }
   }
 
   const handleChange = prop => event => {
@@ -137,9 +186,7 @@ const TabAccount = () => {
                     id='account-settings-upload-image'
                   />
                 </ButtonStyled>
-                <ResetButtonStyled color='error' variant='outlined' onClick={() => setImgSrc('/images/avatars/1.png')}>
-                  Reset
-                </ResetButtonStyled>
+                
                 <Typography variant='body2' sx={{ marginTop: 5 }}>
                   Allowed PNG or JPEG. Max size of 800K.
                 </Typography>

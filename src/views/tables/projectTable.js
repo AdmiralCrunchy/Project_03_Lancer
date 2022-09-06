@@ -1,5 +1,6 @@
 // ** React Imports
 import { useState, useEffect } from 'react'
+import { permCheck } from 'src/permcheck'
 
 // ** MUI Imports
 import Paper from '@mui/material/Paper'
@@ -13,16 +14,15 @@ import TablePagination from '@mui/material/TablePagination'
 import { CheckboxMultipleMarkedOutline } from 'mdi-material-ui'
 
 const columns = [
-  {id: 'id', label: 'Project Id', minWidth: 25},
-  {id: 'project_name', label: 'Project Name', minWidth: 150},
-  {id: 'project_status', label: 'Project Status', minWidth: 150, align: 'center'},
-  {id: 'initial_charge', label: 'Initial Charge', minWidth: 150, align: 'right'},
-  {id: 'balance', label: 'Project Balance', minWidth: 150, align: 'right'},
+  {id: 'projectName', label: 'Project Name', minWidth: 170,  align: 'center'},
+  {id: 'projectStatus', label: 'Project Status', minWidth: 170, align: 'center'},
+  {id: 'initialCharge', label: 'Initial Charge', minWidth: 170,  align: 'center'},
+  {id: 'balance', label: 'Project Balance', minWidth: 170,  align: 'center'},
 ]
 
 
 
-export default function ProjectTable(){
+export default function ProjectTables(){
 
 
   const [page, setPage] = useState(0)
@@ -34,34 +34,39 @@ export default function ProjectTable(){
   }
 
   useEffect(() => {
-    fetch("http://lancerbackend.herokuapp.com/developers/home", {
-      method: 'GET', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors',
-      contentType: 'application/json',
-      headers: {
-                'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-                "Access-Control-Allow-Origin": "*"
-              }
-    })
-     .then(res => res.json())
-     .then((data) =>{
-      console.log(data)
-      const holdingArray = []
-      data.Projects.map(project => {
-        let details = {
-          id: project.id,
-          projectName: project.project_name,
-          projectStatus: project.project_status,
-          initialCharge: project.initial_charge,
-          balance: project.balance
-        }
-        holdingArray.push(details)
+    permCheck()
+       }, [])
 
-      })
-        setProjects(holdingArray)
-     }
-     )
-  }, [])
+       useEffect(() => {
+        fetch("http://lancerbackend.herokuapp.com/developers/home", {
+          method: 'GET', // *GET, POST, PUT, DELETE, etc.
+          mode: 'cors',
+          contentType: 'application/json',
+          headers: {
+            'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+            "Access-Control-Allow-Origin": "*"
+          }
+        })
+         .then(res => res.json())
+         .then((data) =>{
+          console.log(data)
+          const holdingArray = []
+          if(!data.Projects){return}
+          data.Projects.map(project => {
+            let details = {
+              id: project.id,
+              projectName: project.project_name,
+              projectStatus: project.project_status,
+              initialCharge: project.initial_charge,
+              balance: project.balance
+            }
+            holdingArray.push(details)
+    
+          })
+            setProjects(holdingArray)
+         }
+         )
+      }, [])
   
   
   const handleChangePage = (event, newPage) => {
@@ -77,7 +82,7 @@ export default function ProjectTable(){
 
   return (
     <div>
-    {projects && <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    {projects && <Paper sx={{ width: '100%', overflow: 'hidden', marginBottom:4 }}>
       
       <TableContainer component={Paper}>
       <Table stickyHeader aria-label='sticky table'>
@@ -93,12 +98,11 @@ export default function ProjectTable(){
            <TableBody>
             {projects.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(projects => {
               return (
-                <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
+                <TableRow hover role='checkbox' tabIndex={-1} key={projects.id}>
                   {columns.map(column => {
-                    console.log(column.id)
-                    if(row[column.id] > 0 && column.id != 'id'){
-                      const value = '$'+row[column.id]
-                      
+                    if(projects[column.id] > 0 ){
+                      const value = '$'+projects[column.id]
+
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {column.format && typeof value === 'number' ? column.format(value) : value}
@@ -129,7 +133,9 @@ export default function ProjectTable(){
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+      
   </Paper>}
+
   </div>
   )
 }

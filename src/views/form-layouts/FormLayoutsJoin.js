@@ -24,7 +24,7 @@ import MessageOutline from 'mdi-material-ui/MessageOutline'
 import CreditCardOutline from  'mdi-material-ui'
 import CreditCardClockOutline from 'mdi-material-ui'
 
-const FormLayoutsProject = () => {
+const FormLayoutsJoin = () => {
   const [values, setValues] = useState({
     projectName: '',
     projectStatus: '',
@@ -35,7 +35,7 @@ const FormLayoutsProject = () => {
   const fetchNewProject = () => {
     if (typeof window !== 'undefined') {
     fetch("http://lancerbackend.herokuapp.com/projects/", {
-      method: 'POST', 
+      method: 'PUT', 
       mode: 'cors',
       headers: {
         'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
@@ -44,23 +44,13 @@ const FormLayoutsProject = () => {
       },
       body: JSON.stringify({
         project_name: values.projectName,
-        project_status: values.projectStatus,
-        initial_charge: values.initialCharge,
-        balance: values.initialCharge,
-        password: values.password
+        password: values.password,
       })
     })
       .then(res => res.json())
       .then((data) => {
         console.log(data)
         location.reload()
-
-        // setValues({
-        //   projectName: '',
-        //   projectStatus: '',
-        //   initialCharge: '',
-        //   password: ''
-        // })
       })
   }
   }
@@ -78,7 +68,7 @@ const FormLayoutsProject = () => {
     
     <div >
     <Card sx={{justifyContent: 'flex-end'}}>
-      <CardHeader title='Create something new!' titleTypographyProps={{ variant: 'h6' }} align = "center"  />
+      <CardHeader title='Join your Lancer Teammate!' titleTypographyProps={{ variant: 'h6' }} align = "center"  />
       <CardContent>
         <form onSubmit={e => e.preventDefault()} >
           
@@ -91,26 +81,6 @@ const FormLayoutsProject = () => {
                 placeholder='Name your next creation!'
                 value={values.projectName}
                 onChange={handleChange('projectName')}
-                sx={{ marginBottom: 2 }} 
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label = "Initial Status"
-                value={values.projectStatus}
-                onChange={handleChange('projectStatus')}
-                sx={{ marginBottom: 2 }} 
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label = "Payment Due"
-                value={values.initialCharge}
-                onChange={handleChange('initialCharge')}
                 sx={{ marginBottom: 2 }} 
               />
             </Grid>
@@ -135,7 +105,7 @@ const FormLayoutsProject = () => {
                 fetchNewProject()
               }}
             >
-              Create Project
+              Join
             
               </Button>
             </Grid>
@@ -147,4 +117,4 @@ const FormLayoutsProject = () => {
   )
 }
 
-export default FormLayoutsProject
+export default FormLayoutsJoin

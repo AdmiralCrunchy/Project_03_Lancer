@@ -27,6 +27,7 @@ const ClientTable = () => {
   const [rows, setRows] = useState(null)
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
     fetch("http://lancerbackend.herokuapp.com/developers/verify", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
@@ -38,8 +39,6 @@ const ClientTable = () => {
     })
      .then(res => res.json())
      .then((data) =>{
-      console.log(data)
-      console.log(data.dev)
       if(!data.dev){
         if (typeof window !== 'undefined') {
           localStorage.clear();
@@ -48,24 +47,25 @@ const ClientTable = () => {
       }
   
       })
-  
+    }
      }, [])
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      
     fetch("http://lancerbackend.herokuapp.com/developers/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
       headers: {
         'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-         "Access-Control-Allow-Origin": "*"
-  }
+        "Access-Control-Allow-Origin": "*"
+      }
     })
      .then(res => res.json())
      .then((data) =>{
-      console.log(data)
       const holdingArray = []
-      if(!data.Projects){return}
+      
       data.Projects.map(project => {
         let details = {
           firstName: project.Client.first_name,
@@ -74,12 +74,14 @@ const ClientTable = () => {
           email: project.Client.email,
           address: project.Client.address,
         }
+        
         holdingArray.push(details)
-
+      
       })
         setRows(holdingArray)
      }
      )
+    }
   }, [])
 
   const totalClients = () => {
@@ -113,7 +115,7 @@ const ClientTable = () => {
           <TableBody>
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
               return (
-                <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
+                <TableRow hover role='checkbox' tabIndex={-1} key={row.id}>
                   {columns.map(column => {
                     const value = row[column.id]
 

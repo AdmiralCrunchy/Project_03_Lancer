@@ -12,13 +12,18 @@ import FormLayoutsAlignment from 'src/views/form-layouts/FormLayoutsAlignment'
 
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
+import InvoiceTable from 'src/views/tables/InvoiceTable'
 
 const FormLayouts = () => {
   return (
-    <DatePickerWrapper>
+    <div>
+      <InvoiceTable sx={{ marginBottom: 4 }} />
+      
+    {/* <DatePickerWrapper>
       <Grid container spacing={6}>
         <Grid item xs={12} md={6}>
           <FormLayoutsBasic />
+          
         </Grid>
         <Grid item xs={12} md={6}>
           <FormLayoutsIcons />
@@ -30,7 +35,8 @@ const FormLayouts = () => {
           <FormLayoutsAlignment />
         </Grid>
       </Grid>
-    </DatePickerWrapper>
+    </DatePickerWrapper> */}
+    </div>
   )
 }
 
