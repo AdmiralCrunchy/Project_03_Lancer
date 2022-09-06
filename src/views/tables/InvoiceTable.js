@@ -37,7 +37,7 @@ export default function InvoiceTable() {
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-        fetch("http://lancerbackend.herokuapp.com/projects/invoices", {
+        fetch("https://lancerbackend.herokuapp.com/projects/invoices", {
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors',
             contentType: 'application/json',

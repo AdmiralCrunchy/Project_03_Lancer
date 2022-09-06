@@ -68,7 +68,7 @@ const LoginPage = () => {
 
   const fetchLogin = () => {
     if (typeof window !== 'undefined') {
-    fetch("http://lancerbackend.herokuapp.com/developers/login", {
+    fetch("https://lancerbackend.herokuapp.com/developers/login", {
       method: 'POST', 
       mode: 'cors',
       headers: {

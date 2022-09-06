@@ -114,7 +114,7 @@ return (
 
 //     useEffect(() => {
     // if (typeof window !== 'undefined') {
-//       fetch("http://lancerbackend.herokuapp.com/developers/home", {
+//       fetch("https://lancerbackend.herokuapp.com/developers/home", {
 //         method: 'GET', // *GET, POST, PUT, DELETE, etc.
 //         mode: 'cors',
 //         contentType: 'application/json',

@@ -76,7 +76,7 @@ const RegisterPage = () => {
 
   const fetchSignUp = () => {
 
-    fetch("http://lancerbackend.herokuapp.com/clients/signup", {
+    fetch("https://lancerbackend.herokuapp.com/clients/signup", {
       method: 'POST', 
       mode: 'cors',
       headers: {
