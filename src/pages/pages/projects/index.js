@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import FormLayoutsProject from "../../../views/form-layouts/FormLayoutsProject"
 import FormLayoutsJoin from "../../../views/form-layouts/FormLayoutsJoin"
+import ProjectTables from "../../../views/tables/projectTable"
 import { useRouter } from 'next/router'
 
 // ** MUI Imports
@@ -39,75 +40,6 @@ export default function ProjectTable(){
   permCheck()
      }, [])
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if(JSON.parse(localStorage.getItem("type")) === "developer"){
-    fetch("http://lancerbackend.herokuapp.com/projects/dev", {
-      method: 'GET', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors',
-      contentType: 'application/json',
-      headers: {
-        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-        "Access-Control-Allow-Origin": "*"
-      }
-    })
-     .then(res => res.json())
-     .then((data) =>{
-      console.log(data)
-      const holdingArray = []
-      if(!data){return}
-      data.map(project => {
-        
-        let details = {
-          id: project.id,
-          projectName: project.project_name,
-          projectStatus: project.project_status,
-          initialCharge: project.initial_charge,
-          balance: project.balance
-        }
-        
-        holdingArray.push(details)
-
-      })
-      console.log(holdingArray)
-        setProjects(holdingArray)
-     }
-     )}
-     else{
-      fetch("http://lancerbackend.herokuapp.com/projects/client", {
-        method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors',
-        contentType: 'application/json',
-        headers: {
-          'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-          "Access-Control-Allow-Origin": "*"
-        }
-      })
-       .then(res => res.json())
-       .then((data) =>{
-        console.log(data)
-        const holdingArray = []
-        if(!data){return}
-        data.map(project => {
-          
-          let details = {
-            id: project.id,
-            projectName: project.project_name,
-            projectStatus: project.project_status,
-            initialCharge: project.initial_charge,
-            balance: project.balance
-          }
-          
-          holdingArray.push(details)
-  
-        })
-        console.log(holdingArray)
-          setProjects(holdingArray)
-       }
-       )}
-     }
-    
-  }, [])
 
   
   const handleChangePage = (event, newPage) => {
@@ -122,61 +54,9 @@ export default function ProjectTable(){
 
   return (
     <div >
-    {projects && <Paper sx={{ width: '100%', overflow: 'hidden', marginBottom:4 }}>
-      
-      <TableContainer component={Paper}>
-      <Table stickyHeader aria-label='sticky table'>
-          <TableHead>
-            <TableRow>
-              {columns.map(column => (
-                <TableCell key={column.id} align={column.align} sx={{ minWidth: column.minWidth }}>
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-           <TableBody>
-            {projects.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(projects => {
-              return (
-                <TableRow hover role='checkbox' tabIndex={-1} key={projects.id}>
-                  {columns.map(column => {
-                    if(projects[column.id] > 0 ){
-                      const value = '$'+projects[column.id]
+   
 
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number' ? column.format(value) : value}
-                        </TableCell>
-                      )
-                    }else{
-                      const value = projects[column.id]
-
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number' ? column.format(value) : value}
-                        </TableCell>
-                      )
-                    }
-                  })}
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component='div'
-        count={projects.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-      
-  </Paper>}
-
-
+    {typeof window !== 'undefined' && <ProjectTables/>}
   {typeof window !== 'undefined' && JSON.parse(localStorage.getItem("type")) === "developer" && <FormLayoutsProject />}
   {typeof window !== 'undefined' && JSON.parse(localStorage.getItem("type")) === "client" && <FormLayoutsJoin />}
   {/* <UncontrolledBoard /> */}
