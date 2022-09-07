@@ -64,42 +64,6 @@ export default function singleProject(){
         )
     }
 }, [])
-  useEffect(() => {
-    permCheck()
-       }, [])
-
-       useEffect(() => {
-        fetch("http://lancerbackend.herokuapp.com/developers/home", {
-          method: 'GET', // *GET, POST, PUT, DELETE, etc.
-          mode: 'cors',
-          contentType: 'application/json',
-          headers: {
-            'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-            "Access-Control-Allow-Origin": "*"
-          }
-        })
-         .then(res => res.json())
-         .then((data) =>{
-          console.log(data)
-          const holdingArray = []
-          if(!data.Projects){return}
-          data.Projects.map(project => {
-            let details = {
-              id: project.id,
-              projectName: project.project_name,
-              projectStatus: project.project_status,
-              initialCharge: project.initial_charge,
-              balance: project.balance
-            }
-            holdingArray.push(details)
-    
-          })
-            setProjects(holdingArray)
-         }
-         )
-      }, [])
-
-
   
   const handleChangePage = (event, newPage) => {
     setPage(newPage)

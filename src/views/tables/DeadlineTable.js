@@ -26,7 +26,7 @@ const DeadlineTable = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
         if (JSON.parse(localStorage.getItem("type")) === "developer") {
-            fetch("http://127.0.0.1:3001/projects/deadlines/developers", {
+            fetch("https://lancerbackend.herokuapp.com/projects/deadlines/developers", {
                 method: 'GET', // *GET, POST, PUT, DELETE, etc.
                 mode: 'cors',
                 contentType: 'application/json',
@@ -74,12 +74,9 @@ const DeadlineTable = () => {
                         data.Deadlines.map(Deadlines => {
                             let details = {
                                 id: Deadlines.id,
-                                amountDue: Deadlines.Deadlines_sum,
+                                deliverableName: Deadlines.deliverableName,
                                 DeadlinesDate: Deadlines.Deadlines_date,
-                                projectName: data.project_name,
-                                projectId: data.id,
-                                balance: data.balance,
-                                paid: Deadlines.paid
+
                             }
 
                             holdingArray.push(details)
