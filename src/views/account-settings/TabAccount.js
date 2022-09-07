@@ -116,7 +116,7 @@ const TabAccount = () => {
   const fetchAccUpdate = () => {
     if (typeof window !== 'undefined') {
       if(JSON.parse(localStorage.getItem("type")) === "developer"){
-    fetch("http://lancerbackend.herokuapp.com/developers/settings", {
+    fetch("https://lancerbackend.herokuapp.com/developers/settings", {
       method: 'PUT', 
       mode: 'cors',
       
@@ -138,7 +138,7 @@ const TabAccount = () => {
         console.log(data)
       })
     }else{
-      fetch("http://lancerbackend.herokuapp.com/clients/settings", {
+      fetch("https://lancerbackend.herokuapp.com/clients/settings", {
       method: 'PUT', 
       mode: 'cors',
       
