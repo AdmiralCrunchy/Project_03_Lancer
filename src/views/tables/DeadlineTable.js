@@ -25,38 +25,77 @@ const DeadlineTable = () => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      
-    fetch("http://lancerbackend.herokuapp.com/developers/home", {
-      method: 'GET', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors',
-      contentType: 'application/json',
-      headers: {
-        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-        "Access-Control-Allow-Origin": "*"
-      }
-    })
-     .then(res => res.json())
-     .then((data) =>{
-      const holdingArray = []
-      
-      data.Projects.map(project => {
-        let details = {
-          Deliverable: project.Deadlines.deliverable,
-          Priority: project.Deadlines.priority,
+        if (JSON.parse(localStorage.getItem("type")) === "developer") {
+            fetch("http://127.0.0.1:3001/projects/deadlines/developers", {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors',
+                contentType: 'application/json',
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                    "Access-Control-Allow-Origin": "*"
+                }
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    console.log(data)
+                    const holdingArray = []
+                    data.map(data => {
+
+                        data.Deadlines.map(Deadlines => {
+                            let details = {
+                                id: Deadlines.id,
+                                deliverableName: Deadlines.name
+
+                            }
+                            holdingArray.push(details)
+                        })
+
+                    })
+
+                    setDeadlines(holdingArray)
+                }
+                )
+        } else {
+            fetch("https://lancerbackend.herokuapp.com/projects/deadlines/clients", {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors',
+                contentType: 'application/json',
+                headers: {
+                    'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                    "Access-Control-Allow-Origin": "*"
+                }
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    console.log(data)
+                    const holdingArray = []
+                    data.map(data => {
+
+                        data.Deadlines.map(Deadlines => {
+                            let details = {
+                                id: Deadlines.id,
+                                amountDue: Deadlines.Deadlines_sum,
+                                DeadlinesDate: Deadlines.Deadlines_date,
+                                projectName: data.project_name,
+                                projectId: data.id,
+                                balance: data.balance,
+                                paid: Deadlines.paid
+                            }
+
+                            holdingArray.push(details)
+                        })
+
+                    })
+                    setDeadlines(holdingArray)
+                }
+                )
         }
-        
-        holdingArray.push(details)
-      
-      })
-        setDeadlines(holdingArray)
-     }
-     )
     }
-  }, [])
+}, [])
 
 
   const totalClients = () => {
-    return (rows.length)
+    return (Deadlines.length)
   }
   
   const handleChangePage = (event, newPage) => {
@@ -88,6 +127,21 @@ const DeadlineTable = () => {
               return (
                 <TableRow hover role='checkbox' tabIndex={-1} key={deadlines.id}>
                   {columns.map(column => {
+
+                    if (column.id === 'paid') {
+                      return (
+                      <TableCell key={column.id} align={column.align}>
+                        {typeof window !== 'undefined' && JSON.parse(localStorage.getItem("type")) === "developer" && Deadlines.paid === true ? <Checkbox checked={true} /> :     <Checkbox checked={false} id={Deadlines.id + " " + Deadlines.projectId}
+                         onClick={(event) => { 
+                         event.preventDefault()
+                          updateDeadline(event) }} 
+                          onChange={handleChange('completed')} />
+                       }
+                      
+                      </TableCell>
+                       )
+                      }
+
                     if(deadline[column.id] > 0 ){
                       const value = '$'+deadline[column.id]
 
@@ -105,7 +159,8 @@ const DeadlineTable = () => {
                         </TableCell>
                       )
                     }
-                  })}
+                  }
+                  )}
                 </TableRow>
               )
             })}
