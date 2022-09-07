@@ -26,12 +26,11 @@ const navigation = () => {
       ]
     },
     {
-      title: 'Calendar',
+      title: 'Dates',
       icon: Calendar,
       path: '/pages/calender'
     },
     {
-      badgeContent: '3',
       title: 'Invoice',
       icon: CurrencyUsd,
       badgeColor:'success',
