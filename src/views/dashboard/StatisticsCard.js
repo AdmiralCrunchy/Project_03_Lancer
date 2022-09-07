@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -23,7 +24,7 @@ const [rowsPerPage, setRowsPerPage] = useState(5)
 const [projects, setProjects]= useState(null)
 
 useEffect(() => {
-  fetch("http://lancerbackend.herokuapp.com/developers/home", {
+  fetch("https://lancerbackend.herokuapp.com/developers/home", {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors',
     contentType: 'application/json',
@@ -53,6 +54,7 @@ useEffect(() => {
    }
    )
 }, [])
+
 // console.log(projects[0].projectName)
 
 const statData = [
@@ -85,7 +87,9 @@ const statData = [
 
 
 const renderStats = () => {
+
   return statData.map((item, index) => (
+
     <Grid item xs={12} sm={3} key={index}>
       <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
         <Avatar
@@ -109,7 +113,9 @@ const renderStats = () => {
     </Grid>
   ))
 }
+
 return (
+
   <div>
         <Card>
       <CardHeader
@@ -134,5 +140,6 @@ return (
       </CardContent>
     </Card>
   </div>
+
 )
 }
