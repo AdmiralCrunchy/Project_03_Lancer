@@ -46,7 +46,7 @@ const ResetButtonStyled = styled(Button)(({ theme }) => ({
   }
 }))
 
-const TabAccount = () => {
+const UserCard = () => {
   // ** State
   const [openAlert, setOpenAlert] = useState(true)
   const [imgSrc, setImgSrc] = useState('/images/avatars/1.png')
@@ -57,6 +57,8 @@ const TabAccount = () => {
     email: "",
     phone: ""
   })
+
+  const [emailmessage, setEmailMessage] = useState("")
 
   const onChange = file => {
     const reader = new FileReader()
@@ -70,7 +72,7 @@ const TabAccount = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if(JSON.parse(localStorage.getItem("type")) === "developer"){
-    fetch("http://lancerbackend.herokuapp.com/developers/home", {
+    fetch("https://lancerbackend.herokuapp.com/developers/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
@@ -91,7 +93,7 @@ const TabAccount = () => {
      )
     }
   else{
-    fetch("http://lancerbackend.herokuapp.com/clients/home", {
+    fetch("https://lancerbackend.herokuapp.com/clients/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
@@ -116,7 +118,7 @@ const TabAccount = () => {
   const fetchAccUpdate = () => {
     if (typeof window !== 'undefined') {
       if(JSON.parse(localStorage.getItem("type")) === "developer"){
-    fetch("http://lancerbackend.herokuapp.com/developers/settings", {
+    fetch("https://lancerbackend.herokuapp.com/developers/settings", {
       method: 'PUT', 
       mode: 'cors',
       
@@ -138,7 +140,7 @@ const TabAccount = () => {
         console.log(data)
       })
     }else{
-      fetch("http://lancerbackend.herokuapp.com/clients/settings", {
+      fetch("https://lancerbackend.herokuapp.com/clients/settings", {
       method: 'PUT', 
       mode: 'cors',
       
@@ -176,20 +178,11 @@ const TabAccount = () => {
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <ImgStyled src={imgSrc} alt='Profile Pic' />
               <Box>
-                <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
-                  Upload New Photo
-                  <input
-                    hidden
-                    type='file'
-                    onChange={onChange}
-                    accept='image/png, image/jpeg'
-                    id='account-settings-upload-image'
-                  />
-                </ButtonStyled>
+              <Grid item xs={12} sm={12}>
+            
+          </Grid>
                 
-                <Typography variant='body2' sx={{ marginTop: 5 }}>
-                  Allowed PNG or JPEG. Max size of 800K.
-                </Typography>
+                
               </Box>
             </Box>
           </Grid>
@@ -200,7 +193,7 @@ const TabAccount = () => {
               label='First Name' 
               placeholder='John'
               value={values.firstName}
-              onChange={handleChange('firstName')}
+              
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -210,7 +203,7 @@ const TabAccount = () => {
             placeholder='John Doe'  
             defaultValue = {values.lastName}
             value={values.lastName}
-              onChange={handleChange('lastName')}
+              
           />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -220,7 +213,7 @@ const TabAccount = () => {
               label='Email'
               placeholder='johnDoe@example.com'
               value={values.email}
-              onChange={handleChange('email')}
+              
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -229,18 +222,28 @@ const TabAccount = () => {
               label='Phone'
               placeholder='xxx-xxx-xxxx'
               value={values.phone}
-              onChange={handleChange('phone')}
+              
+            />
+            </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField 
+            fullWidth 
+            label='Send an Email' 
+            placeholder='Send your teammate a message!'
+            value={values.emailmessage}
+            onChange={handleChange('emailmessage')}
+            
             />
           </Grid>
          
-          
 
 
           <Grid item xs={12}>
             <Button 
             variant='contained' 
             onClick={() => {
-              fetchAccUpdate()
+              fetchNewEmail()
             }}
           
             sx={{ marginRight: 3.5 }}>
@@ -254,4 +257,4 @@ const TabAccount = () => {
   )
 }
 
-export default TabAccount
+export default UserCard

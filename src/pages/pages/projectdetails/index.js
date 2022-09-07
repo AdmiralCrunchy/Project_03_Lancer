@@ -22,7 +22,7 @@ const columns = [
 ]
 
 
-export default function singleProject(){
+export default function SingleProject(){
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [projects, setProjects]= useState(null)
