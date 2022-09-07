@@ -37,37 +37,75 @@ export default function InvoiceTable() {
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-        fetch("http://lancerbackend.herokuapp.com/projects/invoices", {
-            method: 'GET', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors',
-            contentType: 'application/json',
-            headers: {
-                'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-                "Access-Control-Allow-Origin": "*"
-            }
-        })
-            .then(res => res.json())
-            .then((data) => {
-                console.log(data)
-                const holdingArray = []
-                data.map(data => {
-                    
-                    data.Payments.map(Payment => {
-                        let details = {
-                            id: Payment.id,
-                            amountDue: Payment.payment_sum,
-                            paymentDate: Payment.payment_date,
-                            projectName: data.project_name,
-                            balance: data.balance,
-                            paid: Payment.paid
-                        }
-                        holdingArray.push(details)
-                    })
-                    
+            if (JSON.parse(localStorage.getItem("type")) === "developer") {
+                fetch("https://lancerbackend.herokuapp.com/projects/invoices/developers", {
+                    method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                    mode: 'cors',
+                    contentType: 'application/json',
+                    headers: {
+                        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                        "Access-Control-Allow-Origin": "*"
+                    }
                 })
-                setProjects(holdingArray)
+                    .then(res => res.json())
+                    .then((data) => {
+                        console.log(data)
+                        const holdingArray = []
+                        data.map(data => {
+
+                            data.Payments.map(Payment => {
+                                let details = {
+                                    id: Payment.id,
+                                    amountDue: Payment.payment_sum,
+                                    paymentDate: Payment.payment_date,
+                                    projectName: data.project_name,
+                                    projectId: data.id,
+                                    balance: data.balance,
+                                    paid: Payment.paid
+                                }
+                                holdingArray.push(details)
+                            })
+
+                        })
+
+                        setProjects(holdingArray)
+                    }
+                    )
+            } else {
+                fetch("https://lancerbackend.herokuapp.com/projects/invoices/clients", {
+                    method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                    mode: 'cors',
+                    contentType: 'application/json',
+                    headers: {
+                        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                        "Access-Control-Allow-Origin": "*"
+                    }
+                })
+                    .then(res => res.json())
+                    .then((data) => {
+                        console.log(data)
+                        const holdingArray = []
+                        data.map(data => {
+
+                            data.Payments.map(Payment => {
+                                let details = {
+                                    id: Payment.id,
+                                    amountDue: Payment.payment_sum,
+                                    paymentDate: Payment.payment_date,
+                                    projectName: data.project_name,
+                                    projectId: data.id,
+                                    balance: data.balance,
+                                    paid: Payment.paid
+                                }
+
+                                holdingArray.push(details)
+                            })
+
+                        })
+                        setProjects(holdingArray)
+                    }
+                    )
             }
-            )
         }
     }, [])
 
@@ -82,16 +120,45 @@ export default function InvoiceTable() {
     }
 
     const handleChange = prop => event => {
-        event.preventDefault()
-        event.stopPropagation()
-        setValues({ ...values, [prop]: event.target.value })
-      }
 
+        setProjects({ ...projects, [prop]: event.target.value })
+    }
+
+    const updateInvoice = (event) => {
+
+        event.preventDefault()
+        const newArr = event.target.id.split(" ")
+        const id = newArr[0]
+        const projectId = newArr[1]
+
+        console.log(id)
+        console.log(projectId)
+
+        fetch(`https://lancerbackend.herokuapp.com/projects/invoices/`, {
+            method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors',
+            headers: {
+                'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*"
+            },
+            body: JSON.stringify({
+                id: id,
+                project_id: projectId
+            })
+        })
+            .then(res => res.json())
+            .then((data) => {
+                console.log(data)
+              location.reload()
+            }
+            )
+    }
 
 
     return (
         <div>
-            {projects && <Paper sx={{ width: '100%', overflow: 'hidden', marginBottom:4 }}>
+            {projects && <Paper sx={{ width: '100%', overflow: 'hidden', marginBottom: 4 }}>
 
                 <TableContainer component={Paper}>
                     <Table stickyHeader aria-label='sticky table'>
@@ -109,7 +176,23 @@ export default function InvoiceTable() {
                                 return (
                                     <TableRow hover role='checkbox' tabIndex={-1} key={projects.id}>
                                         {columns.map(column => {
-                                           
+                                            if (column.id === 'paid') {
+                                                return (
+                                                    <TableCell key={column.id} align={column.align}>
+                                                        {typeof window !== 'undefined' && JSON.parse(localStorage.getItem("type")) === "developer" && projects.paid === true ? <Checkbox checked={true} /> : <Checkbox checked={false} id={projects.id + " " + projects.projectId}
+                                                            onClick={(event) => { 
+                                                                event.preventDefault()
+                                                                updateInvoice(event) }} 
+                                                                
+                                                                onChange={handleChange('paid')} />
+
+
+                                                        }
+
+                                                    </TableCell>
+                                                )
+                                            }
+                                            
                                             if (projects[column.id] > 0 && column.id != 'id') {
                                                 const value = '$' + projects[column.id]
 
@@ -118,15 +201,7 @@ export default function InvoiceTable() {
                                                         {column.format && typeof value === 'number' ? column.format(value) : value}
                                                     </TableCell>
                                                 )
-                                            }else if(column.id === 'paid'){
-                                                return(
-                                                    <TableCell key={column.id} align={column.align}>
-                                                      {typeof window !== 'undefined' && JSON.parse(localStorage.getItem("type")) === "developer" && <Checkbox
-                                                      
-                                                      />}
-                                                    </TableCell>
-                                                )
-                                            }
+                                            }  
 
                                             else {
                                                 const value = projects[column.id]
@@ -137,9 +212,11 @@ export default function InvoiceTable() {
                                                     </TableCell>
                                                 )
                                             }
-                                           
-                                            
+
+
                                         })}
+
+                                        
                                     </TableRow>
                                 )
                             })}

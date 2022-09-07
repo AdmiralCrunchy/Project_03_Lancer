@@ -3,7 +3,7 @@
 const permCheck = () => {
   if (typeof window !== 'undefined') {
     if(localStorage.getItem("type" === "developer")){
-    fetch("http://lancerbackend.herokuapp.com/developers/verify", {
+    fetch("https://lancerbackend.herokuapp.com/developers/verify", {
       method: 'GET', 
       mode: 'cors',
       contentType: 'application/json',
@@ -20,7 +20,7 @@ const permCheck = () => {
       })}
 
     if(localStorage.getItem("type" === "client")){
-    fetch("http://lancerbackend.herokuapp.com/clients/verify", {
+    fetch("https://lancerbackend.herokuapp.com/clients/verify", {
       method: 'GET',
       mode: 'cors',
       contentType: 'application/json',
