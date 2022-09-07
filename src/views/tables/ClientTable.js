@@ -52,7 +52,7 @@ const ClientTable = () => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      
+      if(JSON.parse(localStorage.getItem("type")) === "developer"){
     fetch("https://lancerbackend.herokuapp.com/developers/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
@@ -65,7 +65,7 @@ const ClientTable = () => {
      .then(res => res.json())
      .then((data) =>{
       const holdingArray = []
-      
+      if(!data.projects){return}
       data.Projects.map(project => {
         let details = {
           firstName: project.Client.first_name,
@@ -82,6 +82,7 @@ const ClientTable = () => {
      }
      )
     }
+  }
   }, [])
 
   const totalClients = () => {

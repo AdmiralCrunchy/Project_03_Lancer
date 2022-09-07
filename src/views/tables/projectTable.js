@@ -75,6 +75,7 @@ export default function ProjectTables(){
     })
      .then(res => res.json())
      .then((data) =>{
+      console.log(data)
       const holdingArray = []
       data.Projects.map(project => {
         let details = {

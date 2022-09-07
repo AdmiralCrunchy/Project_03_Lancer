@@ -56,7 +56,8 @@ export default function ProjectTable(){
     <div >
    
 
-    {typeof window !== 'undefined' && <ProjectTables/>}
+  {typeof window !== 'undefined' && <ProjectTables/>}
+  
   {typeof window !== 'undefined' && JSON.parse(localStorage.getItem("type")) === "developer" && <FormLayoutsProject />}
   {typeof window !== 'undefined' && JSON.parse(localStorage.getItem("type")) === "client" && <FormLayoutsJoin />}
   {/* <UncontrolledBoard /> */}

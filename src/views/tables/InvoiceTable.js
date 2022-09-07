@@ -127,6 +127,7 @@ export default function InvoiceTable() {
     const updateInvoice = (event) => {
 
         event.preventDefault()
+        if(JSON.parse(localStorage.getItem("type")) === "client"){return}
         const newArr = event.target.id.split(" ")
         const id = newArr[0]
         const projectId = newArr[1]
