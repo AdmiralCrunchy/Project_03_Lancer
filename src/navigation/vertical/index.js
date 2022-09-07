@@ -37,6 +37,18 @@ const navigation = () => {
       ]
     },
     {
+      title: 'Project Details',
+      icon: AlertCircleOutline,
+      path: '/pages/projectdetails',
+      children: [
+        {
+          title: 'Test1',
+          path: '/components1'
+        }
+      ]
+    },
+    {
+      title: 'Calendar',
       title: 'Dates',
       icon: Calendar,
       path: '/pages/calender'

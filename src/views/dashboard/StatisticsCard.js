@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -15,10 +16,49 @@ import DotsVertical from 'mdi-material-ui/DotsVertical'
 import CellphoneLink from 'mdi-material-ui/CellphoneLink'
 import AccountOutline from 'mdi-material-ui/AccountOutline'
 
+export default function StatisticsCard () {
+
+const [page, setPage] = useState(0)
+const [rowsPerPage, setRowsPerPage] = useState(5)
+const [projects, setProjects]= useState(null)
+
+useEffect(() => {
+  fetch("http://lancerbackend.herokuapp.com/developers/home", {
+    method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors',
+    contentType: 'application/json',
+    headers: {
+      'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      "Access-Control-Allow-Origin": "*"
+    }
+  })
+   .then(res => res.json())
+   .then((data) =>{
+    console.log(data)
+    const holdingArray = []
+    if(!data.Projects){return}
+    data.Projects.map(project => {
+      let details = {
+        id: project.id,
+        email: project.Client.email,
+        projectName: project.project_name,
+        projectStatus: project.project_status,
+        initialCharge: project.initial_charge,
+        balance: project.balance
+      }
+      holdingArray.push(details)
+
+    })
+      setProjects(holdingArray)
+   }
+   )
+}, [])
+// console.log(projects[0].projectName)
+
 const statData = [
   {
-    stats: '10',
-    title: 'Ongoing Projects',
+    stats: '',
+    title: 'Deadline',
     color: 'primary',
     icon: <TrendingUp sx={{ fontSize: '1.75rem' }} />
   },
@@ -30,17 +70,19 @@ const statData = [
   },
   {
     stats: '$88k',
-    color: 'info',
-    title: 'Revenue',
+    color: 'success',
+    title: 'Payment Due',
     icon: <CurrencyUsd sx={{ fontSize: '1.75rem' }} />
   },
   {
     stats: '12.5k',
-    title: 'Clients',
-    color: 'success',
+    title: 'Client Info',
+    color: 'info',
     icon: <AccountOutline sx={{ fontSize: '1.75rem' }} />
   },
 ]
+
+
 
 const renderStats = () => {
   return statData.map((item, index) => (
@@ -67,12 +109,11 @@ const renderStats = () => {
     </Grid>
   ))
 }
-
-const StatisticsCard = () => {
-  return (
-    <Card>
+return (
+  <div>
+        <Card>
       <CardHeader
-        title='Overview'
+        title='{projects.projectName}'
         action={
           <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
             <DotsVertical />
@@ -92,7 +133,6 @@ const StatisticsCard = () => {
         </Grid>
       </CardContent>
     </Card>
-  )
+  </div>
+)
 }
-
-export default StatisticsCard
