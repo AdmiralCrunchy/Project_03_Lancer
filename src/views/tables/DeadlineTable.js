@@ -12,42 +12,16 @@ import TableContainer from '@mui/material/TableContainer'
 import TablePagination from '@mui/material/TablePagination'
 
 const columns = [
-  {id: 'firstName', label: 'First Name', minWidth: 170,  align: 'center'},
-  {id: 'lastName', label: 'Last Name', minWidth: 170,  align: 'center'},
-  {id: 'email', label: 'E-mail', minWidth: 170, align: 'center'},
-  {id: 'phone', label: 'Phone', minWidth: 170, align: 'center'},
-  {id: 'address', label: 'Address', minWidth: 170, align: 'center'}, 
+  {id: 'Deliverable', label: 'Deliverable', minWidth: 170,  align: 'center'},
+  {id: 'Priority', label: 'Priority', minWidth: 170,  align: 'center'},
 ]
 
-const ClientTable = () => {
+const DeadlineTable = () => {
   // ** States
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [rows, setRows] = useState(null)
+  const [deadlines, setDeadlines] = useState(null)
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-    fetch("http://lancerbackend.herokuapp.com/developers/verify", {
-      method: 'GET', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors',
-      contentType: 'application/json',
-      headers: {
-      'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-      "Access-Control-Allow-Origin": "*"
-    }
-    })
-     .then(res => res.json())
-     .then((data) =>{
-      if(!data.dev){
-        if (typeof window !== 'undefined') {
-          localStorage.clear();
-          window.location.href= "/"
-        }
-      }
-  
-      })
-    }
-     }, [])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -67,21 +41,19 @@ const ClientTable = () => {
       
       data.Projects.map(project => {
         let details = {
-          firstName: project.Client.first_name,
-          lastName: project.Client.last_name,
-          phone: project.Client.phone,
-          email: project.Client.email,
-          address: project.Client.address,
+          Deliverable: project.Deadlines.deliverable,
+          Priority: project.Deadlines.priority,
         }
         
         holdingArray.push(details)
       
       })
-        setRows(holdingArray)
+        setDeadlines(holdingArray)
      }
      )
     }
   }, [])
+
 
   const totalClients = () => {
     return (rows.length)
@@ -98,10 +70,10 @@ const ClientTable = () => {
 
   return (
     <div>
-
-    {rows && <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 550 }}>
-        <Table stickyHeader aria-label='sticky table'>
+    {deadlines && <Paper sx={{ width: '100%', overflow: 'hidden', marginBottom:4 }}>
+      
+      <TableContainer component={Paper}>
+      <Table stickyHeader aria-label='sticky table'>
           <TableHead>
             <TableRow>
               {columns.map(column => (
@@ -111,18 +83,28 @@ const ClientTable = () => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+           <TableBody>
+            {deadlines.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(deadline => {
               return (
-                <TableRow hover role='checkbox' tabIndex={-1} key={row.id}>
+                <TableRow hover role='checkbox' tabIndex={-1} key={deadlines.id}>
                   {columns.map(column => {
-                    const value = row[column.id]
+                    if(deadline[column.id] > 0 ){
+                      const value = '$'+deadline[column.id]
 
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
-                      </TableCell>
-                    )
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === 'number' ? column.format(value) : value}
+                        </TableCell>
+                      )
+                    }else{
+                      const value = deadline[column.id]
+
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === 'number' ? column.format(value) : value}
+                        </TableCell>
+                      )
+                    }
                   })}
                 </TableRow>
               )
@@ -133,15 +115,16 @@ const ClientTable = () => {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component='div'
-        count={rows.length}
+        count={deadlines.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-    </Paper>}
+      
+  </Paper>}
     </div>
   )
 }
 
-export default ClientTable
+export default DeadlineTable
