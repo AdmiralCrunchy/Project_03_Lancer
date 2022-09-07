@@ -28,7 +28,7 @@ const ClientTable = () => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-    fetch("http://lancerbackend.herokuapp.com/developers/verify", {
+    fetch("https://lancerbackend.herokuapp.com/developers/verify", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
@@ -53,7 +53,7 @@ const ClientTable = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       
-    fetch("http://lancerbackend.herokuapp.com/developers/home", {
+    fetch("https://lancerbackend.herokuapp.com/developers/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
@@ -115,7 +115,7 @@ const ClientTable = () => {
           <TableBody>
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
               return (
-                <TableRow hover role='checkbox' tabIndex={-1} key={row.id}>
+                <TableRow hover role='checkbox' tabIndex={-1} key={rows.id}>
                   {columns.map(column => {
                     const value = row[column.id]
 

@@ -80,7 +80,7 @@ const FormLayoutsBasic = () => {
 
   // useEffect(() => {
   // if (typeof window !== 'undefined') {
-  //   fetch("http://lancerbackend.herokuapp.com/developers/home", {
+  //   fetch("https://lancerbackend.herokuapp.com/developers/home", {
   //     method: 'GET', // *GET, POST, PUT, DELETE, etc.
   //     mode: 'cors',
   //     contentType: 'application/json',
@@ -109,7 +109,7 @@ const FormLayoutsBasic = () => {
 
   const fetchNewInvoice = () => {
     if (typeof window !== 'undefined') {
-      fetch("http://lancerbackend.herokuapp.com/projects/invoices", {
+      fetch("https://lancerbackend.herokuapp.com/projects/invoices", {
         method: 'POST',
         mode: 'cors',
         headers: {

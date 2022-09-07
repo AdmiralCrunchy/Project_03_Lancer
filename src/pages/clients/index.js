@@ -14,7 +14,7 @@ import ClientTable from 'src/views/tables/ClientTable'
 const clientTable = () => {
   // useEffect(() => {
     // if (typeof window !== 'undefined') {
-  //   fetch("http://lancerbackend.herokuapp.com/developers/verify", {
+  //   fetch("https://lancerbackend.herokuapp.com/developers/verify", {
   //     method: 'GET', // *GET, POST, PUT, DELETE, etc.
   //     mode: 'cors',
   //     contentType: 'application/json',
@@ -51,7 +51,7 @@ const clientTable = () => {
       </Grid>
       <Grid item xs={12}>
         <Card>
-          <CardHeader title='Clients' titleTypographyProps={{ variant: 'h6' }} />
+          
           <ClientTable />
         </Card>
       </Grid>
