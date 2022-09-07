@@ -70,7 +70,7 @@ const TabAccount = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if(JSON.parse(localStorage.getItem("type")) === "developer"){
-    fetch("http://lancerbackend.herokuapp.com/developers/home", {
+    fetch("https://lancerbackend.herokuapp.com/developers/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
@@ -91,7 +91,7 @@ const TabAccount = () => {
      )
     }
   else{
-    fetch("http://lancerbackend.herokuapp.com/clients/home", {
+    fetch("https://lancerbackend.herokuapp.com/clients/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
