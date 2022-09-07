@@ -10,6 +10,7 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TablePagination from '@mui/material/TablePagination'
+import Checkbox from '@mui/material/Checkbox'
 import { CheckboxMultipleMarkedOutline } from 'mdi-material-ui'
 
 const columns = [
@@ -17,7 +18,8 @@ const columns = [
     { id: 'amountDue', label: 'Amount Due', minWidth: 25, align: 'center' },
     { id: 'paymentDate', label: 'Due Date', minWidth: 25, align: 'center' },
     { id: 'projectName', label: 'Project Name', minWidth: 150, align: 'center' },
-    { id: 'balance', label: 'Project Balance', minWidth: 150, align: 'center' }
+    { id: 'balance', label: 'Project Balance', minWidth: 150, align: 'center' },
+    { id: 'paid', label: 'Paid?', minWidth: 25, align: 'center' }
 ]
 
 
@@ -55,8 +57,9 @@ export default function InvoiceTable() {
                             id: Payment.id,
                             amountDue: Payment.payment_sum,
                             paymentDate: Payment.payment_date,
-                            projectName:data.project_name,
-                            balance: data.balance
+                            projectName: data.project_name,
+                            balance: data.balance,
+                            paid: Payment.paid
                         }
                         holdingArray.push(details)
                     })
@@ -77,6 +80,12 @@ export default function InvoiceTable() {
         setRowsPerPage(+event.target.value)
         setPage(0)
     }
+
+    const handleChange = prop => event => {
+        event.preventDefault()
+        event.stopPropagation()
+        setValues({ ...values, [prop]: event.target.value })
+      }
 
 
 
@@ -109,7 +118,17 @@ export default function InvoiceTable() {
                                                         {column.format && typeof value === 'number' ? column.format(value) : value}
                                                     </TableCell>
                                                 )
-                                            } else {
+                                            }else if(column.id === 'paid'){
+                                                return(
+                                                    <TableCell key={column.id} align={column.align}>
+                                                      {typeof window !== 'undefined' && JSON.parse(localStorage.getItem("type")) === "developer" && <Checkbox
+                                                      
+                                                      />}
+                                                    </TableCell>
+                                                )
+                                            }
+
+                                            else {
                                                 const value = projects[column.id]
 
                                                 return (
@@ -118,6 +137,8 @@ export default function InvoiceTable() {
                                                     </TableCell>
                                                 )
                                             }
+                                           
+                                            
                                         })}
                                     </TableRow>
                                 )

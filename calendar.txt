@@ -1,9 +1,20 @@
+<<<<<<< HEAD
+// // ** React Imports
+import React, { useState, useEffect } from "react";
+
+// import Calendar from "react-beautiful-calendar"
+
+import { useRouter } from 'next/router'
+
+// // ** MUI Components
+=======
 import React, { useState, useEffect } from "react";
 import Calendar from "react-beautiful-calendar"
 
 import { useRouter } from 'next/router'
 
 // ** MUI Components
+>>>>>>> dev
 import Box from '@mui/material/Box'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
@@ -18,10 +29,20 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 
+<<<<<<< HEAD
+// const Card = styled(MuiCard)(({ theme }) => ({
+//     [theme.breakpoints.up('sm')]: { width: '100rem' }
+//   }))
+
+//   const createData = (day, month, year, name, status, appName, description) => {
+//     return { day, month, year, name, status, appName, description}
+//   }
+=======
 
 const Card = styled(MuiCard)(({ theme }) => ({
     [theme.breakpoints.up('sm')]: { width: '100rem' }
   }))
+>>>>>>> dev
 
   const createData = (day, month, year, name, status, appName, description) => {
     return { day, month, year, name, status, appName, description}
@@ -44,10 +65,18 @@ const Card = styled(MuiCard)(({ theme }) => ({
   function CalendarPage() {
    
 <<<<<<< HEAD
+  let today = new Date();
+
+    const [page, setPage] = useState(0)
+    const [rowsPerPage, setRowsPerPage] = useState(5)
+    const [projects, setProjects]= useState(null)
+=======
+<<<<<<< HEAD
   // ** States
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(10)
     const [rows, setRows] = useState(null)
+>>>>>>> dev
 
     const [day,setDate] = useState(2)
     const [month,setMonth] = useState("September")
@@ -169,10 +198,17 @@ const Card = styled(MuiCard)(({ theme }) => ({
       setPage(newPage)
     }
   
+<<<<<<< HEAD
+//     const handleChangeRowsPerPage = event => {
+//       setRowsPerPage(+event.target.value)
+//       setPage(0)
+//     }
+=======
     const handleChangeRowsPerPage = event => {
       setRowsPerPage(+event.target.value)
       setPage(0)
     }
+>>>>>>> dev
 
     return (
       <Box>
@@ -203,6 +239,49 @@ const Card = styled(MuiCard)(({ theme }) => ({
                           {columns.map(column => {
                             const value = row[column.id]
 
+<<<<<<< HEAD
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === 'number' ? column.format(value) : value}
+                            </TableCell>
+                          )
+                        }
+                      })}
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component='div'
+          count={projects.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>}
+          <h1> Important Appointments</h1>
+                <tbody>
+                <tr>
+                  <h2>{month} {day} {year}: </h2>
+                </tr>
+              </tbody>
+    </Box>
+=======
+        <div></div>
+
+
+>>>>>>> 7431d69daabe5a9ef5422b062377a45d6048625b
+    )
+
+//   }
+  }
+  
+export default CalendarPage
+=======
                             return (
                               <TableCell key={column.id} align={column.align}>
                                 {column.format && typeof value === 'number' ? column.format(value) : value}
@@ -230,3 +309,4 @@ const Card = styled(MuiCard)(({ theme }) => ({
   }
 
 export default CalendarPage;
+>>>>>>> dev
