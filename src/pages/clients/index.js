@@ -42,12 +42,17 @@ const clientTable = () => {
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Typography variant='h5'>
-          <Link href='https://mui.com/components/tables/' target='_blank'>
+          {typeof window !== 'undefined' && JSON.parse(localStorage.getItem("type")) === "developer" && <Link  target='_blank'>
             Your Clients
-          </Link>
+          </Link>}
+
+          {typeof window !== 'undefined' && JSON.parse(localStorage.getItem("type")) === "client" &&<Link  target='_blank'>
+            Your Teammates
+          </Link>}
+
         </Typography>
-        <Typography variant='body2'>Work WITH your clients, not FOR your clients
-        </Typography>
+        {typeof window !== 'undefined' && JSON.parse(localStorage.getItem("type")) === "developer" && <Typography variant='body2'>Work WITH your clients, not FOR your clients
+        </Typography>}
       </Grid>
       <Grid item xs={12}>
         <Card>

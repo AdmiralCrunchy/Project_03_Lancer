@@ -233,15 +233,7 @@ const TabAccount = () => {
             />
           </Grid>
          
-          <Grid item xs={12} sm={6}>
-            <TextField 
-              fullWidth 
-              label='Company' 
-              placeholder='ABC Pvt. Ltd.' 
-              value={values.company}
-              onChange={handleChange('company')} 
-            />
-          </Grid>
+          
 
 
           <Grid item xs={12}>

@@ -25,29 +25,6 @@ const ClientTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [rows, setRows] = useState(null)
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-    fetch("https://lancerbackend.herokuapp.com/developers/verify", {
-      method: 'GET', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors',
-      contentType: 'application/json',
-      headers: {
-      'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-      "Access-Control-Allow-Origin": "*"
-    }
-    })
-     .then(res => res.json())
-     .then((data) =>{
-      if(!data.dev){
-        if (typeof window !== 'undefined') {
-          localStorage.clear();
-          window.location.href= "/"
-        }
-      }
-  
-      })
-    }
-     }, [])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -64,7 +41,7 @@ const ClientTable = () => {
      .then(res => res.json())
      .then((data) =>{
       const holdingArray = []
-      if(!data.projects){return}
+    
       data.Projects.map(project => {
         let details = {
           firstName: project.Client.first_name,
@@ -80,6 +57,36 @@ const ClientTable = () => {
         setRows(holdingArray)
      }
      )
+    }else{
+      fetch("https://lancerbackend.herokuapp.com/clients/home", {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors',
+      contentType: 'application/json',
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        "Access-Control-Allow-Origin": "*"
+      }
+    })
+     .then(res => res.json())
+     .then((data) =>{
+      const holdingArray = []
+      
+      data.Projects.map(project => {
+        let details = {
+          firstName: project.Developer.first_name,
+          lastName: project.Developer.last_name,
+          phone: project.Developer.phone,
+          email: project.Developer.email,
+          address: project.Developer.address,
+        }
+        
+        holdingArray.push(details)
+      
+      })
+        setRows(holdingArray)
+     }
+     )
+      
     }
   }
   }, [])
