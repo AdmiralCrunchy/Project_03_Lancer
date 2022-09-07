@@ -32,7 +32,7 @@ export default function DeadlineTables(){
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-    fetch("http://lancerbackend.herokuapp.com/projects/deadlines/developers", {
+    fetch("https://lancerbackend.herokuapp.com/projects/deadlines/developers", {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors',
         contentType: 'application/json',
@@ -66,7 +66,7 @@ export default function DeadlineTables(){
 
 useEffect(() => {
     if (typeof window !== 'undefined') {
-    fetch("http://lancerbackend.herokuapp.com/projects/deadlines/clients", {
+    fetch("https://lancerbackend.herokuapp.com/projects/deadlines/clients", {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors',
         contentType: 'application/json',
