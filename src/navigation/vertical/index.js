@@ -3,6 +3,17 @@ import {Login, Table, CubeOutline, HomeOutline, FormatLetterCase, AccountCogOutl
 
 import MaterialUi from 'mdi-material-ui/MaterialUi'
 
+const listTitle = () => {
+  if(typeof window !== 'undefined'){
+    console.log("nice")
+    if(JSON.parse(localStorage.getItem("type")) === "developer"){
+      return "Client List"
+    }else{
+      return "Developer List"
+    }
+  }
+}
+
 const navigation = () => {
 
   return [
@@ -52,7 +63,7 @@ const navigation = () => {
       ]
     },
     {
-      title: 'Client List',
+      title: listTitle(),
       icon: AccountMultiple,
       path: '/clients'
     },
