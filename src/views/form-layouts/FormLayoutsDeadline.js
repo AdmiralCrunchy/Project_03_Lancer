@@ -25,7 +25,7 @@ const FormLayoutsDeadline = () => {
 
   const fetchNewDeadline = () => {
     if (typeof window !== 'undefined') {
-    fetch("http://lancerbackend.herokuapp.com/deadlines/", {
+    fetch("https://lancerbackend.herokuapp.com/projects/deadlines", {
       method: 'POST', 
       mode: 'cors',
       headers: {

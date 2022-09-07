@@ -12,8 +12,9 @@ import TableContainer from '@mui/material/TableContainer'
 import TablePagination from '@mui/material/TablePagination'
 
 const columns = [
-  {id: 'Deliverable', label: 'Deliverable', minWidth: 170,  align: 'center'},
-  {id: 'Priority', label: 'Priority', minWidth: 170,  align: 'center'},
+    {id: 'projectId', label: 'Project Id', minWidth: 50,  align: 'center'},
+    {id: 'deliverable', label: 'Deliverable', minWidth: 170,  align: 'center'},
+    {id: 'deadlineDate', label: 'Deadline Date', minWidth: 100, align: 'center'},
 ]
 
 const DeadlineTable = () => {
@@ -41,10 +42,11 @@ const DeadlineTable = () => {
                     const holdingArray = []
                     data.map(data => {
 
-                        data.Deadlines.map(Deadlines => {
+                        data.Deadlines.map(Deadline => {
                             let details = {
-                                id: Deadlines.id,
-                                deliverableName: Deadlines.name
+                                projectId: Deadline.project_id,
+                                deadlineDate: Deadline.completion_date,
+                                deliverable: Deadline.deliverable,
 
                             }
                             holdingArray.push(details)
@@ -71,11 +73,11 @@ const DeadlineTable = () => {
                     const holdingArray = []
                     data.map(data => {
 
-                        data.Deadlines.map(Deadlines => {
+                        data.Deadlines.map(Deadline => {
                             let details = {
-                                id: Deadlines.id,
-                                deliverableName: Deadlines.deliverableName,
-                                DeadlinesDate: Deadlines.Deadlines_date,
+                                projectId: Deadline.project_id,
+                                deadlineDate: Deadline.completion_date,
+                                deliverable: Deadline.deliverable,
 
                             }
 
@@ -140,7 +142,7 @@ const DeadlineTable = () => {
                       }
 
                     if(deadline[column.id] > 0 ){
-                      const value = '$'+deadline[column.id]
+                      const value = deadline[column.id]
 
                       return (
                         <TableCell key={column.id} align={column.align}>

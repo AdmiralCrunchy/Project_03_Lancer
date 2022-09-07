@@ -19,7 +19,6 @@ const columns = [
   {id: 'appointmentDuration', label: 'Duration', minWidth: 170,  align: 'right'},
   {id: 'appointmentDescription', label: 'Description', minWidth: 170,  align: 'right'},
   {id: 'appointmentLocation', label: 'Location', minWidth: 170,  align: 'right'},
-
 ]
 
 
