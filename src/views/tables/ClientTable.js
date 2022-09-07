@@ -16,8 +16,7 @@ const columns = [
   {id: 'lastName', label: 'Last Name', minWidth: 170,  align: 'center'},
   {id: 'email', label: 'E-mail', minWidth: 170, align: 'center'},
   {id: 'phone', label: 'Phone', minWidth: 170, align: 'center'},
-  {id: 'address', label: 'Address', minWidth: 170, align: 'center'},
-  
+  {id: 'address', label: 'Address', minWidth: 170, align: 'center'}, 
 ]
 
 const ClientTable = () => {
