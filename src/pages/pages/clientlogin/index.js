@@ -69,7 +69,7 @@ const ClientLoginPage = () => {
 
   const fetchLogin = () => {
 
-    fetch("http://lancerbackend.herokuapp.com/clients/login", {
+    fetch("https://lancerbackend.herokuapp.com/clients/login", {
       method: 'POST', 
       mode: 'cors',
       headers: {

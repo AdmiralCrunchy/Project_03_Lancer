@@ -70,7 +70,7 @@ const TabAccount = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if(JSON.parse(localStorage.getItem("type")) === "developer"){
-    fetch("http://lancerbackend.herokuapp.com/developers/home", {
+    fetch("https://lancerbackend.herokuapp.com/developers/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
@@ -91,7 +91,7 @@ const TabAccount = () => {
      )
     }
   else{
-    fetch("http://lancerbackend.herokuapp.com/clients/home", {
+    fetch("https://lancerbackend.herokuapp.com/clients/home", {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors',
       contentType: 'application/json',
@@ -116,7 +116,7 @@ const TabAccount = () => {
   const fetchAccUpdate = () => {
     if (typeof window !== 'undefined') {
       if(JSON.parse(localStorage.getItem("type")) === "developer"){
-    fetch("http://lancerbackend.herokuapp.com/developers/settings", {
+    fetch("https://lancerbackend.herokuapp.com/developers/settings", {
       method: 'PUT', 
       mode: 'cors',
       
@@ -138,7 +138,7 @@ const TabAccount = () => {
         console.log(data)
       })
     }else{
-      fetch("http://lancerbackend.herokuapp.com/clients/settings", {
+      fetch("https://lancerbackend.herokuapp.com/clients/settings", {
       method: 'PUT', 
       mode: 'cors',
       
@@ -233,15 +233,6 @@ const TabAccount = () => {
             />
           </Grid>
          
-          <Grid item xs={12} sm={6}>
-            <TextField 
-              fullWidth 
-              label='Company' 
-              placeholder='ABC Pvt. Ltd.' 
-              value={values.company}
-              onChange={handleChange('company')} 
-            />
-          </Grid>
 
 
           <Grid item xs={12}>

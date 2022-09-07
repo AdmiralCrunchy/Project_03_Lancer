@@ -12,6 +12,7 @@ import Box from '@mui/material/Box'
 
 import FormLayoutsBasic from 'src/views/form-layouts/FormLayoutsBasic'
 import InvoiceTable from 'src/views/tables/InvoiceTable'
+import ProjectTables from 'src/views/tables/projectTable'
 import FormLayoutsIcons from 'src/views/form-layouts/FormLayoutsIcons'
 import FormLayoutsSeparator from 'src/views/form-layouts/FormLayoutsSeparator'
 import FormLayoutsAlignment from 'src/views/form-layouts/FormLayoutsAlignment'
@@ -28,9 +29,9 @@ const FormLayouts = () => {
     <div>
       
       <InvoiceTable  />
-      
-
       {typeof window !== 'undefined' && JSON.parse(localStorage.getItem("type")) === "developer" &&<FormLayoutsBasic />}
+      {typeof window !== 'undefined' && JSON.parse(localStorage.getItem("type")) === "developer" &&<ProjectTables />}
+      
 
 
     </div>
