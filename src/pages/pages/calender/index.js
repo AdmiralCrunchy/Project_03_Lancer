@@ -4,9 +4,13 @@ import React, { useState, useEffect } from "react";
 // import Calendar from "react-beautiful-calendar"
 
 import { useRouter } from 'next/router'
+
 // import AppointmentTables from '../../../views/tables/AppointmentTable'
+
 import DeadlineTables from '../../../views/tables/DeadlineTable'
+
 // import FormLayoutsAppointment from "../../../views/form-layouts/FormLayoutsAppointment"
+
 import FormLayoutsDeadline from "../../../views/form-layouts/FormLayoutsDeadline";
 
 // ** MUI Components
